@@ -73,7 +73,6 @@
             text-shadow: 2px 2px var(--gold);
         }
 
-        /* Анимация загрузки */
         .loader {
             border: 4px solid #1a1a1a;
             border-top: 4px solid var(--gold);
@@ -86,6 +85,10 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        video::-webkit-media-controls {
+            filter: invert(1) hue-rotate(180deg);
         }
     </style>
 </head>
@@ -113,7 +116,7 @@
                 </h2>
                 <textarea id="prompt" rows="4" 
                     class="w-full bg-black border border-zinc-800 p-3 text-sm focus:border-[var(--gold)] outline-none transition-colors"
-                    placeholder="Опишите ваше видео (например: Золотая искра в темноте, индустриальный стиль...)"></textarea>
+                    placeholder="Опишите ваше видео..."></textarea>
             </section>
 
             <section class="parameter-card p-6 industrial-border">
@@ -126,12 +129,7 @@
                         </div>
                         <input type="range" id="duration" min="10" max="60" step="10" value="30" class="w-full">
                         <div class="flex justify-between text-[10px] mt-1 text-zinc-600">
-                            <span>10s</span>
-                            <span>20s</span>
-                            <span>30s</span>
-                            <span>40s</span>
-                            <span>50s</span>
-                            <span>60s</span>
+                            <span>10s</span><span>20s</span><span>30s</span><span>40s</span><span>50s</span><span>60s</span>
                         </div>
                     </div>
                 </div>
@@ -140,17 +138,17 @@
             <section class="parameter-card p-6 industrial-border">
                 <h2 class="text-lg font-bold mb-4">НАПРАВЛЕНИЕ ДВИЖЕНИЯ</h2>
                 <div class="grid grid-cols-3 gap-2">
-                    <button onclick="setDirection('forward')" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] hover:border-[var(--gold)]">ВПЕРЕД</button>
-                    <button onclick="setDirection('up')" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] hover:border-[var(--gold)]">ВВЕРХ</button>
-                    <button onclick="setDirection('backward')" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] hover:border-[var(--gold)]">НАЗАД</button>
-                    <button onclick="setDirection('left')" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] hover:border-[var(--gold)]">ВЛЕВО</button>
-                    <button onclick="setDirection('zoom')" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] hover:border-[var(--gold)]">ЗУМ</button>
-                    <button onclick="setDirection('right')" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] hover:border-[var(--gold)]">ВПРАВО</button>
+                    <button onclick="setDirection('forward', this)" class="dir-btn border border-amber-500 text-amber-500 bg-black p-2 text-[10px]">ВПЕРЕД</button>
+                    <button onclick="setDirection('up', this)" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] text-zinc-500">ВВЕРХ</button>
+                    <button onclick="setDirection('backward', this)" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] text-zinc-500">НАЗАД</button>
+                    <button onclick="setDirection('left', this)" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] text-zinc-500">ВЛЕВО</button>
+                    <button onclick="setDirection('zoom', this)" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] text-zinc-500">ЗУМ</button>
+                    <button onclick="setDirection('right', this)" class="dir-btn bg-black border border-zinc-800 p-2 text-[10px] text-zinc-500">ВПРАВО</button>
                 </div>
                 <input type="hidden" id="selected-direction" value="forward">
             </section>
 
-            <button onclick="generateVideo()" class="w-full py-4 btn-gold text-lg">
+            <button id="gen-btn" onclick="generateVideo()" class="w-full py-4 btn-gold text-lg">
                 ЗАПУСТИТЬ ГЕНЕРАЦИЮ
             </button>
         </div>
@@ -159,21 +157,36 @@
         <div class="lg:col-span-2 space-y-6">
             <div class="industrial-border bg-zinc-950 aspect-video flex flex-col items-center justify-center relative overflow-hidden">
                 <!-- Video Overlay -->
-                <div id="loading-overlay" class="hidden absolute inset-0 bg-black/80 z-10 flex flex-col items-center justify-center">
+                <div id="loading-overlay" class="hidden absolute inset-0 bg-black/90 z-10 flex flex-col items-center justify-center">
                     <div class="loader mb-4"></div>
-                    <p class="text-[var(--gold)] font-bold animate-pulse">ИДЕТ РЕНДЕРИНГ ОБЪЕКТА...</p>
+                    <p class="text-[var(--gold)] font-bold animate-pulse tracking-widest">ИДЕТ РЕНДЕРИНГ ОБЪЕКТА...</p>
                     <p id="progress-text" class="text-xs text-zinc-500 mt-2">0%</p>
                 </div>
 
-                <!-- Placeholder / Result -->
-                <div id="preview-content" class="text-center p-12">
+                <!-- Placeholder -->
+                <div id="preview-placeholder" class="text-center p-12">
                     <svg class="w-20 h-20 mx-auto mb-4 text-zinc-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                     </svg>
                     <p class="text-zinc-600 uppercase tracking-widest text-sm font-bold">Ожидание параметров системы</p>
                 </div>
                 
-                <video id="video-result" class="hidden w-full h-full object-cover" controls></video>
+                <!-- Actual Video Player -->
+                <video id="video-player" class="hidden w-full h-full object-contain" controls preload="auto">
+                    <source id="video-source" src="" type="video/mp4">
+                    Ваш браузер не поддерживает видео.
+                </video>
+            </div>
+
+            <!-- Download & Share Actions -->
+            <div id="action-buttons" class="hidden grid grid-cols-2 gap-4">
+                <a id="download-link" href="#" download="Talas_Master_AI_Video.mp4" class="btn-gold py-3 text-center text-sm flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    СКАЧАТЬ НА УСТРОЙСТВО
+                </a>
+                <button onclick="resetSystem()" class="bg-zinc-900 border border-zinc-700 text-white py-3 text-sm font-bold uppercase hover:bg-zinc-800 transition-colors">
+                    НОВЫЙ ПРОЕКТ
+                </button>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -208,22 +221,30 @@
     </footer>
 
     <script>
-        // Обновление значения длительности
         const durationInput = document.getElementById('duration');
         const durationVal = document.getElementById('duration-val');
+        const videoPlayer = document.getElementById('video-player');
+        const videoSource = document.getElementById('video-source');
+        const actionButtons = document.getElementById('action-buttons');
+        const placeholder = document.getElementById('preview-placeholder');
+        const downloadLink = document.getElementById('download-link');
+        const genBtn = document.getElementById('gen-btn');
+
+        // Пример видео для демонстрации (т.к. мы на клиенте)
+        const sampleVideo = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+
         durationInput.addEventListener('input', (e) => {
             durationVal.textContent = e.target.value + ' СЕК';
         });
 
-        function setDirection(dir) {
+        function setDirection(dir, btn) {
             document.getElementById('selected-direction').value = dir;
-            // Визуальный эффект выбора
-            document.querySelectorAll('.dir-btn').forEach(btn => {
-                btn.style.borderColor = '#27272a';
-                btn.style.color = '#71717a';
+            document.querySelectorAll('.dir-btn').forEach(b => {
+                b.classList.remove('border-amber-500', 'text-amber-500');
+                b.classList.add('border-zinc-800', 'text-zinc-500');
             });
-            event.target.style.borderColor = '#FBBF24';
-            event.target.style.color = '#FBBF24';
+            btn.classList.add('border-amber-500', 'text-amber-500');
+            btn.classList.remove('border-zinc-800', 'text-zinc-500');
             log(`Направление изменено на: ${dir.toUpperCase()}`);
         }
 
@@ -242,47 +263,61 @@
                 return;
             }
 
-            const duration = durationInput.value;
-            const direction = document.getElementById('selected-direction').value;
-
-            log(`Инициализация генерации: ${duration}с, Направление: ${direction}`);
+            genBtn.disabled = true;
+            genBtn.style.opacity = "0.5";
+            log(`Инициализация генерации...`);
             
             const overlay = document.getElementById('loading-overlay');
             const progressText = document.getElementById('progress-text');
-            const previewContent = document.getElementById('preview-content');
             
             overlay.classList.remove('hidden');
-            previewContent.classList.add('hidden');
+            placeholder.classList.add('hidden');
+            videoPlayer.classList.add('hidden');
+            actionButtons.classList.add('hidden');
 
             let progress = 0;
             const interval = setInterval(() => {
-                progress += Math.random() * 5;
+                progress += Math.random() * 8;
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);
-                    finishGeneration();
+                    showResult();
                 }
                 progressText.textContent = Math.floor(progress) + '%';
-            }, 500);
+            }, 300);
         }
 
-        function finishGeneration() {
-            log("Генерация завершена. Сборка пакета данных...");
+        function showResult() {
+            log("Рендеринг завершен. Подготовка превью...");
+            
             setTimeout(() => {
                 document.getElementById('loading-overlay').classList.add('hidden');
-                log("Видео успешно создано.");
                 
-                // Здесь будет логика отображения видео, если есть бэкенд
-                const preview = document.getElementById('preview-content');
-                preview.classList.remove('hidden');
-                preview.innerHTML = `
-                    <div class="text-[var(--gold)]">
-                        <p class="text-xl font-bold mb-2">ГОТОВО!</p>
-                        <p class="text-xs text-white">Видео в ${durationInput.value} секунд сгенерировано.</p>
-                        <button class="mt-4 px-6 py-2 border border-[var(--gold)] text-[10px] hover:bg-[var(--gold)] hover:text-black transition-all">СКАЧАТЬ РЕЗУЛЬТАТ</button>
-                    </div>
-                `;
-            }, 1000);
+                // Устанавливаем источник и загружаем видео
+                videoSource.src = sampleVideo;
+                videoPlayer.load();
+                videoPlayer.classList.remove('hidden');
+                
+                // Показываем кнопки действий
+                actionButtons.classList.remove('hidden');
+                downloadLink.href = sampleVideo;
+
+                log("ВИДЕО ГОТОВО К ПРОСМОТРУ.");
+                genBtn.disabled = false;
+                genBtn.style.opacity = "1";
+                
+                // Автовоспроизведение для эффекта
+                videoPlayer.play();
+            }, 800);
+        }
+
+        function resetSystem() {
+            videoPlayer.pause();
+            videoPlayer.classList.add('hidden');
+            actionButtons.classList.add('hidden');
+            placeholder.classList.remove('hidden');
+            document.getElementById('prompt').value = "";
+            log("Система сброшена. Ожидание нового промпта.");
         }
     </script>
 </body>
