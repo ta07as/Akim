@@ -46,9 +46,14 @@
             clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
         }
 
-        .btn-gold:hover {
+        .btn-gold:hover:not(:disabled) {
             transform: scale(1.05);
             box-shadow: 0 0 20px rgba(251, 191, 36, 0.6);
+        }
+
+        .btn-gold:disabled {
+            background-color: #444;
+            cursor: not-allowed;
         }
 
         .parameter-card {
@@ -74,26 +79,36 @@
             accent-color: var(--gold);
         }
 
-        .status-light {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 8px;
-            box-shadow: 0 0 5px currentColor;
-        }
-
         .glitch-text {
             text-shadow: 2px 2px var(--gold);
         }
 
-        .loader {
+        /* Анимированный сканер для загрузки */
+        .scanner {
+            width: 100%;
+            height: 2px;
+            background: var(--gold);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 30;
+            box-shadow: 0 0 15px var(--gold);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            50% { top: 100%; }
+            100% { top: 0; }
+        }
+
+        .loader-ring {
             border: 4px solid #1a1a1a;
             border-top: 4px solid var(--gold);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
         }
 
         @keyframes spin {
@@ -101,7 +116,6 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Portrait mode for phone preview */
         .video-container.portrait {
             aspect-ratio: 9/16;
             max-height: 600px;
@@ -128,10 +142,9 @@
 
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Sidebar Controls (4 columns) -->
+        <!-- Sidebar Controls -->
         <div class="lg:col-span-4 space-y-4">
             
-            <!-- Type of Work Selection -->
             <section class="parameter-card p-4 industrial-border">
                 <h2 class="text-xs font-bold mb-3 text-[var(--gold)] uppercase tracking-widest">01. КАТЕГОРИЯ УСЛУГИ</h2>
                 <select id="work-type">
@@ -143,13 +156,11 @@
                 </select>
             </section>
 
-            <!-- Creative Prompt -->
             <section class="parameter-card p-4 industrial-border">
                 <h2 class="text-xs font-bold mb-3 text-[var(--gold)] uppercase tracking-widest">02. ДЕТАЛИЗАЦИЯ (ПРОМПТ)</h2>
-                <textarea id="prompt" rows="3" placeholder="Например: монтаж щитка в стиле киберпанк, неоновые искры..."></textarea>
+                <textarea id="prompt" rows="3" placeholder="Опишите детали..."></textarea>
             </section>
 
-            <!-- Visual Style -->
             <section class="parameter-card p-4 industrial-border">
                 <h2 class="text-xs font-bold mb-3 text-[var(--gold)] uppercase tracking-widest">03. ВИЗУАЛЬНЫЙ СТИЛЬ</h2>
                 <div class="grid grid-cols-2 gap-2">
@@ -161,16 +172,15 @@
                 <input type="hidden" id="selected-style" value="hyper">
             </section>
 
-            <!-- Advanced Specs -->
             <section class="parameter-card p-4 industrial-border">
-                <h2 class="text-xs font-bold mb-3 text-[var(--gold)] uppercase tracking-widest">04. ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ</h2>
+                <h2 class="text-xs font-bold mb-3 text-[var(--gold)] uppercase tracking-widest">04. ТЕХНИЧЕСКИЕ ПАРАМЕТРЫ</h2>
                 <div class="space-y-3">
                     <div>
-                        <label class="text-[10px] text-zinc-500 uppercase">Формат (Aspect Ratio)</label>
+                        <label class="text-[10px] text-zinc-500 uppercase">Формат</label>
                         <select id="aspect-ratio" onchange="updatePreviewLayout()">
-                            <option value="9-16">9:16 (REELS / TIKTOK / PHONE)</option>
-                            <option value="16-9">16:9 (YOUTUBE / DESKTOP)</option>
-                            <option value="1-1">1:1 (INSTAGRAM POST)</option>
+                            <option value="9-16">9:16 (REELS / TIKTOK)</option>
+                            <option value="16-9">16:9 (YOUTUBE)</option>
+                            <option value="1-1">1:1 (POST)</option>
                         </select>
                     </div>
                     <div>
@@ -184,25 +194,38 @@
             </section>
 
             <button id="gen-btn" onclick="generateVideo()" class="w-full py-5 btn-gold text-lg shadow-lg">
-                СГЕНЕРИРОВАТЬ ШЕДЕВР
+                ЗАПУСТИТЬ ГЕНЕРАЦИЮ
             </button>
         </div>
 
-        <!-- Main Display (8 columns) -->
+        <!-- Main Display -->
         <div class="lg:col-span-8 space-y-6">
             <div id="video-container" class="video-container portrait industrial-border bg-zinc-950 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-500">
                 
-                <!-- Loading State -->
-                <div id="loading-overlay" class="hidden absolute inset-0 bg-black/95 z-20 flex flex-col items-center justify-center text-center px-6">
-                    <div class="loader mb-6"></div>
-                    <h3 class="text-2xl font-black text-[var(--gold)] mb-2 uppercase italic">TALAS AI RENDERING...</h3>
-                    <div class="w-64 h-1 bg-zinc-800 rounded-full overflow-hidden">
-                        <div id="progress-bar" class="h-full bg-[var(--gold)] w-0 transition-all duration-300"></div>
+                <!-- Анимация загрузки -->
+                <div id="loading-overlay" class="hidden absolute inset-0 bg-black/95 z-40 flex flex-col items-center justify-center text-center px-6">
+                    <div class="scanner" id="video-scanner"></div>
+                    <div class="loader-ring mb-8"></div>
+                    
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-black text-[var(--gold)] uppercase italic tracking-widest animate-pulse">
+                            Rendering Process
+                        </h3>
+                        <p id="status-update" class="text-[10px] font-mono text-zinc-400 uppercase tracking-[0.4em]">Инициализация нейросети...</p>
                     </div>
-                    <p id="status-update" class="text-[10px] font-mono text-zinc-500 mt-4 uppercase tracking-[0.3em]">Инициализация нейронных сетей...</p>
+
+                    <div class="mt-10 w-full max-w-xs">
+                        <div class="flex justify-between text-[10px] mb-2 font-mono">
+                            <span id="rendering-step">STEP: 01/05</span>
+                            <span id="percentage-label">0%</span>
+                        </div>
+                        <div class="w-full h-1.5 bg-zinc-900 border border-zinc-800 rounded-full overflow-hidden">
+                            <div id="progress-bar" class="h-full bg-[var(--gold)] w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Empty State -->
+                <!-- Состояние ожидания -->
                 <div id="preview-placeholder" class="text-center p-12">
                     <div class="relative inline-block mb-6">
                         <svg class="w-24 h-24 text-zinc-900" fill="currentColor" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.97 4.43c-.31.17-.69.17-1 0L3.53 17.38c-.32-.17-.53-.5-.53-.88V7.5c0-.38.21-.71.53-.88l7.97-4.43c.31-.17.69-.17 1 0l7.97 4.43c.32.17.53.5.53.88v9z"/></svg>
@@ -210,31 +233,31 @@
                             <span class="text-[var(--gold)] text-4xl">⚡</span>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold mb-2 uppercase tracking-tighter">Система готова к созданию контента</h2>
-                    <p class="text-zinc-600 text-xs max-w-sm mx-auto uppercase">Выберите параметры слева и нажмите кнопку генерации для получения HD видео Talas_master.</p>
+                    <h2 class="text-xl font-bold mb-2 uppercase tracking-tighter">Система Talas готова</h2>
+                    <p class="text-zinc-600 text-xs max-w-sm mx-auto uppercase">Настройте параметры и нажмите кнопку для создания HD-контента.</p>
                 </div>
                 
-                <!-- Video Display -->
+                <!-- Видеоплеер -->
                 <video id="video-player" class="hidden w-full h-full object-cover bg-black" controls playsinline preload="auto">
                     <source id="video-source" src="" type="video/mp4">
                 </video>
             </div>
 
-            <!-- Action Bar -->
+            <!-- Кнопки действий -->
             <div id="action-buttons" class="hidden flex flex-wrap gap-4">
                 <a id="download-link" href="#" download="Talas_Master_PRO.mp4" class="btn-gold flex-1 py-4 text-center text-sm flex items-center justify-center gap-3">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     СКАЧАТЬ В FULL HD
                 </a>
                 <button onclick="location.reload()" class="bg-zinc-900 border border-zinc-700 text-white px-8 py-4 text-xs font-bold uppercase hover:bg-zinc-800 transition-colors">
-                    ОЧИСТИТЬ ПАМЯТЬ
+                    СБРОСИТЬ
                 </button>
             </div>
 
-            <!-- Logs Terminal -->
+            <!-- Терминал -->
             <div class="bg-zinc-950 border border-zinc-800 p-4 font-mono text-[10px] text-zinc-500 h-24 overflow-y-auto" id="terminal">
-                <div>[SYSTEM] Контроллер Talas_master 2.5 онлайн...</div>
-                <div>[INFO] Ожидание выбора параметров...</div>
+                <div>[SYSTEM] Контроллер Talas_master v2.6...</div>
+                <div>[INFO] Ожидание команды пользователя...</div>
             </div>
         </div>
     </main>
@@ -251,26 +274,32 @@
         const genBtn = document.getElementById('gen-btn');
         const terminal = document.getElementById('terminal');
 
-        // Большая библиотека видео по категориям (HD)
         const assets = {
             electric: "https://cdn.pixabay.com/vimeo/328227092/electricity-23444.mp4?width=1280&hash=d7e7e6f8",
-            welding: "https://cdn.pixabay.com/vimeo/459039322/technology-51207.mp4?width=1280&hash=1a1a1a", // Placeholder for welding/tech
-            plumbing: "https://cdn.pixabay.com/vimeo/144933353/fire-1105.mp4?width=1280&hash=8f6a0a0", // Placeholder
-            cleaning: "https://cdn.pixabay.com/vimeo/356132711/city-26365.mp4?width=1280&hash=3b3b3b", // Placeholder
-            construction: "https://cdn.pixabay.com/vimeo/208316147/city-8349.mp4?width=1280" // Placeholder
+            welding: "https://cdn.pixabay.com/vimeo/459039322/technology-51207.mp4?width=1280&hash=1a1a1a",
+            plumbing: "https://cdn.pixabay.com/vimeo/806443586/water-154381.mp4?width=1280",
+            cleaning: "https://cdn.pixabay.com/vimeo/517618844/vacuum-64670.mp4?width=1280",
+            construction: "https://cdn.pixabay.com/vimeo/208316147/city-8349.mp4?width=1280"
         };
 
-        const statusMessages = [
-            "Анализ индустриальных данных...",
-            "Генерация освещения и теней...",
-            "Рендеринг частиц и искр...",
-            "Финальная сборка видеопотока...",
-            "Оптимизация для мобильных устройств..."
+        const steps = [
+            { p: 10, m: "Инициализация нейросети...", s: "STEP: 01/05" },
+            { p: 35, m: "Генерация геометрии объектов...", s: "STEP: 02/05" },
+            { p: 60, m: "Симуляция освещения и частиц...", s: "STEP: 03/05" },
+            { p: 85, m: "Композитинг кадров 60 FPS...", s: "STEP: 04/05" },
+            { p: 98, m: "Финальная HD кодировка...", s: "STEP: 05/05" }
         ];
 
         durationInput.addEventListener('input', (e) => {
             durationVal.textContent = e.target.value + ' СЕК';
         });
+
+        function log(msg) {
+            const div = document.createElement('div');
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            terminal.appendChild(div);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
 
         function setStyle(style, btn) {
             document.getElementById('selected-style').value = style;
@@ -280,92 +309,86 @@
             });
             btn.classList.add('border-amber-500', 'bg-zinc-900');
             btn.classList.remove('border-zinc-800');
-            log(`Стиль установлен: ${style.toUpperCase()}`);
+            log(`Стиль: ${style.toUpperCase()}`);
         }
 
         function updatePreviewLayout() {
             const ratio = document.getElementById('aspect-ratio').value;
-            container.classList.remove('portrait', 'aspect-video', 'aspect-square');
-            
+            container.classList.remove('portrait');
             if (ratio === '9-16') {
+                container.classList.add('portrait');
                 container.style.aspectRatio = "9/16";
-                container.style.maxHeight = "600px";
             } else if (ratio === '16-9') {
                 container.style.aspectRatio = "16/9";
-                container.style.maxHeight = "none";
             } else {
                 container.style.aspectRatio = "1/1";
-                container.style.maxHeight = "500px";
             }
-            log(`Формат изменен на ${ratio}`);
-        }
-
-        function log(msg) {
-            const div = document.createElement('div');
-            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
-            terminal.appendChild(div);
-            terminal.scrollTop = terminal.scrollHeight;
         }
 
         async function generateVideo() {
             const workType = document.getElementById('work-type').value;
-            const prompt = document.getElementById('prompt').value;
             
+            // Визуальная блокировка
             genBtn.disabled = true;
-            genBtn.classList.add('opacity-50');
-            
             document.getElementById('loading-overlay').classList.remove('hidden');
             placeholder.classList.add('hidden');
             videoPlayer.classList.add('hidden');
             actionButtons.classList.add('hidden');
 
-            log(`Запуск генерации видео: Категория ${workType.toUpperCase()}`);
+            log(`Запуск рендеринга категории: ${workType.toUpperCase()}`);
 
             let progress = 0;
             const progressBar = document.getElementById('progress-bar');
             const statusLabel = document.getElementById('status-update');
-            
+            const stepLabel = document.getElementById('rendering-step');
+            const percentLabel = document.getElementById('percentage-label');
+
             const timer = setInterval(() => {
-                progress += Math.random() * 5;
+                progress += Math.random() * 3;
+                
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(timer);
-                    finishRendering(assets[workType]);
+                    renderComplete(assets[workType]);
                 }
+
                 progressBar.style.width = progress + '%';
-                if (Math.floor(progress) % 20 === 0) {
-                    statusLabel.textContent = statusMessages[Math.floor(progress/25)];
-                }
-            }, 150);
+                percentLabel.textContent = Math.floor(progress) + '%';
+
+                // Обновление текстовых статусов по мере прогресса
+                const currentStep = steps.find(s => progress <= s.p) || steps[steps.length - 1];
+                statusLabel.textContent = currentStep.m;
+                stepLabel.textContent = currentStep.s;
+
+            }, 100);
         }
 
-        function finishRendering(url) {
+        function renderComplete(url) {
+            log("Рендеринг завершен. Подготовка видео...");
+            
             setTimeout(() => {
                 document.getElementById('loading-overlay').classList.add('hidden');
-                
                 videoSource.src = url;
                 videoPlayer.load();
-                
-                // Проверка на ошибки загрузки видео (решение проблемы белого экрана)
-                videoPlayer.onerror = () => {
-                    log("ОШИБКА: Видео не загружено. Попробуйте другой источник.");
-                    placeholder.classList.remove('hidden');
-                };
 
                 videoPlayer.onloadeddata = () => {
                     videoPlayer.classList.remove('hidden');
                     actionButtons.classList.remove('hidden');
                     downloadLink.href = url;
                     videoPlayer.play();
-                    log("УСПЕХ: Видео сгенерировано и готово к загрузке.");
+                    log("СИСТЕМА: Видео успешно выведено на экран.");
+                    genBtn.disabled = false;
                 };
 
-                genBtn.disabled = false;
-                genBtn.classList.remove('opacity-50');
-            }, 500);
+                videoPlayer.onerror = () => {
+                    log("КРИТИЧЕСКАЯ ОШИБКА: Ресурс недоступен.");
+                    document.getElementById('loading-overlay').classList.add('hidden');
+                    placeholder.classList.remove('hidden');
+                    genBtn.disabled = false;
+                };
+            }, 800);
         }
 
-        // Initialize layout
         updatePreviewLayout();
     </script>
 </body>
