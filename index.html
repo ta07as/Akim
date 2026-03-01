@@ -177,11 +177,11 @@
 
         async function expandTo10Variants() {
             const input = document.getElementById('userInput');
-            if(!input.value) return notify('Введите хотя бы одно слово');
+            if(!input.value) return notify('Введите запрос');
             
             toggleLoader(true, "Разворачиваю в маркетинговую сеть...");
             
-            const prompt = `Ты ТОП-маркетолог. Возьми идею: "${input.value}" для категории "${currentCategory}". Напиши 10 коротких, но разных профессиональных рекламных заголовков. Добавь Talas_master и +996 755 000 228. Верни только список через новую строку без лишнего текста.`;
+            const prompt = `Ты ТОП-маркетолог компании Talas_master (+996 755 000 228). Тема: "${input.value}" в категории "${currentCategory}". Напиши ровно 10 разных коротких рекламных заголовков. Верни только список через новую строку, БЕЗ пояснений.`;
             
             try {
                 const result = await callGemini(prompt);
@@ -200,17 +200,22 @@
 
             toggleLoader(true, `Генерирую 10 вариантов ${currentMode.toUpperCase()}...`);
             
-            const prompt = `Создай ровно 10 разных ${currentMode === 'video' ? 'сценариев для Reels' : (currentMode === 'image' ? 'промптов для генерации фото' : 'постов для Instagram')} по теме: "${input}". Категория: ${currentCategory}. Компания Talas_master, контакт +996 755 000 228. Для каждого варианта: укажи id (число), title (заголовок) и desc (описание или промпт). Верни строго JSON массив объектов.`;
+            const prompt = `Ты - креативный директор Talas_master (+996 755 000 228). Создай ровно 10 разных ${currentMode === 'video' ? 'сценариев для Reels' : (currentMode === 'image' ? 'промптов для генерации фото' : 'постов для Instagram')} по теме: "${input}". Категория: ${currentCategory}. Для каждого варианта: укажи id (число), title (заголовок) и desc (текст сценария/промпт). Верни ТОЛЬКО JSON массив. БЕЗ лишних слов.`;
             
             try {
                 const responseText = await callGemini(prompt, true);
-                // Очистка ответа от возможных Markdown-тегов ```json ... ```
-                const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+                
+                // Улучшенная очистка JSON
+                let cleanJson = responseText;
+                if (cleanJson.includes('[')) {
+                    cleanJson = cleanJson.substring(cleanJson.indexOf('['), cleanJson.lastIndexOf(']') + 1);
+                }
+                
                 const data = JSON.parse(cleanJson);
                 renderResults(data);
                 notify('10 ВАРИАНТОВ СГЕНЕРИРОВАНО');
             } catch (e) {
-                console.error("Ошибка парсинга или запроса:", e);
+                console.error("Критическая ошибка обработки:", e);
                 notify('Ошибка в обработке данных');
             }
             toggleLoader(false);
@@ -225,30 +230,33 @@
             list.innerHTML = `<h3 class="text-2xl font-black italic mb-8 uppercase text-[#FBBF24]">Результаты генерации (10)</h3>`;
 
             if (!Array.isArray(items)) {
-                list.innerHTML += `<p class="text-red-500 font-bold uppercase">Ошибка формата данных от ИИ. Попробуйте еще раз.</p>`;
+                list.innerHTML += `<p class="text-red-500 font-bold uppercase p-4 border border-red-500 rounded-xl">ИИ вернул неверный формат. Повторите попытку.</p>`;
                 return;
             }
 
             items.forEach((item, index) => {
+                const title = item.title || 'Без заголовка';
+                const desc = item.desc || 'Описание отсутствует';
+                
                 let contentHTML = '';
                 if(currentMode === 'image') {
                     contentHTML = `
-                        <div class="mt-4 p-4 bg-black rounded-2xl border border-zinc-800 text-[10px] font-mono text-zinc-500 break-words">
-                            PROMPT: ${item.desc}
+                        <div class="mt-4 p-4 bg-black rounded-2xl border border-zinc-800 text-[10px] font-mono text-zinc-500 break-words select-all">
+                            PROMPT: ${desc}
                         </div>
-                        <button onclick="quickGenerateImage('${(item.desc || "").replace(/'/g, "\\'")}')" class="mt-4 bg-[#FBBF24] text-black px-6 py-2 rounded-xl text-[10px] font-black uppercase">Создать Фото №${index+1}</button>
+                        <button onclick="quickGenerateImage('${desc.replace(/'/g, "\\'")}')" class="mt-4 bg-[#FBBF24] text-black px-6 py-2 rounded-xl text-[10px] font-black uppercase hover:opacity-80 transition">Создать Фото №${index+1}</button>
                     `;
                 } else {
-                    contentHTML = `<p class="text-[11px] leading-relaxed text-zinc-400 mt-2 whitespace-pre-line italic">${item.desc}</p>`;
+                    contentHTML = `<p class="text-[11px] leading-relaxed text-zinc-400 mt-2 italic border-t border-zinc-800 pt-3">${desc}</p>`;
                 }
 
                 list.innerHTML += `
-                    <div class="result-item p-6 bg-zinc-900/40 rounded-[32px] border border-zinc-800 animate-in fade-in slide-in-from-bottom-4 duration-500" style="animation-delay: ${index * 100}ms">
+                    <div class="result-item p-6 bg-zinc-900/40 rounded-[32px] border border-zinc-800 animate-in fade-in slide-in-from-bottom-4 duration-500" style="animation-delay: ${index * 50}ms">
                         <div class="flex justify-between items-start mb-2">
                             <span class="text-[9px] font-black text-[#FBBF24] uppercase tracking-widest">ВАРИАНТ #${index + 1}</span>
-                            <button onclick="copyToClipboard('${(item.title || "")}\\n${(item.desc || "")}')" class="text-zinc-600 hover:text-white transition-colors"><i class="fas fa-copy"></i></button>
+                            <button onclick="copyToClipboard('${title}\\n${desc}')" class="text-zinc-600 hover:text-white transition-colors p-2"><i class="fas fa-copy"></i></button>
                         </div>
-                        <h4 class="text-lg font-black uppercase leading-tight">${item.title}</h4>
+                        <h4 class="text-lg font-black uppercase leading-tight">${title}</h4>
                         ${contentHTML}
                     </div>
                 `;
@@ -265,15 +273,14 @@
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ 
-                        instances: { prompt: `Industrial advertising for Talas_master, ${promptText}, high-end cinematic lighting, sharp details, 8k.` }, 
+                        instances: { prompt: `Industrial luxury marketing style, Talas_master professional services, ${promptText}, yellow and black palette, 8k cinematic shot.` }, 
                         parameters: { sampleCount: 1 } 
                     })
                 });
                 
                 const result = await response.json();
                 if(result.predictions && result.predictions[0]) {
-                    const b64 = result.predictions[0].bytesBase64Encoded;
-                    showImageModal(b64);
+                    showImageModal(result.predictions[0].bytesBase64Encoded);
                 } else {
                     notify('Ошибка генерации фото');
                 }
@@ -321,7 +328,6 @@
                 };
             }
 
-            // Экспоненциальная задержка (retry logic)
             const fetchWithRetry = async (url, options, retries = 5, delay = 1000) => {
                 try {
                     const res = await fetch(url, options);
@@ -342,7 +348,7 @@
                 body: JSON.stringify(payload)
             });
 
-            if(!data.candidates || !data.candidates[0]) throw new Error("No candidates in Gemini response");
+            if(!data.candidates || !data.candidates[0]) throw new Error("Empty response");
             return data.candidates[0].content.parts[0].text;
         }
 
