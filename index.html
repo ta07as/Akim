@@ -28,13 +28,6 @@
             border: 1px solid rgba(251, 191, 36, 0.1);
         }
 
-        .loading-bar {
-            height: 3px;
-            background: var(--brand-gold);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
         .result-item {
             border-left: 3px solid transparent;
             transition: all 0.3s ease;
@@ -42,12 +35,6 @@
         .result-item:hover {
             border-left-color: var(--brand-gold);
             background: rgba(251, 191, 36, 0.05);
-        }
-
-        .active-tab {
-            background: var(--brand-gold) !important;
-            color: black !important;
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
         }
 
         ::-webkit-scrollbar { width: 5px; }
@@ -62,9 +49,9 @@
     <header class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
         <div class="text-center md:text-left">
             <h1 class="text-6xl font-black tracking-tighter uppercase italic leading-none">
-                AI VIDEO <span class="text-[#FBBF24]">LAB 10X</span>
+                AI VIDEO <span class="text-[#FBBF24]">LAB 2X</span>
             </h1>
-            <p class="text-zinc-500 text-[10px] uppercase tracking-[0.4em] font-bold mt-2">Генерация сценариев для Reels/Shorts</p>
+            <p class="text-zinc-500 text-[10px] uppercase tracking-[0.4em] font-bold mt-2">Премиальные сценарии Talas_master</p>
         </div>
         <div class="flex items-center gap-6 bg-zinc-900/30 p-3 rounded-3xl border border-zinc-800">
             <div class="hidden sm:block text-right">
@@ -72,7 +59,7 @@
                 <p class="text-sm font-black">+996 755 000 228</p>
             </div>
             <div class="w-14 h-14 bg-[#FBBF24] rounded-2xl flex items-center justify-center text-black shadow-xl rotate-3">
-                <i class="fas fa-video text-2xl"></i>
+                <i class="fas fa-bolt text-2xl"></i>
             </div>
         </div>
     </header>
@@ -86,27 +73,24 @@
                     <i class="fas fa-film text-[#FBBF24]"></i> СОЗДАНИЕ ВИДЕО
                 </h2>
 
-                <!-- Category Selector -->
                 <div class="mb-6">
                     <label class="text-[10px] uppercase font-bold text-zinc-500 mb-3 block">Услуга</label>
                     <div class="grid grid-cols-2 gap-2">
-                        <button onclick="setCategory('Электрика')" class="cat-btn p-3 bg-zinc-900 rounded-xl text-[9px] font-bold uppercase border border-zinc-800 hover:border-gold transition">Электрика</button>
+                        <button onclick="setCategory('Электрика')" class="cat-btn p-3 bg-zinc-900 rounded-xl text-[9px] font-bold uppercase border border-zinc-800 hover:border-gold transition active-tab">Электрика</button>
                         <button onclick="setCategory('Сантехника')" class="cat-btn p-3 bg-zinc-900 rounded-xl text-[9px] font-bold uppercase border border-zinc-800 hover:border-gold transition">Сантехника</button>
-                        <button onclick="setCategory('Клининг')" class="cat-btn p-3 bg-zinc-900 rounded-xl text-[9px] font-bold uppercase border border-zinc-800 hover:border-gold transition">Клининг</button>
-                        <button onclick="setCategory('Стройка')" class="cat-btn p-3 bg-zinc-900 rounded-xl text-[9px] font-bold uppercase border border-zinc-800 hover:border-gold transition">Стройка</button>
                     </div>
                 </div>
 
                 <div class="space-y-6">
                     <div>
-                        <label class="text-[10px] uppercase font-bold text-zinc-500 mb-2 block italic">Тема ролика (напр: почему искрит розетка)</label>
-                        <textarea id="userInput" placeholder="О чем будет видео..." 
+                        <label class="text-[10px] uppercase font-bold text-zinc-500 mb-2 block italic">Тема (напр: замена щитка или электромонтаж в гофре)</label>
+                        <textarea id="userInput" placeholder="Напишите ключевые слова..." 
                                   class="w-full bg-black border border-zinc-800 rounded-3xl p-5 text-sm focus:border-[#FBBF24] outline-none h-32 transition-all"></textarea>
                     </div>
 
                     <div class="space-y-3">
                         <button id="mainGenBtn" onclick="generateVideoContent()" class="w-full bg-[#FBBF24] text-black py-5 rounded-2xl text-[11px] font-black uppercase hover:scale-[1.02] transition shadow-2xl">
-                            <i class="fas fa-magic mr-2"></i> ГЕНЕРИРОВАТЬ 10 СЦЕНАРИЕВ
+                            <i class="fas fa-magic mr-2"></i> СОЗДАТЬ 2 ВАРИАНТА С ИНТЕРНЕТОМ
                         </button>
                     </div>
                 </div>
@@ -115,25 +99,22 @@
 
         <!-- Output Section -->
         <div class="lg:col-span-8 space-y-6">
-            <div id="outputArea" class="glass-card p-1 rounded-[40px] min-h-[700px] relative overflow-hidden flex flex-col">
+            <div id="outputArea" class="glass-card p-1 rounded-[40px] min-h-[600px] relative overflow-hidden flex flex-col">
                 <!-- Loader Overlay -->
                 <div id="loader" class="hidden absolute inset-0 z-50 bg-black/80 backdrop-blur-md flex flex-col items-center justify-center p-12 text-center">
-                    <div class="w-24 h-24 mb-6 relative">
+                    <div class="w-20 h-20 mb-6 relative">
                          <div class="absolute inset-0 border-4 border-zinc-800 rounded-full"></div>
                          <div class="absolute inset-0 border-4 border-[#FBBF24] rounded-full border-t-transparent animate-spin"></div>
                     </div>
-                    <h3 class="text-2xl font-black uppercase italic mb-2">Создание сценариев...</h3>
-                    <p id="loaderStatus" class="text-zinc-500 text-[10px] uppercase font-bold tracking-widest">Прорабатываю виральные крючки</p>
-                    <div class="w-64 bg-zinc-900 h-1 mt-8 rounded-full overflow-hidden">
-                        <div id="progressBar" class="h-full bg-[#FBBF24] w-0 transition-all duration-500"></div>
-                    </div>
+                    <h3 class="text-xl font-black uppercase italic mb-2">Поиск в интернете и анализ...</h3>
+                    <p id="loaderStatus" class="text-zinc-500 text-[9px] uppercase font-bold tracking-widest">Изучаю лучшие практики по вашему запросу</p>
                 </div>
 
                 <!-- Placeholder -->
                 <div id="placeholder" class="flex-1 flex flex-col items-center justify-center text-zinc-700 p-20 text-center">
-                    <i class="fas fa-clapperboard text-8xl mb-8 opacity-10"></i>
-                    <h4 class="text-xl font-black uppercase opacity-20 italic">Контент-план пуст</h4>
-                    <p class="text-[10px] uppercase font-bold mt-4 opacity-30">Выберите категорию и введите тему для создания 10 видео-идей</p>
+                    <i class="fas fa-search-plus text-8xl mb-8 opacity-10"></i>
+                    <h4 class="text-xl font-black uppercase opacity-20 italic">Ожидание запроса</h4>
+                    <p class="text-[10px] uppercase font-bold mt-4 opacity-30">Введите тему, и ИИ создаст 2 профессиональных сценария</p>
                 </div>
 
                 <!-- Results List -->
@@ -144,7 +125,6 @@
         </div>
     </main>
 
-    <!-- Notification -->
     <div id="toast" class="fixed bottom-10 right-10 bg-[#FBBF24] text-black px-10 py-5 rounded-2xl font-black text-[11px] uppercase shadow-2xl opacity-0 translate-y-10 transition-all z-[100] border-4 border-black">
         Готово!
     </div>
@@ -155,40 +135,61 @@
 
         function setCategory(cat) {
             currentCategory = cat;
-            notify(`КАТЕГОРИЯ: ${cat.toUpperCase()}`);
+            document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active-tab', 'bg-[#FBBF24]', 'text-black'));
+            event.target.classList.add('bg-[#FBBF24]', 'text-black');
+            notify(`ВЫБРАНО: ${cat.toUpperCase()}`);
         }
 
         async function generateVideoContent() {
             const input = document.getElementById('userInput').value;
-            if(!input) return notify('Введите тему видео');
+            if(!input) return notify('Введите тему');
 
-            toggleLoader(true, "Генерирую 10 виральных сценариев...");
+            toggleLoader(true);
             
-            const prompt = `Ты - эксперт по Reels и Shorts для компании Talas_master (+996 755 000 228).
-            Создай ровно 10 разных сценариев коротких видео на тему: "${input}". 
-            Категория услуг: ${currentCategory}. 
-            Для каждого варианта укажи:
-            1. id (число 1-10)
-            2. title (цепляющий заголовок на видео)
-            3. desc (краткий сценарий: Хук, Основная часть, Призыв к действию с упоминанием Talas_master).
-            
-            Ответ должен быть СТРОГО в формате JSON массива объектов [{},{},...]. Никакого лишнего текста.`;
+            const systemPrompt = `Ты - креативный директор Talas_master (+996 755 000 228).
+            Твоя задача: используя поиск в интернете, найти самые популярные и полезные советы по теме "${input}" (категория ${currentCategory}).
+            На основе найденного создай ровно 2 разных сценария для Reels.
+            Каждый сценарий должен включать:
+            1. Заголовок (Title)
+            2. Сценарий (Desc) с Хуком, Содержанием и Призывом.
+            Верни СТРОГО JSON массив из 2 объектов.`;
             
             try {
-                const responseText = await callGemini(prompt, true);
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: `Тема: ${input}. Категория: ${currentCategory}` }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        tools: [{ "google_search": {} }],
+                        generationConfig: { 
+                            responseMimeType: "application/json",
+                            responseSchema: {
+                                type: "ARRAY",
+                                items: {
+                                    type: "OBJECT",
+                                    properties: {
+                                        title: { type: "STRING" },
+                                        desc: { type: "STRING" }
+                                    },
+                                    required: ["title", "desc"]
+                                }
+                            }
+                        }
+                    })
+                });
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
                 
-                // Очистка JSON от возможных префиксов/суффиксов markdown
-                let cleanJson = responseText;
-                if (cleanJson.includes('[')) {
-                    cleanJson = cleanJson.substring(cleanJson.indexOf('['), cleanJson.lastIndexOf(']') + 1);
-                }
+                if(!text) throw new Error("Empty Response");
                 
-                const data = JSON.parse(cleanJson);
+                const data = JSON.parse(text);
                 renderResults(data);
-                notify('10 СЦЕНАРИЕВ ГОТОВЫ');
+                notify('2 ВАРИАНТА ГОТОВЫ');
             } catch (e) {
-                console.error("Ошибка генерации видео:", e);
-                notify('Ошибка в обработке данных');
+                console.error("Ошибка:", e);
+                notify('ОШИБКА ОБРАБОТКИ');
             }
             toggleLoader(false);
         }
@@ -199,91 +200,26 @@
             
             placeholder.style.display = 'none';
             list.style.display = 'block';
-            list.innerHTML = `<h3 class="text-2xl font-black italic mb-8 uppercase text-[#FBBF24]">Видео-идеи (10 вариантов)</h3>`;
+            list.innerHTML = `<h3 class="text-2xl font-black italic mb-8 uppercase text-[#FBBF24]">Топ-2 Сценария</h3>`;
 
-            if (!Array.isArray(items)) {
-                list.innerHTML += `<p class="text-red-500 font-bold uppercase p-4 border border-red-500 rounded-xl">Ошибка формата. Пожалуйста, попробуйте еще раз.</p>`;
-                return;
-            }
-
-            items.forEach((item, index) => {
-                const title = item.title || 'Без заголовка';
-                const desc = item.desc || 'Сценарий не сгенерирован';
-                
+            items.slice(0, 2).forEach((item, index) => {
                 list.innerHTML += `
-                    <div class="result-item p-6 bg-zinc-900/40 rounded-[32px] border border-zinc-800 animate-in fade-in slide-in-from-bottom-4 duration-500" style="animation-delay: ${index * 50}ms">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-[9px] font-black text-[#FBBF24] uppercase tracking-widest">СЦЕНАРИЙ #${index + 1}</span>
-                            <button onclick="copyToClipboard('Тема: ${title}\\nСценарий: ${desc}')" class="text-zinc-600 hover:text-white transition-colors p-2"><i class="fas fa-copy"></i></button>
+                    <div class="result-item p-8 bg-zinc-900/40 rounded-[35px] border border-zinc-800 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-[10px] font-black text-[#FBBF24] uppercase tracking-widest">ВАРИАНТ #${index + 1}</span>
+                            <button onclick="copyToClipboard('${item.title}\\n${item.desc}')" class="text-zinc-600 hover:text-white p-2"><i class="fas fa-copy"></i></button>
                         </div>
-                        <h4 class="text-lg font-black uppercase leading-tight mb-3">${title}</h4>
-                        <div class="text-[11px] leading-relaxed text-zinc-400 italic border-t border-zinc-800 pt-3 whitespace-pre-line">
-                            ${desc}
+                        <h4 class="text-xl font-black uppercase mb-4 leading-tight">${item.title}</h4>
+                        <div class="text-[12px] leading-relaxed text-zinc-400 italic border-t border-zinc-800 pt-5 whitespace-pre-line">
+                            ${item.desc}
                         </div>
                     </div>
                 `;
             });
-            list.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        async function callGemini(prompt, isJson = false) {
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }]
-            };
-            
-            if(isJson) {
-                payload.generationConfig = { 
-                    responseMimeType: "application/json",
-                    responseSchema: {
-                        type: "ARRAY",
-                        items: {
-                            type: "OBJECT",
-                            properties: {
-                                id: { type: "NUMBER" },
-                                title: { type: "STRING" },
-                                desc: { type: "STRING" }
-                            },
-                            required: ["id", "title", "desc"]
-                        }
-                    }
-                };
-            }
-
-            const fetchWithRetry = async (url, options, retries = 5, delay = 1000) => {
-                try {
-                    const res = await fetch(url, options);
-                    if (!res.ok) throw new Error(`HTTP Error ${res.status}`);
-                    return await res.json();
-                } catch (err) {
-                    if (retries > 0) {
-                        await new Promise(r => setTimeout(r, delay));
-                        return fetchWithRetry(url, options, retries - 1, delay * 2);
-                    }
-                    throw err;
-                }
-            };
-
-            const data = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(payload)
-            });
-
-            if(!data.candidates || !data.candidates[0]) throw new Error("Empty response");
-            return data.candidates[0].content.parts[0].text;
-        }
-
-        function toggleLoader(show, status = "") {
-            const l = document.getElementById('loader');
-            const p = document.getElementById('progressBar');
-            if(show) {
-                l.classList.remove('hidden');
-                document.getElementById('loaderStatus').innerText = status;
-                p.style.width = '0%';
-                setTimeout(() => p.style.width = '100%', 100);
-            } else {
-                l.classList.add('hidden');
-            }
+        function toggleLoader(show) {
+            document.getElementById('loader').classList.toggle('hidden', !show);
         }
 
         function notify(msg) {
@@ -300,7 +236,7 @@
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            notify('СЦЕНАРИЙ СКОПИРОВАН');
+            notify('СКОПИРОВАНО');
         }
     </script>
 </body>
