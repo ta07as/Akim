@@ -53,7 +53,9 @@
 
         .btn-gold:disabled {
             background-color: #444;
+            color: #888;
             cursor: not-allowed;
+            clip-path: none;
         }
 
         .parameter-card {
@@ -61,7 +63,7 @@
             border-left: 4px solid var(--gold);
         }
 
-        select, input[type="text"], textarea {
+        select, textarea {
             background: #000;
             border: 1px solid #333;
             color: #fff;
@@ -75,45 +77,75 @@
             border-color: var(--gold);
         }
 
-        input[type="range"] {
-            accent-color: var(--gold);
-        }
-
         .glitch-text {
             text-shadow: 2px 2px var(--gold);
         }
 
-        /* Анимированный сканер для загрузки */
-        .scanner {
+        /* Эффект сканирования */
+        .scan-line {
             width: 100%;
-            height: 2px;
+            height: 4px;
             background: var(--gold);
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 30;
-            box-shadow: 0 0 15px var(--gold);
-            animation: scan 2s linear infinite;
+            z-index: 50;
+            box-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold);
+            opacity: 0;
         }
 
-        @keyframes scan {
-            0% { top: 0; }
+        .is-generating .scan-line {
+            opacity: 1;
+            animation: scanMove 2.5s linear infinite;
+        }
+
+        @keyframes scanMove {
+            0% { top: 0%; }
             50% { top: 100%; }
-            100% { top: 0; }
+            100% { top: 0%; }
         }
 
-        .loader-ring {
-            border: 4px solid #1a1a1a;
-            border-top: 4px solid var(--gold);
+        /* Радар рендеринга */
+        .radar {
+            width: 120px;
+            height: 120px;
+            border: 2px solid rgba(251, 191, 36, 0.2);
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            animation: spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .radar::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--gold);
+            border-radius: 50%;
+            animation: radarRotate 1.5s linear infinite;
+        }
+
+        @keyframes radarRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .recording-dot {
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         .video-container.portrait {
@@ -136,14 +168,14 @@
         </div>
         <div class="text-right hidden md:block">
             <p class="text-zinc-500 text-sm">WHATSAPP: +996 755 000 228</p>
-            <p class="text-zinc-500 text-xs uppercase tracking-widest">Master Auth: <span class="text-green-500">Verified</span></p>
+            <p class="text-zinc-500 text-xs uppercase tracking-widest">Status: <span class="text-green-500">READY</span></p>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
         <!-- Sidebar Controls -->
-        <div class="lg:col-span-4 space-y-4">
+        <div class="lg:col-span-4 space-y-4" id="controls-panel">
             
             <section class="parameter-card p-4 industrial-border">
                 <h2 class="text-xs font-bold mb-3 text-[var(--gold)] uppercase tracking-widest">01. КАТЕГОРИЯ УСЛУГИ</h2>
@@ -158,7 +190,7 @@
 
             <section class="parameter-card p-4 industrial-border">
                 <h2 class="text-xs font-bold mb-3 text-[var(--gold)] uppercase tracking-widest">02. ДЕТАЛИЗАЦИЯ (ПРОМПТ)</h2>
-                <textarea id="prompt" rows="3" placeholder="Опишите детали..."></textarea>
+                <textarea id="prompt" rows="3" placeholder="Опишите детали (например: замена автомата в щитке)..."></textarea>
             </section>
 
             <section class="parameter-card p-4 industrial-border">
@@ -183,17 +215,10 @@
                             <option value="1-1">1:1 (POST)</option>
                         </select>
                     </div>
-                    <div>
-                        <div class="flex justify-between text-[10px] mb-1">
-                            <span class="text-zinc-500">ДЛИТЕЛЬНОСТЬ</span>
-                            <span id="duration-val" class="text-[var(--gold)]">30 СЕК</span>
-                        </div>
-                        <input type="range" id="duration" min="5" max="60" step="5" value="30" class="w-full">
-                    </div>
                 </div>
             </section>
 
-            <button id="gen-btn" onclick="generateVideo()" class="w-full py-5 btn-gold text-lg shadow-lg">
+            <button id="gen-btn" onclick="generateVideo()" class="w-full py-6 btn-gold text-xl shadow-lg border-2 border-white/10">
                 ЗАПУСТИТЬ ГЕНЕРАЦИЮ
             </button>
         </div>
@@ -202,100 +227,98 @@
         <div class="lg:col-span-8 space-y-6">
             <div id="video-container" class="video-container portrait industrial-border bg-zinc-950 flex flex-col items-center justify-center relative overflow-hidden transition-all duration-500">
                 
-                <!-- Анимация загрузки -->
-                <div id="loading-overlay" class="hidden absolute inset-0 bg-black/95 z-40 flex flex-col items-center justify-center text-center px-6">
-                    <div class="scanner" id="video-scanner"></div>
-                    <div class="loader-ring mb-8"></div>
-                    
-                    <div class="space-y-2">
-                        <h3 class="text-2xl font-black text-[var(--gold)] uppercase italic tracking-widest animate-pulse">
-                            Rendering Process
-                        </h3>
-                        <p id="status-update" class="text-[10px] font-mono text-zinc-400 uppercase tracking-[0.4em]">Инициализация нейросети...</p>
-                    </div>
+                <!-- Линия сканирования -->
+                <div class="scan-line"></div>
 
-                    <div class="mt-10 w-full max-w-xs">
-                        <div class="flex justify-between text-[10px] mb-2 font-mono">
-                            <span id="rendering-step">STEP: 01/05</span>
-                            <span id="percentage-label">0%</span>
+                <!-- Оверлей загрузки -->
+                <div id="loading-overlay" class="hidden absolute inset-0 bg-black/90 z-40 flex flex-col items-center justify-center text-center px-6">
+                    <div class="radar mb-8">
+                        <span class="text-[var(--gold)] font-black text-xl animate-pulse">AI</span>
+                    </div>
+                    
+                    <div class="space-y-4 w-full max-w-sm">
+                        <div class="flex items-center justify-center">
+                            <span class="recording-dot"></span>
+                            <h3 class="text-2xl font-black text-white uppercase italic tracking-tighter">
+                                RENDERING IN PROGRESS
+                            </h3>
                         </div>
-                        <div class="w-full h-1.5 bg-zinc-900 border border-zinc-800 rounded-full overflow-hidden">
-                            <div id="progress-bar" class="h-full bg-[var(--gold)] w-0 transition-all duration-300"></div>
+                        
+                        <p id="status-update" class="text-xs font-mono text-zinc-400 uppercase tracking-widest">Запуск движка Talas...</p>
+                        
+                        <div class="relative pt-4">
+                            <div class="flex justify-between text-[10px] mb-2 font-mono text-[var(--gold)]">
+                                <span id="rendering-step">ENGINE: ACTIVE</span>
+                                <span id="percentage-label">0%</span>
+                            </div>
+                            <div class="w-full h-2 bg-zinc-900 border border-zinc-800 rounded-none overflow-hidden">
+                                <div id="progress-bar" class="h-full bg-[var(--gold)] w-0 shadow-[0_0_15px_var(--gold)] transition-all duration-200"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Состояние ожидания -->
+                <!-- Заглушка до старта -->
                 <div id="preview-placeholder" class="text-center p-12">
-                    <div class="relative inline-block mb-6">
-                        <svg class="w-24 h-24 text-zinc-900" fill="currentColor" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.97 4.43c-.31.17-.69.17-1 0L3.53 17.38c-.32-.17-.53-.5-.53-.88V7.5c0-.38.21-.71.53-.88l7.97-4.43c.31-.17.69-.17 1 0l7.97 4.43c.32.17.53.5.53.88v9z"/></svg>
-                        <div class="absolute inset-0 flex items-center justify-center animate-pulse">
-                            <span class="text-[var(--gold)] text-4xl">⚡</span>
-                        </div>
+                    <div class="mb-6 opacity-20">
+                        <svg class="w-32 h-32 mx-auto text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
                     </div>
-                    <h2 class="text-xl font-bold mb-2 uppercase tracking-tighter">Система Talas готова</h2>
-                    <p class="text-zinc-600 text-xs max-w-sm mx-auto uppercase">Настройте параметры и нажмите кнопку для создания HD-контента.</p>
+                    <h2 class="text-2xl font-black mb-2 uppercase italic">Ожидание параметров</h2>
+                    <p class="text-zinc-500 text-xs uppercase tracking-[0.2em]">Нажмите кнопку слева для начала работы</p>
                 </div>
                 
                 <!-- Видеоплеер -->
-                <video id="video-player" class="hidden w-full h-full object-cover bg-black" controls playsinline preload="auto">
+                <video id="video-player" class="hidden w-full h-full object-cover bg-black" controls playsinline>
                     <source id="video-source" src="" type="video/mp4">
                 </video>
             </div>
 
-            <!-- Кнопки действий -->
+            <!-- Терминал и Кнопки -->
             <div id="action-buttons" class="hidden flex flex-wrap gap-4">
-                <a id="download-link" href="#" download="Talas_Master_PRO.mp4" class="btn-gold flex-1 py-4 text-center text-sm flex items-center justify-center gap-3">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    СКАЧАТЬ В FULL HD
+                <a id="download-link" href="#" download class="btn-gold flex-1 py-4 text-center text-sm font-black flex items-center justify-center gap-3">
+                    СКАЧАТЬ ВИДЕО (HD)
                 </a>
-                <button onclick="location.reload()" class="bg-zinc-900 border border-zinc-700 text-white px-8 py-4 text-xs font-bold uppercase hover:bg-zinc-800 transition-colors">
-                    СБРОСИТЬ
-                </button>
             </div>
 
-            <!-- Терминал -->
-            <div class="bg-zinc-950 border border-zinc-800 p-4 font-mono text-[10px] text-zinc-500 h-24 overflow-y-auto" id="terminal">
-                <div>[SYSTEM] Контроллер Talas_master v2.6...</div>
-                <div>[INFO] Ожидание команды пользователя...</div>
+            <div class="bg-zinc-950 border border-zinc-800 p-4 font-mono text-[10px] text-zinc-500 h-28 overflow-y-auto" id="terminal">
+                <div class="text-[var(--gold)] font-bold">[TALAS_MASTER OS v2.7]</div>
+                <div>[SYSTEM] Все системы в норме. Готов к рендерингу.</div>
             </div>
         </div>
     </main>
 
     <script>
-        const durationInput = document.getElementById('duration');
-        const durationVal = document.getElementById('duration-val');
         const videoPlayer = document.getElementById('video-player');
         const videoSource = document.getElementById('video-source');
         const container = document.getElementById('video-container');
         const actionButtons = document.getElementById('action-buttons');
         const placeholder = document.getElementById('preview-placeholder');
-        const downloadLink = document.getElementById('download-link');
         const genBtn = document.getElementById('gen-btn');
         const terminal = document.getElementById('terminal');
+        const overlay = document.getElementById('loading-overlay');
 
         const assets = {
-            electric: "https://cdn.pixabay.com/vimeo/328227092/electricity-23444.mp4?width=1280&hash=d7e7e6f8",
-            welding: "https://cdn.pixabay.com/vimeo/459039322/technology-51207.mp4?width=1280&hash=1a1a1a",
+            electric: "https://cdn.pixabay.com/vimeo/328227092/electricity-23444.mp4?width=1280",
+            welding: "https://cdn.pixabay.com/vimeo/459039322/technology-51207.mp4?width=1280",
             plumbing: "https://cdn.pixabay.com/vimeo/806443586/water-154381.mp4?width=1280",
             cleaning: "https://cdn.pixabay.com/vimeo/517618844/vacuum-64670.mp4?width=1280",
             construction: "https://cdn.pixabay.com/vimeo/208316147/city-8349.mp4?width=1280"
         };
 
-        const steps = [
-            { p: 10, m: "Инициализация нейросети...", s: "STEP: 01/05" },
-            { p: 35, m: "Генерация геометрии объектов...", s: "STEP: 02/05" },
-            { p: 60, m: "Симуляция освещения и частиц...", s: "STEP: 03/05" },
-            { p: 85, m: "Композитинг кадров 60 FPS...", s: "STEP: 04/05" },
-            { p: 98, m: "Финальная HD кодировка...", s: "STEP: 05/05" }
+        const logs = [
+            "Установка связи с GPU кластером...",
+            "Загрузка текстур высокого разрешения...",
+            "Расчет физики искр и теней...",
+            "Применение выбранного стиля рендеринга...",
+            "Кодирование потока в формат MP4...",
+            "Проверка качества Talas_master..."
         ];
 
-        durationInput.addEventListener('input', (e) => {
-            durationVal.textContent = e.target.value + ' СЕК';
-        });
-
-        function log(msg) {
+        function log(msg, color = "zinc-500") {
             const div = document.createElement('div');
+            div.className = `text-${color}`;
             div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
             terminal.appendChild(div);
             terminal.scrollTop = terminal.scrollHeight;
@@ -308,8 +331,7 @@
                 b.classList.add('border-zinc-800');
             });
             btn.classList.add('border-amber-500', 'bg-zinc-900');
-            btn.classList.remove('border-zinc-800');
-            log(`Стиль: ${style.toUpperCase()}`);
+            log(`Стиль изменен на: ${style.toUpperCase()}`, "gold");
         }
 
         function updatePreviewLayout() {
@@ -328,65 +350,67 @@
         async function generateVideo() {
             const workType = document.getElementById('work-type').value;
             
-            // Визуальная блокировка
+            // Активация анимаций
             genBtn.disabled = true;
-            document.getElementById('loading-overlay').classList.remove('hidden');
+            container.classList.add('is-generating');
+            overlay.classList.remove('hidden');
             placeholder.classList.add('hidden');
             videoPlayer.classList.add('hidden');
             actionButtons.classList.add('hidden');
 
-            log(`Запуск рендеринга категории: ${workType.toUpperCase()}`);
+            log(`ИНИЦИАЦИЯ ГЕНЕРАЦИИ: ${workType.toUpperCase()}`, "white");
 
             let progress = 0;
             const progressBar = document.getElementById('progress-bar');
             const statusLabel = document.getElementById('status-update');
-            const stepLabel = document.getElementById('rendering-step');
             const percentLabel = document.getElementById('percentage-label');
 
-            const timer = setInterval(() => {
-                progress += Math.random() * 3;
+            const interval = setInterval(() => {
+                progress += Math.random() * 4;
                 
                 if (progress >= 100) {
                     progress = 100;
-                    clearInterval(timer);
-                    renderComplete(assets[workType]);
+                    clearInterval(interval);
+                    showVideo(assets[workType]);
                 }
 
                 progressBar.style.width = progress + '%';
                 percentLabel.textContent = Math.floor(progress) + '%';
-
-                // Обновление текстовых статусов по мере прогресса
-                const currentStep = steps.find(s => progress <= s.p) || steps[steps.length - 1];
-                statusLabel.textContent = currentStep.m;
-                stepLabel.textContent = currentStep.s;
-
-            }, 100);
+                
+                if (Math.floor(progress) % 15 === 0) {
+                    const msg = logs[Math.floor(progress / 17)] || logs[logs.length-1];
+                    statusLabel.textContent = msg;
+                    log(msg);
+                }
+            }, 150);
         }
 
-        function renderComplete(url) {
-            log("Рендеринг завершен. Подготовка видео...");
+        function showVideo(url) {
+            log("РЕНДЕРИНГ ЗАВЕРШЕН. ВЫВОД НА ЭКРАН...", "green-500");
             
-            setTimeout(() => {
-                document.getElementById('loading-overlay').classList.add('hidden');
-                videoSource.src = url;
-                videoPlayer.load();
+            videoSource.src = url;
+            videoPlayer.load();
 
-                videoPlayer.onloadeddata = () => {
+            videoPlayer.onloadeddata = () => {
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                    container.classList.remove('is-generating');
                     videoPlayer.classList.remove('hidden');
                     actionButtons.classList.remove('hidden');
-                    downloadLink.href = url;
+                    document.getElementById('download-link').href = url;
                     videoPlayer.play();
-                    log("СИСТЕМА: Видео успешно выведено на экран.");
                     genBtn.disabled = false;
-                };
+                    log("ГОТОВО. ВИДЕО ДОСТУПНО ДЛЯ ПРОСМОТРА.", "white");
+                }, 1000);
+            };
 
-                videoPlayer.onerror = () => {
-                    log("КРИТИЧЕСКАЯ ОШИБКА: Ресурс недоступен.");
-                    document.getElementById('loading-overlay').classList.add('hidden');
-                    placeholder.classList.remove('hidden');
-                    genBtn.disabled = false;
-                };
-            }, 800);
+            videoPlayer.onerror = () => {
+                log("ОШИБКА ЗАГРУЗКИ ФАЙЛА.", "red-500");
+                overlay.classList.add('hidden');
+                container.classList.remove('is-generating');
+                placeholder.classList.remove('hidden');
+                genBtn.disabled = false;
+            };
         }
 
         updatePreviewLayout();
