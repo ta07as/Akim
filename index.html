@@ -191,10 +191,11 @@
             50% { box-shadow: 0 0 40px rgba(251, 191, 36, 0.5); }
         }
 
-        .hero-bg {
-            background: 
-                radial-gradient(circle at 80% 0%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 20% 100%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+       .hero-bg {
+    background-color: var(--black); /* Фиксируем базу */
+    background-image: 
+        radial-gradient(circle at 80% 0%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 20% 100%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
         }
 
         /* Скелетоны для загрузки */
@@ -246,7 +247,7 @@
         }
     </style>
 </head>
-<body class="hero-bg flex flex-col min-h-screen">
+<body class="hero-bg bg-black text-white flex flex-col min-h-screen">
 
     <!-- PRELOADER -->
     <div id="app-preloader" class="fixed inset-0 z-[999] bg-black flex flex-col items-center justify-center transition-all duration-700">
