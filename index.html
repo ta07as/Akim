@@ -3,927 +3,912 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talas_profi | Enterprise Management System</title>
-    
-    <!-- External Libraries -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
+    <title>TALAS_PROFI | Профессиональный ремонт и монтаж под ключ</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@100;300;400;600;700;800;900&display=swap');
-        
+        /* 1. БАЗОВЫЕ НАСТРОЙКИ И ЦВЕТА */
         :root {
-            --gold: #FBBF24;
             --black: #000000;
-            --dark-card: #0a0a0a;
-            --border: #1a1a1a;
-            --success: #10b981;
-            --danger: #ef4444;
+            --gold: #FBBF24;
+            --dark-gray: #111111;
+            --light-gray: #222222;
+            --white: #FFFFFF;
+            --font: 'Arial', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
             background-color: var(--black);
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
+            color: var(--white);
+            font-family: var(--font);
             overflow-x: hidden;
-            scrollbar-gutter: stable;
         }
 
-        .heading-font { font-family: 'Orbitron', sans-serif; }
-
-        /* Industrial UI Components */
-        .industrial-card {
-            background: var(--dark-card);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
-        .industrial-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 2px; height: 0;
-            background: var(--gold);
-            transition: 0.4s;
-        }
-
-        .industrial-card:hover::before { height: 100%; }
-
-        .industrial-card:hover {
-            border-color: rgba(251, 191, 36, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .input-pro {
-            background: #0a0a0a;
-            border: 1px solid var(--border);
+        /* Кнопка WhatsApp, преследующая пользователя */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
             color: white;
-            padding: 14px 18px;
-            width: 100%;
-            border-radius: 4px;
-            outline: none;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .input-pro:focus {
-            border-color: var(--gold);
-            box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.1);
-        }
-
-        .btn-gold {
-            background: var(--gold);
-            color: black;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            font-size: 13px;
+            font-size: 32px;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
         }
 
-        .btn-gold:hover {
-            background: #ffffff;
-            letter-spacing: 3px;
+        /* 2. ШАПКА САЙТА */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.95);
+            border-bottom: 1px solid var(--light-gray);
         }
 
-        .btn-outline {
-            border: 1px solid var(--border);
-            background: transparent;
-            color: #666;
-            font-weight: 700;
-            padding: 10px 20px;
-            text-transform: uppercase;
-            font-size: 11px;
-            transition: 0.3s;
-        }
-
-        .btn-outline:hover {
-            border-color: #fff;
-            color: #fff;
-        }
-
-        /* Status Badges */
-        .status-pill {
-            font-size: 9px;
+        .logo {
+            font-size: 26px;
             font-weight: 900;
-            padding: 4px 10px;
-            border-radius: 2px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-decoration: none;
             text-transform: uppercase;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .header-phone {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.2s;
+        }
+        .header-phone:hover {
+            color: var(--gold);
+        }
+
+        .cta-btn {
+            background-color: var(--gold);
+            color: var(--black);
+            padding: 12px 24px;
+            font-weight: bold;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .cta-btn:hover {
+            background-color: var(--white);
+            transform: scale(1.05);
+        }
+
+        /* ОБЩИЙ СТИЛЬ ДЛЯ ЗАГОЛОВКОВ СЕКЦИЙ */
+        .section-title {
+            font-size: 42px;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 50px;
             letter-spacing: 1px;
         }
+        .section-title span {
+            color: var(--gold);
+        }
 
-        .status-active { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid #10b981; }
-        .status-busy { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; }
+        /* 3. ГЛАВНЫЙ ЭКРАН (HERO) */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            background: radial-gradient(circle, #111 0%, #000 100%);
+        }
 
-        /* Table Aesthetics */
-        table thead th {
-            position: sticky;
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            max-width: 1000px;
+        }
+        .hero h1 span {
+            color: var(--gold);
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: #aaa;
+            margin-bottom: 40px;
+            max-width: 750px;
+        }
+
+        .main-form {
+            background-color: var(--dark-gray);
+            padding: 35px;
+            border: 1px solid var(--light-gray);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .main-form h3 {
+            font-size: 20px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            color: var(--gold);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="tel"] {
+            background-color: var(--black);
+            border: 1px solid #333;
+            padding: 16px;
+            color: var(--white);
+            font-size: 16px;
+            outline: none;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        input[type="tel"]:focus {
+            border-color: var(--gold);
+        }
+
+        .submit-btn {
+            background-color: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .submit-btn:hover {
+            background-color: var(--white);
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 15px;
+        }
+
+        /* 4. БЛОК ГАРАНТИЙ (Снятие страхов) */
+        .guarantees {
+            padding: 100px 40px;
+            background-color: #050505;
+        }
+
+        .grid-guarantees {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .guarantee-card {
+            background-color: var(--dark-gray);
+            padding: 40px;
+            border: 1px solid #222;
+            text-align: center;
+            transition: border-color 0.3s;
+        }
+        .guarantee-card:hover {
+            border-color: var(--gold);
+        }
+
+        .guarantee-card h3 {
+            font-size: 22px;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .guarantee-card p {
+            color: #aaa;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        /* 5. БЛОК СЧЕТЧИКОВ (Масштаб) */
+        .stats-section {
+            padding: 80px 40px;
+            background-color: var(--dark-gray);
+            border-top: 1px solid var(--light-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h2 {
+            font-size: 72px;
+            color: var(--gold);
+            font-weight: 900;
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 13px;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 2px;
+        }
+
+        /* 6. КАЛЬКУЛЯТОР СТОИМОСТИ (Залипалово №1) */
+        .calc-section {
+            padding: 100px 40px;
+            background-color: var(--black);
+        }
+
+        .calc-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--dark-gray);
+            padding: 45px;
+            border: 1px solid var(--light-gray);
+        }
+
+        .calc-item {
+            margin-bottom: 35px;
+        }
+
+        .calc-item label {
+            display: block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-weight: bold;
+            color: #888;
+            font-size: 14px;
+        }
+
+        .calc-item input[type="range"] {
+            width: 100%;
+            accent-color: var(--gold);
+            height: 6px;
+            background: #333;
+            outline: none;
+        }
+
+        .range-val {
+            float: right;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .total-price-box {
+            border-top: 1px solid var(--light-gray);
+            padding-top: 30px;
+            text-align: center;
+        }
+
+        .total-price-box h3 {
+            font-size: 48px;
+            color: var(--gold);
+            font-weight: 900;
+        }
+
+        /* 7. ОГРОМНЫЙ ПРАЙС-ЛИСТ С КНОПКАМИ */
+        .pricing-section {
+            padding: 100px 40px;
+            background-color: #050505;
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            background-color: var(--dark-gray);
+            border: 1px solid #222;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+        .price-card.popular {
+            border-color: var(--gold);
+        }
+        .popular-tag {
+            position: absolute;
             top: 0;
-            background: #0d0d0d;
-            z-index: 10;
+            right: 0;
+            background-color: var(--gold);
+            color: var(--black);
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            padding: 5px 10px;
         }
 
-        /* Custom Animations */
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-up { animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-        /* Auth Screen Special */
-        #auth-overlay {
-            background: radial-gradient(circle at center, #111 0%, #000 100%);
+        .price-card h3 {
+            font-size: 24px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
         }
 
-        /* Modal Blur */
-        .glass-modal {
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(12px);
+        .price-card .cost {
+            color: var(--gold);
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 25px;
         }
 
-        .stat-grid-item {
-            border-right: 1px solid var(--border);
+        .price-card ul {
+            list-style: none;
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 40px;
         }
-        .stat-grid-item:last-child { border-right: none; }
+
+        .price-card ul li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 20px;
+        }
+        .price-card ul li::before {
+            content: '✓';
+            color: var(--gold);
+            position: absolute;
+            left: 0;
+        }
+
+        /* 8. ЭФФЕКТ РЕНТГЕНА (Залипалово №2) */
+        .rentgen-section {
+            padding: 100px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: var(--black);
+        }
+
+        .rentgen-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 500px;
+            overflow: hidden;
+            border: 2px solid var(--dark-gray);
+        }
+
+        .rentgen-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #111 url('https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?q=80&w=1000') center/cover;
+            z-index: 1;
+        }
+
+        .rentgen-fg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #222 url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000') center/cover;
+            z-index: 2;
+            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+        }
+
+        .rentgen-slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background-color: var(--gold);
+            z-index: 3;
+            transform: translateX(-50%);
+            cursor: col-resize;
+        }
+        .rentgen-slider::before {
+            content: '↔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background-color: var(--gold);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* 9. ЭТАПЫ РАБОТЫ */
+        .steps-section {
+            padding: 100px 40px;
+            background-color: #050505;
+        }
+
+        .steps-timeline {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+
+        .step-num {
+            font-size: 64px;
+            font-weight: 900;
+            color: var(--gold);
+            opacity: 0.3;
+            line-height: 0.8;
+        }
+
+        .step-content h3 {
+            font-size: 22px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: #aaa;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* 10. БЛОК FAQ (Вопрос/Ответ) */
+        .faq-section {
+            padding: 100px 40px;
+            background-color: var(--black);
+        }
+
+        .faq-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--light-gray);
+            padding: 25px 0;
+        }
+
+        .faq-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .faq-title:hover {
+            color: var(--gold);
+        }
+
+        .faq-text {
+            color: #aaa;
+            margin-top: 15px;
+            font-size: 15px;
+            line-height: 1.6;
+            display: none;
+        }
+        .faq-item.active .faq-text {
+            display: block;
+        }
+
+        /* 11. ФИНАЛЬНЫЙ СУПЕР-ЗАХВАТ (FOMO) */
+        .urgency-section {
+            background-color: var(--dark-gray);
+            padding: 80px 20px;
+            text-align: center;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .urgency-box {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .spots-left {
+            display: inline-block;
+            background-color: #ff3333;
+            color: white;
+            padding: 6px 15px;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .urgency-box h2 {
+            font-size: 32px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        /* 12. ФУТЕР */
+        footer {
+            padding: 80px 40px 40px 40px;
+            background-color: #050505;
+            text-align: center;
+        }
+
+        .footer-contacts a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 28px;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.2s;
+        }
+        .footer-contacts a:hover {
+            color: var(--gold);
+        }
+
+        .copyright {
+            color: #444;
+            font-size: 13px;
+            margin-top: 40px;
+            border-top: 1px solid #111;
+            padding-top: 20px;
+        }
+
+        /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .header-phone { display: none; } /* На мобилках прячем длинный телефон из шапки */
+            .hero h1 { font-size: 38px; }
+            .hero p { font-size: 16px; }
+            .section-title { font-size: 32px; }
+            .rentgen-container { height: 300px; }
+            .pricing-section, .guarantees, .calc-section, .steps-section, .faq-section { padding: 60px 20px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- AUTHENTICATION LAYER -->
-    <div id="auth-overlay" class="fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-700">
-        <div class="max-w-md w-full p-8 text-center">
-            <div class="mb-12 animate-up">
-                <h1 class="heading-font text-5xl font-black italic mb-2 tracking-tighter">
-                    TALAS<span class="text-amber-400">_PROFI</span>
-                </h1>
-                <div class="h-1 w-24 bg-amber-400 mx-auto"></div>
-                <p class="text-[10px] text-gray-500 uppercase tracking-[0.5em] mt-4 font-bold">Secure Master Database Access</p>
-            </div>
-            
-            <div class="industrial-card p-10 bg-neutral-900/30 backdrop-blur-md animate-up" style="animation-delay: 0.2s">
-                <div class="mb-8">
-                    <i class="fas fa-lock text-amber-400 text-3xl mb-4"></i>
-                    <p class="text-xs text-gray-400 uppercase font-black">Введите ключ доступа владельца</p>
-                </div>
-                <input type="password" id="admin-pass" 
-                    class="input-pro text-center text-2xl tracking-[0.5em] mb-6 border-white/10" 
-                    placeholder="••••"
-                    onkeypress="if(event.key === 'Enter') checkAuth()">
-                <button onclick="checkAuth()" class="btn-gold w-full group">
-                    АВТОРИЗАЦИЯ 
-                    <i class="fas fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
-                </button>
-            </div>
-            
-            <p class="mt-12 text-[9px] text-gray-600 uppercase font-black tracking-widest animate-up" style="animation-delay: 0.4s">
-                © 2024 TALAS PROFI INDUSTRIAL SYSTEMS. ALL RIGHTS RESERVED.
-            </p>
-        </div>
-    </div>
+    <a href="https://wa.me/996755000228" class="whatsapp-float" target="_blank">💬</a>
 
-    <!-- MAIN DASHBOARD APPLICATION -->
-    <div id="app-content" class="hidden opacity-0 transition-opacity duration-1000">
+    <header>
+        <a href="#" class="logo">TALAS_PROFI</a>
+        <div class="header-right">
+            <a href="tel:+996755000228" class="header-phone">+996 755 000 228</a>
+            <a href="tel:+996755000228" class="cta-btn">Вызвать мастера</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Профессиональный ремонт и монтаж в <span>Таласе</span></h1>
+        <p>Вызовите инженера на бесплатный замер. Рассчитаем честную смету и не поднимем цену в процессе.</p>
+
+        <div class="main-form">
+            <h3>Заявка на бесплатный замер</h3>
+            <div class="input-group">
+                <input type="tel" id="phone1" placeholder="+996 (___) __-__-__" required>
+                <button class="submit-btn" onclick="sendLead('phone1')">Получить расчет 0 сом</button>
+            </div>
+            <div class="form-note">Перезваниваем в течение 5 минут. Ваши данные конфиденциальны.</div>
+        </div>
+    </section>
+
+    <section class="guarantees">
+        <h2 class="section-title">Железные <span>гарантии</span></h2>
+        <div class="grid-guarantees">
+            <div class="guarantee-card">
+                <h3>Без предоплаты</h3>
+                <p>Никаких авансов. Вы оплачиваете работу только поэтапно, видя реальный результат перед глазами.</p>
+            </div>
+            <div class="guarantee-card">
+                <h3>Цена не вырастет</h3>
+                <p>Фиксируем смету в договоре до начала работ. Никаких внезапных накруток за "дополнительные метры".</p>
+            </div>
+            <div class="guarantee-card">
+                <h3>Идеальный порядок</h3>
+                <p>Мы работаем с пылесосом. По окончании каждого рабочего дня и всего объекта убираем весь мусор.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h2>100+</h2>
+                <p>Мастеров в базе</p>
+            </div>
+            <div class="stat-item">
+                <h2>1500+</h2>
+                <p>Готовых объектов</p>
+            </div>
+            <div class="stat-item">
+                <h2>5 Лет</h2>
+                <p>На рынке услуг</p>
+            </div>
+            <div class="stat-item">
+                <h2>100%</h2>
+                <p>Соблюдение сроков</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="calc-section">
+        <h2 class="section-title">Онлайн <span>Калькулятор</span></h2>
+        <div class="calc-wrapper">
+            <div class="calc-item">
+                <label>Площадь вашего помещения: <span class="range-val" id="area-val">50 м²</span></label>
+                <input type="range" id="area" min="5" max="250" value="50">
+            </div>
+            <div class="calc-item">
+                <label>Сложность проекта: <span class="range-val" id="diff-val">Обычный</span></label>
+                <input type="range" id="diff" min="1" max="3" value="1">
+            </div>
+            <div class="total-price-box">
+                <p style="color:#666; text-transform:uppercase; font-size:12px; margin-bottom:10px;">Ориентировочная стоимость работ</p>
+                <h3 id="total-price">15,000 сом</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing-section">
+        <h2 class="section-title">Наши <span>Услуги и цены</span></h2>
+        <div class="price-grid">
+            
+            <div class="price-card popular">
+                <div class="popular-tag">Часто заказывают</div>
+                <div>
+                    <h3>Электромонтаж</h3>
+                    <div class="cost">от 300 сом/м²</div>
+                    <ul>
+                        <li>Проектирование и штробление</li>
+                        <li>Полная замена проводки</li>
+                        <li>Сборка сложных щитов автоматики</li>
+                        <li>Монтаж подрозетников и люстр</li>
+                    </ul>
+                </div>
+                <button class="cta-btn" style="width: 100%;" onclick="orderWhatsApp('Электромонтаж')">Заказать расчет</button>
+            </div>
+
+            <div class="price-card">
+                <div>
+                    <h3>Сантехника</h3>
+                    <div class="cost">от 400 сом/м²</div>
+                    <ul>
+                        <li>Разводка труб (ХВС, ГВС, отопление)</li>
+                        <li>Монтаж систем водяного теплого пола</li>
+                        <li>Установка инсталляций и смесителей</li>
+                        <li>Подключение бойлеров и котлов</li>
+                    </ul>
+                </div>
+                <button class="cta-btn" style="width: 100%;" onclick="orderWhatsApp('Сантехнику')">Заказать расчет</button>
+            </div>
+
+            <div class="price-card">
+                <div>
+                    <h3>Отделка стен</h3>
+                    <div class="cost">от 250 сом/м²</div>
+                    <ul>
+                        <li>Выравнивание стен (штукатурка)</li>
+                        <li>Финишная шпаклевка под обои/покраску</li>
+                        <li>Поклейка всех видов обоев</li>
+                        <li>Малярные работы без разводов</li>
+                    </ul>
+                </div>
+                <button class="cta-btn" style="width: 100%;" onclick="orderWhatsApp('Отделку')">Заказать расчет</button>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="rentgen-section">
+        <h2 class="section-title">Культура <span>Монтажа</span></h2>
+        <p style="color: #666; margin-bottom: 30px; text-align: center; max-width:600px;">Потяните за ползунок. Мы гордимся тем, как выглядят наши скрытые работы под идеальной отделкой.</p>
         
-        <!-- SIDEBAR / NAVIGATION -->
-        <header class="border-b border-white/5 bg-black/90 backdrop-blur-xl sticky top-0 z-50">
-            <div class="max-w-[1600px] mx-auto px-8 h-24 flex justify-between items-center">
-                <div class="flex items-center gap-16">
-                    <div class="flex items-center gap-3 cursor-pointer" onclick="location.reload()">
-                        <div class="w-12 h-12 bg-amber-400 flex items-center justify-center rounded-sm">
-                            <i class="fas fa-tools text-black text-xl"></i>
-                        </div>
-                        <h2 class="heading-font text-3xl font-black italic tracking-tighter">
-                            TALAS<span class="text-amber-400">_PROFI</span>
-                        </h2>
-                    </div>
-                    
-                    <nav class="hidden lg:flex items-center gap-2">
-                        <button onclick="nav('db')" id="nav-db" class="nav-link active py-2 px-6 text-[11px] font-black uppercase tracking-widest text-amber-400 border-b-2 border-amber-400">База Данных</button>
-                        <button onclick="nav('crm')" id="nav-crm" class="nav-link py-2 px-6 text-[11px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition">CRM / Заказы</button>
-                        <button onclick="nav('fin')" id="nav-fin" class="nav-link py-2 px-6 text-[11px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition">Финансы</button>
-                        <button onclick="nav('reg')" id="nav-reg" class="nav-link py-2 px-6 text-[11px] font-black uppercase tracking-widest text-gray-500 hover:text-white transition">Регистрация</button>
-                    </nav>
-                </div>
+        <div class="rentgen-container" id="rentgen">
+            <div class="rentgen-bg"></div>
+            <div class="rentgen-fg" id="fg-img"></div>
+            <div class="rentgen-slider" id="slider"></div>
+        </div>
+    </section>
 
-                <div class="flex items-center gap-6">
-                    <div class="hidden xl:flex flex-col items-end">
-                        <span class="text-[10px] font-black text-amber-400 uppercase">System Status: Optimal</span>
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                            <span class="text-[11px] font-bold text-gray-400">ADMIN: +996 755 000 228</span>
-                        </div>
-                    </div>
-                    <div class="h-10 w-[1px] bg-white/10 hidden sm:block"></div>
-                    <button onclick="logout()" class="group flex items-center gap-3 hover:text-red-500 transition">
-                        <span class="text-[10px] font-black uppercase hidden sm:block">Выход</span>
-                        <div class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center group-hover:border-red-500/50">
-                            <i class="fas fa-power-off text-xs"></i>
-                        </div>
-                    </button>
+    <section class="steps-section">
+        <h2 class="section-title">Как мы <span>работаем</span></h2>
+        <div class="steps-timeline">
+            <div class="step-item">
+                <div class="step-num">01</div>
+                <div class="step-content">
+                    <h3>Заявка на сайте</h3>
+                    <p>Вы оставляете свой номер. Мы связываемся с вами и подбираем удобное время для визита мастера.</p>
                 </div>
             </div>
-        </header>
-
-        <main class="max-w-[1600px] mx-auto p-8">
-            
-            <!-- VIEW: DATABASE (MASTER REPOSITORY) -->
-            <section id="view-db" class="page-view space-y-8">
-                <div class="flex flex-col xl:flex-row justify-between items-start xl:items-end gap-6">
-                    <div class="animate-up">
-                        <div class="flex items-center gap-3 mb-2">
-                            <div class="w-2 h-8 bg-amber-400"></div>
-                            <h3 class="text-5xl font-black heading-font italic uppercase leading-none tracking-tighter">
-                                MASTER <span class="text-amber-400">REGISTRY</span>
-                            </h3>
-                        </div>
-                        <p class="text-[11px] text-gray-500 font-bold uppercase tracking-[0.3em] ml-5">Global verified workforce synchronization</p>
-                    </div>
-
-                    <div class="flex flex-wrap gap-4 w-full xl:w-auto animate-up" style="animation-delay: 0.1s">
-                        <div class="relative flex-grow min-w-[300px]">
-                            <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-gray-600"></i>
-                            <input type="text" id="search-input" oninput="filterData()" class="input-pro pl-14" placeholder="ПОИСК ПО ИМЕНИ, ТЕЛЕФОНУ ИЛИ УСЛУГЕ...">
-                        </div>
-                        <select id="filter-region" onchange="filterData()" class="input-pro w-48">
-                            <option value="all">ВСЕ РЕГИОНЫ</option>
-                            <option value="Талас">ТАЛАС</option>
-                            <option value="Бакай-Ата">БАКАЙ-АТА</option>
-                            <option value="Манас">МАНАС</option>
-                            <option value="Кара-Буура">КАРА-БУУРА</option>
-                        </select>
-                        <button onclick="exportData()" class="btn-outline flex items-center gap-2">
-                            <i class="fas fa-file-export"></i> EXCEL
-                        </button>
-                    </div>
+            <div class="step-item">
+                <div class="step-num">02</div>
+                <div class="step-content">
+                    <h3>Бесплатный замер и смета</h3>
+                    <p>Приезжаем, замеряем объемы, выслушиваем пожелания и в течение дня выдаем итоговую точную стоимость.</p>
                 </div>
-
-                <!-- Metrics Ribbon -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-up" style="animation-delay: 0.2s">
-                    <div class="industrial-card p-6 flex flex-col justify-between">
-                        <span class="text-[9px] font-black text-gray-500 uppercase">Всего мастеров</span>
-                        <h4 id="stat-total" class="text-4xl font-black heading-font text-white mt-2">0</h4>
-                    </div>
-                    <div class="industrial-card p-6 flex flex-col justify-between">
-                        <span class="text-[9px] font-black text-gray-500 uppercase">Активные (Online)</span>
-                        <h4 id="stat-active" class="text-4xl font-black heading-font text-green-500 mt-2">0</h4>
-                    </div>
-                    <div class="industrial-card p-6 flex flex-col justify-between">
-                        <span class="text-[9px] font-black text-gray-500 uppercase">Средний Рейтинг</span>
-                        <h4 class="text-4xl font-black heading-font text-amber-400 mt-2">4.92</h4>
-                    </div>
-                    <div class="industrial-card p-6 flex flex-col justify-between">
-                        <span class="text-[9px] font-black text-gray-500 uppercase">Процент занятости</span>
-                        <h4 class="text-4xl font-black heading-font text-blue-400 mt-2">64%</h4>
-                    </div>
-                </div>
-
-                <div class="industrial-card animate-up" style="animation-delay: 0.3s">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[1000px]">
-                            <thead>
-                                <tr class="bg-neutral-900/50 text-[10px] font-black uppercase text-gray-500 border-b border-white/5">
-                                    <th class="p-8">Профиль Специалиста</th>
-                                    <th class="p-8">Специализация</th>
-                                    <th class="p-8">Локация / Опыт</th>
-                                    <th class="p-8">Статус / КПД</th>
-                                    <th class="p-8 text-right">Управление</th>
-                                </tr>
-                            </thead>
-                            <tbody id="master-db-body" class="divide-y divide-white/[0.03]">
-                                <!-- Dynamically populated -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW: CRM / ORDERS -->
-            <section id="view-crm" class="hidden page-view space-y-8 animate-up">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Order Feed -->
-                    <div class="lg:col-span-2 space-y-6">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-2xl font-black uppercase italic italic heading-font">Журнал Заказов</h3>
-                            <button class="btn-gold py-2 px-6 text-[10px]">Новый Заказ +</button>
-                        </div>
-                        
-                        <div class="space-y-4" id="order-history">
-                            <!-- Order cards -->
-                        </div>
-                    </div>
-                    
-                    <!-- Sidebar CRM Tools -->
-                    <div class="space-y-8">
-                        <div class="industrial-card p-8 bg-amber-400 text-black">
-                            <h4 class="text-xl font-black uppercase italic mb-4">Блиц-Сводка</h4>
-                            <div class="space-y-4">
-                                <div class="flex justify-between items-center border-b border-black/10 pb-2">
-                                    <span class="text-[10px] font-black uppercase">Ожидают подтверждения</span>
-                                    <span class="text-xl font-black">04</span>
-                                </div>
-                                <div class="flex justify-between items-center border-b border-black/10 pb-2">
-                                    <span class="text-[10px] font-black uppercase">В работе сейчас</span>
-                                    <span class="text-xl font-black">12</span>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-[10px] font-black uppercase">Конфликтные ситуации</span>
-                                    <span class="text-xl font-black">00</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="industrial-card p-8">
-                            <h4 class="text-xs font-black uppercase italic mb-6">Топ Мастеров Месяца</h4>
-                            <div class="space-y-6" id="top-masters-list">
-                                <!-- Top masters -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW: FINANCES -->
-            <section id="view-fin" class="hidden page-view space-y-8 animate-up">
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <div class="xl:col-span-2 industrial-card p-10">
-                        <h3 class="text-2xl font-black heading-font italic uppercase mb-8">График Доходов <span class="text-amber-400">Talas_profi</span></h3>
-                        <canvas id="financeChart" height="150"></canvas>
-                    </div>
-                    
-                    <div class="space-y-8">
-                        <div class="industrial-card p-10">
-                            <h4 class="text-xs font-black uppercase text-gray-500 mb-6">Калькулятор Комиссии</h4>
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="text-[9px] font-black uppercase text-gray-600 mb-2 block">Сумма заказа (сом)</label>
-                                    <input type="number" id="calc-sum" class="input-pro" value="5000" oninput="calcCommission()">
-                                </div>
-                                <div class="p-6 bg-neutral-900 border-l-4 border-amber-400">
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-[10px] font-black uppercase">Твоя доля (10%)</span>
-                                        <span id="calc-result" class="text-2xl font-black text-amber-400">500 с.</span>
-                                    </div>
-                                    <p class="text-[9px] text-gray-500 uppercase">Комиссия рассчитывается автоматически</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="industrial-card p-10 border-green-500/20">
-                            <h4 class="text-xs font-black uppercase text-gray-500 mb-2">Общий баланс системы</h4>
-                            <p class="text-5xl font-black italic heading-font text-white tracking-tighter">84,200 <span class="text-xl">СОМ</span></p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIEW: REGISTRATION (PUBLIC-FACING) -->
-            <section id="view-reg" class="hidden page-view max-w-4xl mx-auto py-12 animate-up">
-                <div class="text-center mb-16">
-                    <h3 class="text-5xl font-black heading-font italic uppercase tracking-tighter mb-4">
-                        ВСТУПАЙ В <span class="text-amber-400">ЭЛИТУ</span>
-                    </h3>
-                    <p class="text-xs text-gray-500 font-black uppercase tracking-[0.4em]">Стань частью самой мощной команды Таласа</p>
-                </div>
-
-                <div class="industrial-card p-12 bg-neutral-900/10">
-                    <div id="reg-form-inner">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black uppercase text-gray-600 ml-2">ФИО Полностью</label>
-                                <input type="text" id="m-name" class="input-pro" placeholder="Азамат Уланов">
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black uppercase text-gray-600 ml-2">Номер WhatsApp</label>
-                                <input type="tel" id="m-phone" class="input-pro" placeholder="996 700 000 000">
-                            </div>
-                        </div>
-
-                        <div class="mb-10">
-                            <label class="text-[10px] font-black uppercase text-gray-600 ml-2 mb-4 block">Выберите ваши специализации</label>
-                            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                                <label class="service-chip flex items-center gap-3 p-4 bg-black/40 border border-white/5 cursor-pointer hover:border-amber-400 transition-all rounded group">
-                                    <input type="checkbox" name="m-service" value="Клининг" class="w-4 h-4 accent-amber-400">
-                                    <span class="text-[11px] font-black uppercase group-hover:text-amber-400">КЛИНИНГ</span>
-                                </label>
-                                <label class="service-chip flex items-center gap-3 p-4 bg-black/40 border border-white/5 cursor-pointer hover:border-amber-400 transition-all rounded group">
-                                    <input type="checkbox" name="m-service" value="Сантехника" class="w-4 h-4 accent-amber-400">
-                                    <span class="text-[11px] font-black uppercase group-hover:text-amber-400">САНТЕХНИКА</span>
-                                </label>
-                                <label class="service-chip flex items-center gap-3 p-4 bg-black/40 border border-white/5 cursor-pointer hover:border-amber-400 transition-all rounded group">
-                                    <input type="checkbox" name="m-service" value="Кирпич" class="w-4 h-4 accent-amber-400">
-                                    <span class="text-[11px] font-black uppercase group-hover:text-amber-400">КИРПИЧ</span>
-                                </label>
-                                <label class="service-chip flex items-center gap-3 p-4 bg-black/40 border border-white/5 cursor-pointer hover:border-amber-400 transition-all rounded group">
-                                    <input type="checkbox" name="m-service" value="Обои" class="w-4 h-4 accent-amber-400">
-                                    <span class="text-[11px] font-black uppercase group-hover:text-amber-400">ОБОИ</span>
-                                </label>
-                                <label class="service-chip flex items-center gap-3 p-4 bg-black/40 border border-white/5 cursor-pointer hover:border-amber-400 transition-all rounded group">
-                                    <input type="checkbox" name="m-service" value="Электрика" class="w-4 h-4 accent-amber-400">
-                                    <span class="text-[11px] font-black uppercase group-hover:text-amber-400">ЭЛЕКТРИКА</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black uppercase text-gray-600 ml-2">Ваш Район</label>
-                                <select id="m-district" class="input-pro">
-                                    <option>г. Талас</option>
-                                    <option>Бакай-Ата</option>
-                                    <option>Манас</option>
-                                    <option>Кара-Буура</option>
-                                </select>
-                            </div>
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black uppercase text-gray-600 ml-2">Опыт работы (лет)</label>
-                                <input type="number" id="m-exp" class="input-pro" placeholder="3">
-                            </div>
-                            <div class="space-y-2 text-center md:text-left pt-6">
-                                <p class="text-[9px] text-gray-500 uppercase font-bold">Регистрация в базе бесплатна для профессионалов</p>
-                            </div>
-                        </div>
-
-                        <button onclick="submitRegistration()" class="btn-gold w-full h-20 text-lg">
-                            ОТПРАВИТЬ ДАННЫЕ В РЕЕСТР <i class="fas fa-paper-plane ml-3"></i>
-                        </button>
-                    </div>
-
-                    <div id="reg-success" class="hidden text-center py-20 animate-up">
-                        <div class="w-24 h-24 bg-green-500/20 border border-green-500 rounded-full flex items-center justify-center mx-auto mb-8">
-                            <i class="fas fa-check text-green-500 text-4xl"></i>
-                        </div>
-                        <h4 class="text-4xl font-black heading-font italic mb-4">ДОБРО ПОЖАЛОВАТЬ!</h4>
-                        <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-12">Твои данные синхронизированы с центральной базой.</p>
-                        <button onclick="resetRegistration()" class="btn-outline px-12">Добавить еще одного мастера</button>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- GLOBAL ORDER MODAL -->
-    <div id="order-modal" class="fixed inset-0 z-[100] glass-modal flex items-center justify-center hidden p-6">
-        <div class="industrial-card max-w-xl w-full p-12 bg-black animate-up shadow-[0_0_100px_rgba(0,0,0,1)]">
-            <div class="flex justify-between items-start mb-10">
-                <div>
-                    <h3 class="text-3xl font-black heading-font italic uppercase leading-none mb-2">НОВЫЙ <span class="text-amber-400">ЗАКАЗ</span></h3>
-                    <p id="om-master-name" class="text-[10px] text-gray-500 uppercase font-black tracking-widest italic">—</p>
-                </div>
-                <button onclick="closeModal()" class="text-gray-600 hover:text-white transition"><i class="fas fa-times text-2xl"></i></button>
             </div>
-            
-            <div class="space-y-8">
-                <div>
-                    <label class="text-[10px] font-black uppercase text-gray-600 mb-2 block">Тип сообщения (шаблон)</label>
-                    <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
-                        <button onclick="setTemplate('urgent')" class="btn-outline border-amber-400/30 text-amber-400 whitespace-nowrap">Срочно</button>
-                        <button onclick="setTemplate('standard')" class="btn-outline whitespace-nowrap">Стандарт</button>
-                        <button onclick="setTemplate('quote')" class="btn-outline whitespace-nowrap">Запрос цены</button>
-                    </div>
-                    <textarea id="om-message" class="input-pro h-40 resize-none font-medium leading-relaxed" placeholder="Опишите детали заказа..."></textarea>
+            <div class="step-item">
+                <div class="step-num">03</div>
+                <div class="step-content">
+                    <h3>Чистовой монтаж</h3>
+                    <p>Завозим инструмент, закупаем материалы со скидками и выполняем работу строго по технологии.</p>
                 </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="closeModal()" class="btn-outline h-16">ОТМЕНА</button>
-                    <button onclick="confirmAndSendWA()" class="btn-gold h-16">
-                        ОТПРАВИТЬ <i class="fab fa-whatsapp text-lg"></i>
-                    </button>
+            </div>
+            <div class="step-item">
+                <div class="step-num">04</div>
+                <div class="step-content">
+                    <h3>Приемка и расчет</h3>
+                    <p>Вы проверяете качество каждого узла, подписываете акт и только после этого производите оплату.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- NOTIFICATION TOAST -->
-    <div id="toast" class="fixed bottom-10 right-10 z-[200] industrial-card p-6 bg-amber-400 text-black hidden shadow-2xl animate-up">
-        <div class="flex items-center gap-4">
-            <i class="fas fa-info-circle text-xl"></i>
-            <div>
-                <p class="text-[10px] font-black uppercase tracking-tighter" id="toast-title">Уведомление</p>
-                <p class="text-xs font-bold" id="toast-msg">Данные обновлены!</p>
+    <section class="faq-section">
+        <h2 class="section-title">Частые <span>Вопросы</span></h2>
+        <div class="faq-wrapper">
+            <div class="faq-item">
+                <div class="faq-title">Вы помогаете с покупкой материалов? <span>+</span></div>
+                <div class="faq-text">Да, у нас есть партнерские скидки на строительных базах. Мы можем полностью взять закупку, погрузку и доставку на себя, предоставив вам все чеки.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-title">Сколько длится гарантия на работы? <span>+</span></div>
+                <div class="faq-text">В зависимости от типа услуг гарантия составляет от 1 года до 3 лет. Это фиксируется документально.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-title">Работаете ли вы в области или только в городе? <span>+</span></div>
+                <div class="faq-text">Мы покрываем весь город Талас, близлежащие районы, а также имеем бригады в Бишкеке для крупных объектов.</div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="urgency-section">
+        <div class="urgency-box">
+            <div class="spots-left">Осталось всего 3 места</div>
+            <h2>На бесплатный замер на этой неделе</h2>
+            <p style="color: #888; margin-bottom: 30px;">Бригады загружены. Успейте забронировать выезд мастера для фиксации старой цены.</p>
+            
+            <div class="input-group" style="max-width: 400px; margin: 0 auto;">
+                <input type="tel" id="phone2" placeholder="+996 (___) __-__-__" required>
+                <button class="submit-btn" onclick="sendLead('phone2')">Занять место</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-contacts">
+            <a href="tel:+996755000228">+996 755 000 228</a>
+            <p style="color: #555; text-transform: uppercase; font-size: 11px; letter-spacing: 2px;">Охват: г. Талас и г. Бишкек</p>
+        </div>
+        <div class="copyright">
+            © 2026 IP Akimaaly A. / Talas_profi. Все права защищены.
+        </div>
+    </footer>
 
     <script>
-        /**
-         * GLOBAL STATE
-         */
-        const CONFIG = {
-            adminKey: "talas2024",
-            commissionRate: 0.10,
-            currency: "сом"
-        };
+        // 1. Скрипт "Рентген" (Ползунок)
+        const rentgen = document.getElementById('rentgen');
+        const fg = document.getElementById('fg-img');
+        const slider = document.getElementById('slider');
+        let isDragging = false;
 
-        // Seed Data
-        let masters = JSON.parse(localStorage.getItem('tp_masters_v2')) || [
-            { id: 101, name: "Бакыт Ибраимов", phone: "996755000228", district: "Талас", services: ["Сантехника", "Электрика"], exp: 12, rating: 5.0, jobs: 48, status: 'active', registered: '2023-10-12' },
-            { id: 102, name: "Азамат Уланов", phone: "996500123456", district: "Манас", services: ["Клининг"], exp: 4, rating: 4.8, jobs: 112, status: 'active', registered: '2023-11-05' },
-            { id: 103, name: "Данияр Касымов", phone: "996707334455", district: "Бакай-Ата", services: ["Обои", "Кирпич"], exp: 7, rating: 4.9, jobs: 31, status: 'busy', registered: '2024-01-20' },
-            { id: 104, name: "Нурбек Саматов", phone: "996555111222", district: "Талас", services: ["Сантехника"], exp: 15, rating: 5.0, jobs: 204, status: 'active', registered: '2022-05-15' },
-            { id: 105, name: "Эмиль Турсунов", phone: "996700889900", district: "Кара-Буура", services: ["Электрика"], exp: 2, rating: 4.2, jobs: 15, status: 'active', registered: '2024-02-10' }
-        ];
-
-        let orders = JSON.parse(localStorage.getItem('tp_orders')) || [
-            { id: 1, masterId: 101, type: 'Сантехника', cost: 4500, date: '2024-03-24', status: 'completed' },
-            { id: 2, masterId: 102, type: 'Клининг', cost: 2000, date: '2024-03-25', status: 'completed' }
-        ];
-
-        let selectedMaster = null;
-
-        /**
-         * CORE ENGINE: AUTH & ROUTING
-         */
-        function checkAuth() {
-            const val = document.getElementById('admin-pass').value;
-            if(val === CONFIG.adminKey) {
-                const overlay = document.getElementById('auth-overlay');
-                overlay.classList.add('opacity-0');
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    const app = document.getElementById('app-content');
-                    app.classList.remove('hidden');
-                    setTimeout(() => app.classList.add('opacity-100'), 50);
-                    initDashboard();
-                }, 700);
-            } else {
-                shake(document.getElementById('admin-pass'));
-                showToast("ОШИБКА", "Неверный ключ доступа", "danger");
-            }
+        function move(e) {
+            if (!isDragging) return;
+            let rect = rentgen.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            if (x < 0) x = 0;
+            if (x > rect.width) x = rect.width;
+            let percent = (x / rect.width) * 100;
+            slider.style.left = percent + '%';
+            fg.style.clipPath = `polygon(0 0, ${percent}% 0, ${percent}% 100%, 0 100%)`;
         }
+        slider.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', move);
+        slider.addEventListener('touchstart', () => isDragging = true);
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => { if (e.touches.length > 0) move(e.touches[0]); });
 
-        function logout() {
-            location.reload();
-        }
+        // 2. Скрипт Калькулятора
+        const areaInput = document.getElementById('area');
+        const diffInput = document.getElementById('diff');
+        const areaVal = document.getElementById('area-val');
+        const diffVal = document.getElementById('diff-val');
+        const totalPrice = document.getElementById('total-price');
 
-        function nav(target) {
-            document.querySelectorAll('.page-view').forEach(p => p.classList.add('hidden'));
-            document.querySelectorAll('.nav-link').forEach(l => {
-                l.classList.remove('active', 'text-amber-400', 'border-b-2', 'border-amber-400');
-                l.classList.add('text-gray-500');
-            });
-
-            document.getElementById('view-' + target).classList.remove('hidden');
-            const btn = document.getElementById('nav-' + target);
-            btn.classList.add('active', 'text-amber-400', 'border-b-2', 'border-amber-400');
-            btn.classList.remove('text-gray-500');
-
-            if(target === 'fin') renderFinanceChart();
-            if(target === 'crm') renderOrderLog();
-        }
-
-        /**
-         * DASHBOARD LOGIC
-         */
-        function initDashboard() {
-            renderMasterTable();
-            updateStats();
-            updateTopMasters();
-        }
-
-        function renderMasterTable(data = masters) {
-            const tbody = document.getElementById('master-db-body');
-            tbody.innerHTML = '';
-
-            data.forEach((m, idx) => {
-                const tr = document.createElement('tr');
-                tr.className = `hover:bg-white/[0.01] transition group animate-up`;
-                tr.style.animationDelay = `${idx * 0.05}s`;
-                
-                tr.innerHTML = `
-                    <td class="p-8">
-                        <div class="flex items-center gap-5">
-                            <div class="w-14 h-14 bg-neutral-900 border border-white/5 flex items-center justify-center font-black italic text-xl text-amber-400 group-hover:border-amber-400/50 transition">
-                                ${m.name[0]}
-                            </div>
-                            <div>
-                                <p class="text-sm font-black uppercase italic">${m.name}</p>
-                                <p class="text-[10px] text-gray-500 font-bold mt-1 tracking-tighter"><i class="fas fa-phone mr-2"></i>${m.phone}</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="p-8">
-                        <div class="flex flex-wrap gap-2">
-                            ${m.services.map(s => `<span class="px-3 py-1 bg-white/5 text-[9px] font-black uppercase text-gray-400 border border-white/5">${s}</span>`).join('')}
-                        </div>
-                    </td>
-                    <td class="p-8">
-                        <div class="space-y-1">
-                            <p class="text-[11px] font-black uppercase"><i class="fas fa-map-marker-alt text-amber-400 mr-2"></i>${m.district}</p>
-                            <p class="text-[10px] text-gray-600 font-bold uppercase">ОПЫТ: ${m.exp} ЛЕТ</p>
-                        </div>
-                    </td>
-                    <td class="p-8">
-                        <div class="flex items-center gap-6">
-                            <span class="status-pill ${m.status === 'active' ? 'status-active' : 'status-busy'}">
-                                ${m.status === 'active' ? 'Свободен' : 'Занят'}
-                            </span>
-                            <div class="flex flex-col">
-                                <span class="text-xs font-black text-amber-400 italic">${m.rating} ★</span>
-                                <span class="text-[9px] text-gray-600 font-black uppercase">${m.jobs} раб.</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="p-8 text-right">
-                        <div class="flex justify-end gap-2">
-                            <button onclick="toggleMasterStatus(${m.id})" class="w-10 h-10 border border-white/5 flex items-center justify-center hover:border-blue-500 hover:text-blue-500 transition rounded" title="Сменить статус">
-                                <i class="fas fa-sync-alt text-[10px]"></i>
-                            </button>
-                            <button onclick="openOrderModal(${m.id})" class="h-10 px-6 bg-amber-400 text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition rounded-sm flex items-center gap-2">
-                                ЗАКАЗ <i class="fab fa-whatsapp"></i>
-                            </button>
-                            <button onclick="deleteMaster(${m.id})" class="w-10 h-10 border border-white/5 flex items-center justify-center hover:bg-red-600 hover:border-red-600 transition rounded">
-                                <i class="fas fa-trash-alt text-[10px]"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        /**
-         * CRUD & UTILS
-         */
-        function filterData() {
-            const query = document.getElementById('search-input').value.toLowerCase();
-            const region = document.getElementById('filter-region').value;
-
-            const filtered = masters.filter(m => {
-                const matchName = m.name.toLowerCase().includes(query);
-                const matchPhone = m.phone.includes(query);
-                const matchService = m.services.some(s => s.toLowerCase().includes(query));
-                const matchRegion = region === 'all' || m.district === region;
-                
-                return (matchName || matchPhone || matchService) && matchRegion;
-            });
-
-            renderMasterTable(filtered);
-        }
-
-        function toggleMasterStatus(id) {
-            const m = masters.find(x => x.id === id);
-            m.status = m.status === 'active' ? 'busy' : 'active';
-            saveState();
-            renderMasterTable();
-            showToast("СИСТЕМА", `Статус мастера ${m.name} изменен`);
-        }
-
-        function deleteMaster(id) {
-            if(confirm("Удалить мастера из базы навсегда?")) {
-                masters = masters.filter(x => x.id !== id);
-                saveState();
-                renderMasterTable();
-                updateStats();
-                showToast("УДАЛЕНИЕ", "Мастер исключен из реестра", "danger");
-            }
-        }
-
-        function saveState() {
-            localStorage.setItem('tp_masters_v2', JSON.stringify(masters));
-            localStorage.setItem('tp_orders', JSON.stringify(orders));
-        }
-
-        /**
-         * WHATSAPP & MODAL LOGIC
-         */
-        function openOrderModal(id) {
-            selectedMaster = masters.find(m => m.id === id);
-            document.getElementById('om-master-name').innerText = `СПЕЦИАЛИСТ: ${selectedMaster.name.toUpperCase()} / ${selectedMaster.phone}`;
-            setTemplate('standard');
-            document.getElementById('order-modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('order-modal').classList.add('hidden');
-        }
-
-        function setTemplate(type) {
-            const msgArea = document.getElementById('om-message');
-            const name = selectedMaster.name;
-            const service = selectedMaster.services[0];
-
-            const templates = {
-                urgent: `СРОЧНО! Здравствуйте, ${name}! Есть горячий заказ на ${service} в р-не ${selectedMaster.district}. Нужно быть на месте в течение часа. Оплата высокая. Подтвердите готовность.`,
-                standard: `Здравствуйте, ${name}! Для вас есть новый заказ на ${service}. Клиент ждет звонка. Пожалуйста, свяжитесь с ним для уточнения деталей.`,
-                quote: `Приветствую, ${name}! Нужна оценка стоимости работ по объекту (${service}). Посмотрите фото/детали и назовите примерную цену.`
-            };
-
-            msgArea.value = templates[type] || "";
-        }
-
-        function confirmAndSendWA() {
-            const msg = document.getElementById('om-message').value;
-            if(!msg) return alert("Введите текст сообщения");
-
-            // Update master local stats
-            selectedMaster.jobs++;
-            orders.unshift({
-                id: Date.now(),
-                masterId: selectedMaster.id,
-                type: selectedMaster.services[0],
-                cost: 0,
-                date: new Date().toISOString().split('T')[0],
-                status: 'pending'
-            });
-
-            saveState();
+        function updateCalc() {
+            const area = parseInt(areaInput.value);
+            const diff = parseInt(diffInput.value);
+            areaVal.innerText = `${area} м²`;
             
-            const waUrl = `https://wa.me/${selectedMaster.phone.replace(/\+/g, '')}?text=${encodeURIComponent(msg)}`;
-            window.open(waUrl, '_blank');
-            
-            closeModal();
-            renderMasterTable();
-            showToast("УСПЕХ", "Заказ отправлен и зафиксирован");
+            let diffName = "Обычный";
+            let multiplier = 1;
+            if (diff === 2) { diffName = "Сложный"; multiplier = 1.5; }
+            if (diff === 3) { diffName = "Евро/Премиум"; multiplier = 2.2; }
+            diffVal.innerText = diffName;
+
+            let total = Math.round(area * 300 * multiplier);
+            totalPrice.innerText = `${total.toLocaleString()} сом`;
         }
+        areaInput.addEventListener('input', updateCalc);
+        diffInput.addEventListener('input', updateCalc);
 
-        /**
-         * REGISTRATION LOGIC
-         */
-        function submitRegistration() {
-            const name = document.getElementById('m-name').value;
-            const phone = document.getElementById('m-phone').value.replace(/\D/g, '');
-            const district = document.getElementById('m-district').value;
-            const exp = document.getElementById('m-exp').value;
-            const selectedServices = Array.from(document.querySelectorAll('input[name="m-service"]:checked')).map(x => x.value);
+        // 3. Скрипт FAQ (Аккордеон)
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const title = item.querySelector('.faq-title');
+            title.addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+                faqItems.forEach(i => i.classList.remove('active'));
+                if (!isOpen) item.classList.add('active');
+            });
+        });
 
-            if(!name || phone.length < 9 || selectedServices.length === 0) {
-                showToast("ОШИБКА", "Заполните все обязательные поля!", "danger");
+        // 4. Скрипты Лидогенерации (Отправка заявок сразу в WhatsApp)
+        function sendLead(inputId) {
+            const phone = document.getElementById(inputId).value;
+            if (phone.trim().length < 6) {
+                alert('Пожалуйста, введите корректный номер телефона!');
                 return;
             }
-
-            const newMaster = {
-                id: Date.now(),
-                name,
-                phone,
-                district,
-                services: selectedServices,
-                exp: parseInt(exp) || 1,
-                rating: 5.0,
-                jobs: 0,
-                status: 'active',
-                registered: new Date().toISOString().split('T')[0]
-            };
-
-            masters.unshift(newMaster);
-            saveState();
-            
-            document.getElementById('reg-form-inner').classList.add('hidden');
-            document.getElementById('reg-success').classList.remove('hidden');
-            updateStats();
+            const text = encodeURIComponent(`Здравствуйте! Я оставил заявку на бесплатный замер на сайте. Мой номер: ${phone}. Перезвоните мне.`);
+            window.open(`https://wa.me/996755000228?text=${text}`, '_blank');
         }
 
-        function resetRegistration() {
-            document.getElementById('reg-form-inner').classList.remove('hidden');
-            document.getElementById('reg-success').classList.add('hidden');
-            // Clear fields
-            document.getElementById('m-name').value = '';
-            document.getElementById('m-phone').value = '';
-            document.querySelectorAll('input[name="m-service"]').forEach(x => x.checked = false);
+        function orderWhatsApp(serviceName) {
+            const text = encodeURIComponent(`Здравствуйте! Меня интересует расчет стоимости на услугу: ${serviceName}. Проконсультируйте меня.`);
+            window.open(`https://wa.me/996755000228?text=${text}`, '_blank');
         }
-
-        /**
-         * FINANCE & CHARTS
-         */
-        function calcCommission() {
-            const sum = document.getElementById('calc-sum').value;
-            const res = Math.floor(sum * CONFIG.commissionRate);
-            document.getElementById('calc-result').innerText = `${res} ${CONFIG.currency}`;
-        }
-
-        function renderFinanceChart() {
-            const ctx = document.getElementById('financeChart').getContext('2d');
-            if(window.mainChart) window.mainChart.destroy();
-            
-            window.mainChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн'],
-                    datasets: [{
-                        label: 'Доход Talas_profi (сом)',
-                        data: [12000, 19000, 15000, 25000, 32000, 28000],
-                        borderColor: '#FBBF24',
-                        backgroundColor: 'rgba(251, 191, 36, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 4,
-                        pointBackgroundColor: '#FBBF24'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#666' } },
-                        x: { grid: { display: false }, ticks: { color: '#666' } }
-                    }
-                }
-            });
-        }
-
-        function renderOrderLog() {
-            const container = document.getElementById('order-history');
-            container.innerHTML = '';
-            
-            orders.slice(0, 5).forEach(o => {
-                const m = masters.find(x => x.id === o.masterId) || {name: 'Мастер удален'};
-                const div = document.createElement('div');
-                div.className = "industrial-card p-6 bg-neutral-900/40 flex justify-between items-center";
-                div.innerHTML = `
-                    <div class="flex items-center gap-4">
-                        <div class="w-2 h-10 bg-amber-400"></div>
-                        <div>
-                            <p class="text-xs font-black uppercase tracking-widest">${o.type}</p>
-                            <p class="text-[10px] text-gray-500 font-bold uppercase">${m.name} • ${o.date}</p>
-                        </div>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-xs font-black text-white italic">${o.cost || 'По договоренности'}</p>
-                        <span class="text-[9px] font-black uppercase text-green-500">Завершен</span>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        /**
-         * INTERFACE UTILS
-         */
-        function updateStats() {
-            document.getElementById('stat-total').innerText = masters.length;
-            document.getElementById('stat-active').innerText = masters.filter(m => m.status === 'active').length;
-        }
-
-        function updateTopMasters() {
-            const list = document.getElementById('top-masters-list');
-            list.innerHTML = '';
-            
-            const top = [...masters].sort((a,b) => b.jobs - a.jobs).slice(0, 3);
-            top.forEach(m => {
-                const item = document.createElement('div');
-                item.className = "flex items-center justify-between group";
-                item.innerHTML = `
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-amber-400 text-black text-[10px] font-black flex items-center justify-center">#${m.jobs}</div>
-                        <p class="text-[10px] font-black uppercase group-hover:text-amber-400 transition">${m.name}</p>
-                    </div>
-                    <span class="text-[10px] text-gray-500 font-bold tracking-widest">${m.rating} ★</span>
-                `;
-                list.appendChild(item);
-            });
-        }
-
-        function showToast(title, msg, type = "success") {
-            const toast = document.getElementById('toast');
-            const tTitle = document.getElementById('toast-title');
-            const tMsg = document.getElementById('toast-msg');
-            
-            tTitle.innerText = title;
-            tMsg.innerText = msg;
-            toast.style.borderColor = type === 'danger' ? '#ef4444' : '#FBBF24';
-            toast.style.background = type === 'danger' ? '#ef4444' : '#FBBF24';
-            
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3000);
-        }
-
-        function shake(el) {
-            el.classList.add('translate-x-1');
-            setTimeout(() => el.classList.remove('translate-x-1'), 100);
-        }
-
-        function exportData() {
-            showToast("ЭКСПОРТ", "База выгружена в формате CSV");
-            const csv = masters.map(m => `${m.name},${m.phone},${m.district},${m.jobs}`).join('\n');
-            console.log("Exported Data:\n", csv);
-        }
-
-        // Window Init
-        window.onload = () => {
-            console.log("Talas_profi Enterprise System Loaded.");
-        };
-
     </script>
 </body>
 </html>
