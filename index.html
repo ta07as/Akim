@@ -3,912 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TALAS_PROFI | Профессиональный ремонт и монтаж под ключ</title>
-    <style>
-        /* 1. БАЗОВЫЕ НАСТРОЙКИ И ЦВЕТА */
-        :root {
-            --black: #000000;
-            --gold: #FBBF24;
-            --dark-gray: #111111;
-            --light-gray: #222222;
-            --white: #FFFFFF;
-            --font: 'Arial', sans-serif;
-        }
+    <title>Talas_profi | Инженерный подход</title>
 
-        * {
+    <style>
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--black);
-            color: var(--white);
-            font-family: var(--font);
+            background-color: #000000; /* Черный фон */
+            color: #FFFFFF;           /* Белый текст */
+            font-family: 'Arial', sans-serif;
             overflow-x: hidden;
-        }
-
-        /* Кнопка WhatsApp, преследующая пользователя */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: #25D366;
-            color: white;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            text-decoration: none;
-            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
-            z-index: 1000;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .whatsapp-float:hover {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        /* 2. ШАПКА САЙТА */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.95);
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--gold);
-            letter-spacing: 2px;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .header-right {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-
-        .header-phone {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-            transition: color 0.2s;
-        }
-        .header-phone:hover {
-            color: var(--gold);
-        }
-
-        .cta-btn {
-            background-color: var(--gold);
-            color: var(--black);
-            padding: 12px 24px;
-            font-weight: bold;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            transition: background-color 0.2s, transform 0.2s;
-        }
-        .cta-btn:hover {
-            background-color: var(--white);
-            transform: scale(1.05);
-        }
-
-        /* ОБЩИЙ СТИЛЬ ДЛЯ ЗАГОЛОВКОВ СЕКЦИЙ */
-        .section-title {
-            font-size: 42px;
-            font-weight: 900;
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 50px;
-            letter-spacing: 1px;
-        }
-        .section-title span {
-            color: var(--gold);
-        }
-
-        /* 3. ГЛАВНЫЙ ЭКРАН (HERO) */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            padding: 20px;
-            background: radial-gradient(circle, #111 0%, #000 100%);
-        }
-
-        .hero h1 {
-            font-size: 64px;
-            font-weight: 900;
-            text-transform: uppercase;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            max-width: 1000px;
-        }
-        .hero h1 span {
-            color: var(--gold);
-        }
-
-        .hero p {
-            font-size: 22px;
-            color: #aaa;
-            margin-bottom: 40px;
-            max-width: 750px;
-        }
-
-        .main-form {
-            background-color: var(--dark-gray);
-            padding: 35px;
-            border: 1px solid var(--light-gray);
-            width: 100%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        .main-form h3 {
-            font-size: 20px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            color: var(--gold);
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        input[type="tel"] {
-            background-color: var(--black);
-            border: 1px solid #333;
-            padding: 16px;
-            color: var(--white);
-            font-size: 16px;
-            outline: none;
-            text-align: center;
-            transition: border-color 0.3s;
-        }
-        input[type="tel"]:focus {
-            border-color: var(--gold);
-        }
-
-        .submit-btn {
-            background-color: var(--gold);
-            color: var(--black);
-            border: none;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .submit-btn:hover {
-            background-color: var(--white);
-        }
-
-        .form-note {
-            font-size: 12px;
-            color: #666;
-            margin-top: 15px;
-        }
-
-        /* 4. БЛОК ГАРАНТИЙ (Снятие страхов) */
-        .guarantees {
-            padding: 100px 40px;
-            background-color: #050505;
-        }
-
-        .grid-guarantees {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .guarantee-card {
-            background-color: var(--dark-gray);
-            padding: 40px;
-            border: 1px solid #222;
-            text-align: center;
-            transition: border-color 0.3s;
-        }
-        .guarantee-card:hover {
-            border-color: var(--gold);
-        }
-
-        .guarantee-card h3 {
-            font-size: 22px;
-            color: var(--gold);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .guarantee-card p {
-            color: #aaa;
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        /* 5. БЛОК СЧЕТЧИКОВ (Масштаб) */
-        .stats-section {
-            padding: 80px 40px;
-            background-color: var(--dark-gray);
-            border-top: 1px solid var(--light-gray);
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .stat-item h2 {
-            font-size: 72px;
-            color: var(--gold);
-            font-weight: 900;
-            margin-bottom: 5px;
-        }
-
-        .stat-item p {
-            font-size: 13px;
-            text-transform: uppercase;
-            color: #888;
-            letter-spacing: 2px;
-        }
-
-        /* 6. КАЛЬКУЛЯТОР СТОИМОСТИ (Залипалово №1) */
-        .calc-section {
-            padding: 100px 40px;
-            background-color: var(--black);
-        }
-
-        .calc-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: var(--dark-gray);
-            padding: 45px;
-            border: 1px solid var(--light-gray);
-        }
-
-        .calc-item {
-            margin-bottom: 35px;
-        }
-
-        .calc-item label {
-            display: block;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            font-weight: bold;
-            color: #888;
-            font-size: 14px;
-        }
-
-        .calc-item input[type="range"] {
-            width: 100%;
-            accent-color: var(--gold);
-            height: 6px;
-            background: #333;
-            outline: none;
-        }
-
-        .range-val {
-            float: right;
-            color: var(--gold);
-            font-weight: bold;
-            font-size: 18px;
-        }
-
-        .total-price-box {
-            border-top: 1px solid var(--light-gray);
-            padding-top: 30px;
-            text-align: center;
-        }
-
-        .total-price-box h3 {
-            font-size: 48px;
-            color: var(--gold);
-            font-weight: 900;
-        }
-
-        /* 7. ОГРОМНЫЙ ПРАЙС-ЛИСТ С КНОПКАМИ */
-        .pricing-section {
-            padding: 100px 40px;
-            background-color: #050505;
-        }
-
-        .price-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .price-card {
-            background-color: var(--dark-gray);
-            border: 1px solid #222;
-            padding: 35px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-        }
-        .price-card.popular {
-            border-color: var(--gold);
-        }
-        .popular-tag {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background-color: var(--gold);
-            color: var(--black);
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            padding: 5px 10px;
-        }
-
-        .price-card h3 {
-            font-size: 24px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .price-card .cost {
-            color: var(--gold);
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 25px;
-        }
-
-        .price-card ul {
-            list-style: none;
-            color: #aaa;
-            font-size: 14px;
-            margin-bottom: 40px;
-        }
-
-        .price-card ul li {
-            margin-bottom: 12px;
-            position: relative;
-            padding-left: 20px;
-        }
-        .price-card ul li::before {
-            content: '✓';
-            color: var(--gold);
-            position: absolute;
-            left: 0;
-        }
-
-        /* 8. ЭФФЕКТ РЕНТГЕНА (Залипалово №2) */
-        .rentgen-section {
-            padding: 100px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: var(--black);
-        }
-
-        .rentgen-container {
-            position: relative;
-            width: 100%;
-            max-width: 900px;
-            height: 500px;
-            overflow: hidden;
-            border: 2px solid var(--dark-gray);
-        }
-
-        .rentgen-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #111 url('https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?q=80&w=1000') center/cover;
-            z-index: 1;
-        }
-
-        .rentgen-fg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #222 url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000') center/cover;
-            z-index: 2;
-            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-        }
-
-        .rentgen-slider {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 4px;
-            height: 100%;
-            background-color: var(--gold);
-            z-index: 3;
-            transform: translateX(-50%);
-            cursor: col-resize;
-        }
-        .rentgen-slider::before {
-            content: '↔';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 44px;
-            height: 44px;
-            background-color: var(--gold);
-            color: var(--black);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        /* 9. ЭТАПЫ РАБОТЫ */
-        .steps-section {
-            padding: 100px 40px;
-            background-color: #050505;
-        }
-
-        .steps-timeline {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .step-item {
-            display: flex;
-            gap: 35px;
-            margin-bottom: 60px;
-        }
-
-        .step-num {
-            font-size: 64px;
-            font-weight: 900;
-            color: var(--gold);
-            opacity: 0.3;
-            line-height: 0.8;
-        }
-
-        .step-content h3 {
-            font-size: 22px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-
-        .step-content p {
-            color: #aaa;
-            line-height: 1.6;
-            font-size: 15px;
-        }
-
-        /* 10. БЛОК FAQ (Вопрос/Ответ) */
-        .faq-section {
-            padding: 100px 40px;
-            background-color: var(--black);
-        }
-
-        .faq-wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
-            border-bottom: 1px solid var(--light-gray);
-            padding: 25px 0;
-        }
-
-        .faq-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 18px;
-            text-transform: uppercase;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .faq-title:hover {
-            color: var(--gold);
-        }
-
-        .faq-text {
-            color: #aaa;
-            margin-top: 15px;
-            font-size: 15px;
-            line-height: 1.6;
-            display: none;
-        }
-        .faq-item.active .faq-text {
-            display: block;
-        }
-
-        /* 11. ФИНАЛЬНЫЙ СУПЕР-ЗАХВАТ (FOMO) */
-        .urgency-section {
-            background-color: var(--dark-gray);
-            padding: 80px 20px;
-            text-align: center;
-            border-top: 1px solid var(--light-gray);
-        }
-
-        .urgency-box {
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .spots-left {
-            display: inline-block;
-            background-color: #ff3333;
-            color: white;
-            padding: 6px 15px;
-            font-weight: bold;
-            font-size: 13px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-        }
-
-        .urgency-box h2 {
-            font-size: 32px;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        /* 12. ФУТЕР */
-        footer {
-            padding: 80px 40px 40px 40px;
-            background-color: #050505;
-            text-align: center;
-        }
-
-        .footer-contacts a {
-            color: var(--white);
-            text-decoration: none;
-            font-size: 28px;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-            transition: color 0.2s;
-        }
-        .footer-contacts a:hover {
-            color: var(--gold);
-        }
-
-        .copyright {
-            color: #444;
-            font-size: 13px;
-            margin-top: 40px;
-            border-top: 1px solid #111;
-            padding-top: 20px;
-        }
-
-        /* АДАПТИВНОСТЬ ДЛЯ ТЕЛЕФОНОВ */
-        @media (max-width: 768px) {
-            header { padding: 15px 20px; }
-            .header-phone { display: none; } /* На мобилках прячем длинный телефон из шапки */
-            .hero h1 { font-size: 38px; }
-            .hero p { font-size: 16px; }
-            .section-title { font-size: 32px; }
-            .rentgen-container { height: 300px; }
-            .pricing-section, .guarantees, .calc-section, .steps-section, .faq-section { padding: 60px 20px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <a href="https://wa.me/996755000228" class="whatsapp-float" target="_blank">💬</a>
-
-    <header>
-        <a href="#" class="logo">TALAS_PROFI</a>
-        <div class="header-right">
-            <a href="tel:+996755000228" class="header-phone">+996 755 000 228</a>
-            <a href="tel:+996755000228" class="cta-btn">Вызвать мастера</a>
-        </div>
-    </header>
-
-    <section class="hero">
-        <h1>Профессиональный ремонт и монтаж в <span>Таласе</span></h1>
-        <p>Вызовите инженера на бесплатный замер. Рассчитаем честную смету и не поднимем цену в процессе.</p>
-
-        <div class="main-form">
-            <h3>Заявка на бесплатный замер</h3>
-            <div class="input-group">
-                <input type="tel" id="phone1" placeholder="+996 (___) __-__-__" required>
-                <button class="submit-btn" onclick="sendLead('phone1')">Получить расчет 0 сом</button>
-            </div>
-            <div class="form-note">Перезваниваем в течение 5 минут. Ваши данные конфиденциальны.</div>
-        </div>
-    </section>
-
-    <section class="guarantees">
-        <h2 class="section-title">Железные <span>гарантии</span></h2>
-        <div class="grid-guarantees">
-            <div class="guarantee-card">
-                <h3>Без предоплаты</h3>
-                <p>Никаких авансов. Вы оплачиваете работу только поэтапно, видя реальный результат перед глазами.</p>
-            </div>
-            <div class="guarantee-card">
-                <h3>Цена не вырастет</h3>
-                <p>Фиксируем смету в договоре до начала работ. Никаких внезапных накруток за "дополнительные метры".</p>
-            </div>
-            <div class="guarantee-card">
-                <h3>Идеальный порядок</h3>
-                <p>Мы работаем с пылесосом. По окончании каждого рабочего дня и всего объекта убираем весь мусор.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h2>100+</h2>
-                <p>Мастеров в базе</p>
-            </div>
-            <div class="stat-item">
-                <h2>1500+</h2>
-                <p>Готовых объектов</p>
-            </div>
-            <div class="stat-item">
-                <h2>5 Лет</h2>
-                <p>На рынке услуг</p>
-            </div>
-            <div class="stat-item">
-                <h2>100%</h2>
-                <p>Соблюдение сроков</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="calc-section">
-        <h2 class="section-title">Онлайн <span>Калькулятор</span></h2>
-        <div class="calc-wrapper">
-            <div class="calc-item">
-                <label>Площадь вашего помещения: <span class="range-val" id="area-val">50 м²</span></label>
-                <input type="range" id="area" min="5" max="250" value="50">
-            </div>
-            <div class="calc-item">
-                <label>Сложность проекта: <span class="range-val" id="diff-val">Обычный</span></label>
-                <input type="range" id="diff" min="1" max="3" value="1">
-            </div>
-            <div class="total-price-box">
-                <p style="color:#666; text-transform:uppercase; font-size:12px; margin-bottom:10px;">Ориентировочная стоимость работ</p>
-                <h3 id="total-price">15,000 сом</h3>
-            </div>
-        </div>
-    </section>
-
-    <section class="pricing-section">
-        <h2 class="section-title">Наши <span>Услуги и цены</span></h2>
-        <div class="price-grid">
-            
-            <div class="price-card popular">
-                <div class="popular-tag">Часто заказывают</div>
-                <div>
-                    <h3>Электромонтаж</h3>
-                    <div class="cost">от 300 сом/м²</div>
-                    <ul>
-                        <li>Проектирование и штробление</li>
-                        <li>Полная замена проводки</li>
-                        <li>Сборка сложных щитов автоматики</li>
-                        <li>Монтаж подрозетников и люстр</li>
-                    </ul>
-                </div>
-                <button class="cta-btn" style="width: 100%;" onclick="orderWhatsApp('Электромонтаж')">Заказать расчет</button>
-            </div>
-
-            <div class="price-card">
-                <div>
-                    <h3>Сантехника</h3>
-                    <div class="cost">от 400 сом/м²</div>
-                    <ul>
-                        <li>Разводка труб (ХВС, ГВС, отопление)</li>
-                        <li>Монтаж систем водяного теплого пола</li>
-                        <li>Установка инсталляций и смесителей</li>
-                        <li>Подключение бойлеров и котлов</li>
-                    </ul>
-                </div>
-                <button class="cta-btn" style="width: 100%;" onclick="orderWhatsApp('Сантехнику')">Заказать расчет</button>
-            </div>
-
-            <div class="price-card">
-                <div>
-                    <h3>Отделка стен</h3>
-                    <div class="cost">от 250 сом/м²</div>
-                    <ul>
-                        <li>Выравнивание стен (штукатурка)</li>
-                        <li>Финишная шпаклевка под обои/покраску</li>
-                        <li>Поклейка всех видов обоев</li>
-                        <li>Малярные работы без разводов</li>
-                    </ul>
-                </div>
-                <button class="cta-btn" style="width: 100%;" onclick="orderWhatsApp('Отделку')">Заказать расчет</button>
-            </div>
-
-        </div>
-    </section>
-
-    <section class="rentgen-section">
-        <h2 class="section-title">Культура <span>Монтажа</span></h2>
-        <p style="color: #666; margin-bottom: 30px; text-align: center; max-width:600px;">Потяните за ползунок. Мы гордимся тем, как выглядят наши скрытые работы под идеальной отделкой.</p>
+    <section class="tp-main-block">
         
-        <div class="rentgen-container" id="rentgen">
-            <div class="rentgen-bg"></div>
-            <div class="rentgen-fg" id="fg-img"></div>
-            <div class="rentgen-slider" id="slider"></div>
-        </div>
-    </section>
-
-    <section class="steps-section">
-        <h2 class="section-title">Как мы <span>работаем</span></h2>
-        <div class="steps-timeline">
-            <div class="step-item">
-                <div class="step-num">01</div>
-                <div class="step-content">
-                    <h3>Заявка на сайте</h3>
-                    <p>Вы оставляете свой номер. Мы связываемся с вами и подбираем удобное время для визита мастера.</p>
-                </div>
-            </div>
-            <div class="step-item">
-                <div class="step-num">02</div>
-                <div class="step-content">
-                    <h3>Бесплатный замер и смета</h3>
-                    <p>Приезжаем, замеряем объемы, выслушиваем пожелания и в течение дня выдаем итоговую точную стоимость.</p>
-                </div>
-            </div>
-            <div class="step-item">
-                <div class="step-num">03</div>
-                <div class="step-content">
-                    <h3>Чистовой монтаж</h3>
-                    <p>Завозим инструмент, закупаем материалы со скидками и выполняем работу строго по технологии.</p>
-                </div>
-            </div>
-            <div class="step-item">
-                <div class="step-num">04</div>
-                <div class="step-content">
-                    <h3>Приемка и расчет</h3>
-                    <p>Вы проверяете качество каждого узла, подписываете акт и только после этого производите оплату.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="faq-section">
-        <h2 class="section-title">Частые <span>Вопросы</span></h2>
-        <div class="faq-wrapper">
-            <div class="faq-item">
-                <div class="faq-title">Вы помогаете с покупкой материалов? <span>+</span></div>
-                <div class="faq-text">Да, у нас есть партнерские скидки на строительных базах. Мы можем полностью взять закупку, погрузку и доставку на себя, предоставив вам все чеки.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-title">Сколько длится гарантия на работы? <span>+</span></div>
-                <div class="faq-text">В зависимости от типа услуг гарантия составляет от 1 года до 3 лет. Это фиксируется документально.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-title">Работаете ли вы в области или только в городе? <span>+</span></div>
-                <div class="faq-text">Мы покрываем весь город Талас, близлежащие районы, а также имеем бригады в Бишкеке для крупных объектов.</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="urgency-section">
-        <div class="urgency-box">
-            <div class="spots-left">Осталось всего 3 места</div>
-            <h2>На бесплатный замер на этой неделе</h2>
-            <p style="color: #888; margin-bottom: 30px;">Бригады загружены. Успейте забронировать выезд мастера для фиксации старой цены.</p>
-            
-            <div class="input-group" style="max-width: 400px; margin: 0 auto;">
-                <input type="tel" id="phone2" placeholder="+996 (___) __-__-__" required>
-                <button class="submit-btn" onclick="sendLead('phone2')">Занять место</button>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-contacts">
-            <a href="tel:+996755000228">+996 755 000 228</a>
-            <p style="color: #555; text-transform: uppercase; font-size: 11px; letter-spacing: 2px;">Охват: г. Талас и г. Бишкек</p>
-        </div>
-        <div class="copyright">
-            © 2026 IP Akimaaly A. / Talas_profi. Все права защищены.
-        </div>
-    </footer>
-
-    <script>
-        // 1. Скрипт "Рентген" (Ползунок)
-        const rentgen = document.getElementById('rentgen');
-        const fg = document.getElementById('fg-img');
-        const slider = document.getElementById('slider');
-        let isDragging = false;
-
-        function move(e) {
-            if (!isDragging) return;
-            let rect = rentgen.getBoundingClientRect();
-            let x = e.clientX - rect.left;
-            if (x < 0) x = 0;
-            if (x > rect.width) x = rect.width;
-            let percent = (x / rect.width) * 100;
-            slider.style.left = percent + '%';
-            fg.style.clipPath = `polygon(0 0, ${percent}% 0, ${percent}% 100%, 0 100%)`;
-        }
-        slider.addEventListener('mousedown', () => isDragging = true);
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('mousemove', move);
-        slider.addEventListener('touchstart', () => isDragging = true);
-        window.addEventListener('touchend', () => isDragging = false);
-        window.addEventListener('touchmove', (e) => { if (e.touches.length > 0) move(e.touches[0]); });
-
-        // 2. Скрипт Калькулятора
-        const areaInput = document.getElementById('area');
-        const diffInput = document.getElementById('diff');
-        const areaVal = document.getElementById('area-val');
-        const diffVal = document.getElementById('diff-val');
-        const totalPrice = document.getElementById('total-price');
-
-        function updateCalc() {
-            const area = parseInt(areaInput.value);
-            const diff = parseInt(diffInput.value);
-            areaVal.innerText = `${area} м²`;
-            
-            let diffName = "Обычный";
-            let multiplier = 1;
-            if (diff === 2) { diffName = "Сложный"; multiplier = 1.5; }
-            if (diff === 3) { diffName = "Евро/Премиум"; multiplier = 2.2; }
-            diffVal.innerText = diffName;
-
-            let total = Math.round(area * 300 * multiplier);
-            totalPrice.innerText = `${total.toLocaleString()} сом`;
-        }
-        areaInput.addEventListener('input', updateCalc);
-        diffInput.addEventListener('input', updateCalc);
-
-        // 3. Скрипт FAQ (Аккордеон)
-        const faqItems = document.querySelectorAll('.faq-item');
-        faqItems.forEach(item => {
-            const title = item.querySelector('.faq-title');
-            title.addEventListener('click', () => {
-                const isOpen = item.classList.contains('active');
-                faqItems.forEach(i => i.classList.remove('active'));
-                if (!isOpen) item.classList.add('active');
-            });
-        });
-
-        // 4. Скрипты Лидогенерации (Отправка заявок сразу в WhatsApp)
-        function sendLead(inputId) {
-            const phone = document.getElementById(inputId).value;
-            if (phone.trim().length < 6) {
-                alert('Пожалуйста, введите корректный номер телефона!');
-                return;
+        <style>
+            /* СТИЛИ КОНКРЕТНО ЭТОГО БЛОКА (ВНУТРИ BODY) */
+            .tp-main-block {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 100px 20px; /* Отступы 100px сверху и снизу */
+                display: flex;       /* На ПК: Инфо и Услуги в один ряд */
+                gap: 50px;           /* Расстояние между ними */
+                align-items: center;
             }
-            const text = encodeURIComponent(`Здравствуйте! Я оставил заявку на бесплатный замер на сайте. Мой номер: ${phone}. Перезвоните мне.`);
-            window.open(`https://wa.me/996755000228?text=${text}`, '_blank');
-        }
 
-        function orderWhatsApp(serviceName) {
-            const text = encodeURIComponent(`Здравствуйте! Меня интересует расчет стоимости на услугу: ${serviceName}. Проконсультируйте меня.`);
-            window.open(`https://wa.me/996755000228?text=${text}`, '_blank');
-        }
-    </script>
-</body>
+            /* ЛЕВАЯ СТОРОНА: ТЕКСТОВЫЙ БЛОК */
+            .tp-left-info {
+                flex: 0 0 380px;     /* Фиксированная ширина на ПК */
+            }
+
+            .tp-left-info h2 {
+                font-size: 48px;
+                font-weight: 900;
+                text-transform: uppercase;
+                margin: 0 0 20px 0;
+                line-height: 1;
+            }
+
+            .tp-left-info h2 span {
+                color: #FBBF24;     /* Твое золото */
+            }
+
+            .tp-left-info p {
+                color: #666;
+                font-size: 15px;
+                line-height: 1.6;
+                margin: 0;
+            }
+
+            /* ПРАВАЯ СТОРОНА: СЕТКА 5 В РЯД */
+            .tp-right-services {
+                flex: 1;
+                display: grid;
+                grid-template-columns: repeat(5, 1fr); /* Ровно 5 колонок */
+                gap: 12px;
+            }
+
+            /* СПЛЮЩЕННЫЙ ПРЯМОУГОЛЬНИК (УСЛУГА) */
+            .tp-service-card {
+                background: #080808;
+                border: 1px solid #1a1a1a;
+                min-height: 90px;    /* Сплющенный вид */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 10px 5px;
+                text-decoration: none;
+                transition: 0.3s ease;
+            }
+
+            .tp-service-card:hover {
+                border-color: #FBBF24;
+                background: #0c0c0c;
+                transform: translateY(-3px);
+            }
+
+            .tp-service-card span {
+                color: #FFFFFF;
+                font-size: 11px;
+                font-weight: 900;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            /* АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНА (📱) */
+            @media (max-width: 1024px) {
+                .tp-main-block {
+                    flex-direction: column; /* На телефоне: Инфо сверху, Услуги снизу */
+                    text-align: center;
+                    padding: 60px 15px;
+                }
+                
+                .tp-left-info { flex: none; width: 100%; margin-bottom: 30px; }
+
+                /* НА ТЕЛЕФОНЕ ВСЁ ЕЩЕ 5 В РЯД */
+                .tp-right-services {
+                    width: 100%;
+                    grid-template-columns: repeat(5, 1fr); 
+                    gap: 5px;
+                }
+
+                .tp-service-card { min-height: 65px; } /* Сильнее сплющиваем на телефоне */
+                .tp-service-card span { font-size: 8px; } /* Мелкий шрифт, чтобы влезло */
+                .tp-left-info h2 { font-size: 32px; }
+            }
+        </style>
+
+        <div class="tp-left-info">
+            <h2>Инженерный <br> <span>Подход</span></h2>
+            <p>
+                Talas_profi — это профессионализм в каждой детали. 
+                Мы проектируем и монтируем системы, которые работают годами.
+            </p>
+        </div>
+
+        <div class="tp-right-services">
+            
+            <a href="#" class="tp-service-card">
+                <span>Электрика</span>
+            </a>
+
+            <a href="#" class="tp-service-card">
+                <span>Сантехника</span>
+            </a>
+
+            <a href="#" class="tp-service-card">
+                <span>Кирпич</span>
+            </a>
+
+            <a href="#" class="tp-service-card">
+                <span>Обои</span>
+            </a>
+
+            <a href="#" class="tp-service-card">
+                <span>Клининг</span>
+            </a>
+
+        </div>
+
+    </section>
+    </body>
 </html>
