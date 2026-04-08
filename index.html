@@ -392,6 +392,252 @@
 </section>
 
 
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    <section class="tp-why-us-mini">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Exo+2:wght@400;800&display=swap');
+
+        .tp-why-us-mini {
+            background-color: #000;
+            padding: 80px 20px;
+            color: #fff;
+            font-family: 'Exo 2', sans-serif;
+            position: relative;
+            overflow: hidden;
+            background: 
+                radial-gradient(circle at 10% 10%, #0a0a0a 0%, #000 50%),
+                radial-gradient(circle at 90% 90%, #080808 0%, #000 50%);
+            perspective: 2000px;
+        }
+
+        .tp-mini-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .tp-mini-header {
+            text-align: left;
+            margin-bottom: 50px;
+            border-left: 4px solid #FBBF24;
+            padding-left: 15px;
+        }
+
+        .tp-mini-header h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(20px, 4vw, 32px);
+            text-transform: uppercase;
+            margin: 0;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        /* ЦЕНТРАЛЬНЫЙ ЛУЧ */
+        .tp-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .tp-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; width: 2px; height: 100%;
+            background: rgba(251, 191, 36, 0.1);
+        }
+
+        /* БЕГУЩИЙ ИМПУЛЬС */
+        .tp-timeline::after {
+            content: '';
+            position: absolute;
+            left: -1px; top: 0; width: 4px; height: 100px;
+            background: linear-gradient(to bottom, transparent, #FBBF24, transparent);
+            box-shadow: 0 0 15px #FBBF24;
+            animation: moveEnergy 4s linear infinite;
+        }
+
+        @keyframes moveEnergy {
+            0% { top: -100px; }
+            100% { top: 100%; }
+        }
+
+        /* БЛОК ШАГА */
+        .tp-step-mini {
+            position: relative;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* АНИМАЦИЯ ПОЯВЛЕНИЯ ИЗ БЕСКОНЕЧНОСТИ */
+        @keyframes introFlyIn {
+            0% { opacity: 0; transform: translateZ(1000px) scale(0.5); }
+            100% { opacity: 1; transform: translateZ(0) scale(1); }
+        }
+
+        .tp-step-mini {
+            opacity: 0; /* Изначально скрыт */
+            animation: introFlyIn 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        /* РАЗНОЕ ВРЕМЯ ПОЯВЛЕНИЯ ДЛЯ КАЖДОГО ШАГА */
+        .tp-step-mini:nth-child(1) { animation-delay: 0.3s; }
+        .tp-step-mini:nth-child(2) { animation-delay: 0.6s; }
+        .tp-step-mini:nth-child(3) { animation-delay: 0.9s; }
+        .tp-step-mini:nth-child(4) { animation-delay: 1.2s; }
+
+        /* ИКОНКА-ТОЧКА НА ЛИНИИ */
+        .tp-step-dot {
+            position: absolute;
+            left: -36px; top: 50%;
+            width: 12px; height: 12px;
+            background: #000;
+            border: 2px solid #FBBF24;
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 10px #FBBF24;
+            transform: translateY(-50%);
+        }
+
+        /* НОМЕР-ДИСК, КОТОРЫЙ ВРАЩАЕТСЯ */
+        @keyframes spinNodes {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .tp-disk-wrapper {
+            width: 50px; height: 50px;
+            position: absolute;
+            left: -55px; top: 50%;
+            transform: translateY(-50%);
+            transform-style: preserve-3d;
+            animation: spinNodes 10s linear infinite; /* Медленное вращение */
+            perspective: 500px;
+        }
+
+        .tp-disk-num {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 16px;
+            font-weight: 900;
+            color: #FBBF24;
+            text-align: center;
+            line-height: 50px;
+            background: #000;
+            border: 2px solid #FBBF24;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+            backface-visibility: hidden; /* Скрываем обратную сторону */
+        }
+
+        /* КОНТЕНТ ШАГА */
+        .tp-step-content {
+            flex: 1;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .tp-step-mini h3 {
+            color: #888; /* Тусклый в обычном состоянии */
+            font-size: 14px;
+            text-transform: uppercase;
+            margin: 0 0 8px 0;
+            letter-spacing: 1px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .tp-step-mini p {
+            font-size: 13px;
+            color: #555; /* Тусклый в обычном состоянии */
+            line-height: 1.5;
+            margin: 0;
+            transition: 0.3s;
+        }
+
+        /* ЭФФЕКТ СКАНИРОВАНИЯ: ЗАГОРАЕТСЯ ПРИ ХОВЕРЕ (ТАК ЖЕ, КАК НА ПРОЦЕССОРЕ) */
+        .tp-step-mini:hover h3 {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .tp-step-mini:hover p {
+            color: #aaa;
+        }
+
+        /* МОБИЛКА */
+        @media (max-width: 600px) {
+            .tp-timeline { padding-left: 25px; }
+            .tp-step-mini { margin-bottom: 25px; padding: 15px 0; }
+            .tp-disk-wrapper { left: -45px; width: 40px; height: 40px; }
+            .tp-disk-num { font-size: 14px; line-height: 40px; }
+            .tp-step-dot { left: -31px; width: 10px; height: 10px; }
+            .tp-step-mini h3 { font-size: 13px; letter-spacing: 0.5px; }
+            .tp-step-mini p { font-size: 11px; }
+        }
+    </style>
+
+    <div class="tp-mini-container">
+        <div class="tp-mini-header">
+            <h2>ПОЧЕМУ МЫ?</h2>
+        </div>
+
+        <div class="tp-timeline">
+            <div class="tp-step-mini">
+                <div class="tp-disk-wrapper">
+                    <div class="tp-disk-num">01</div>
+                </div>
+                <div class="tp-step-content">
+                    <h3>Опыт и Стандарты</h3>
+                    <p>Более 10 лет мы проектируем и монтируем системы в Таласе.</p>
+                </div>
+            </div>
+
+            <div class="tp-step-mini">
+                <div class="tp-disk-wrapper">
+                    <div class="tp-disk-num">02</div>
+                </div>
+                <div class="tp-step-content">
+                    <h3>PRO-Оборудование</h3>
+                    <p>Точность, скорость и долговечность вашего ремонта.</p>
+                </div>
+            </div>
+
+            <div class="tp-step-mini">
+                <div class="tp-disk-wrapper">
+                    <div class="tp-disk-num">03</div>
+                </div>
+                <div class="tp-step-content">
+                    <h3>Гарантия результата</h3>
+                    <p>Вы получаете работающую систему с официальной гарантией.</p>
+                </div>
+            </div>
+
+            <div class="tp-step-mini">
+                <div class="tp-disk-wrapper">
+                    <div class="tp-disk-num">04</div>
+                </div>
+                <div class="tp-step-content">
+                    <h3>Честная смена</h3>
+                    <p>Никаких скрытых платежей. Стоимость фиксируется в начале.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
     
 
 
@@ -400,6 +646,623 @@
 
 
 
+
+
+    
+
+
+
+    <section class="tp-team-order">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Exo+2:wght@400;800&display=swap');
+
+        .tp-team-order {
+            background-color: #000;
+            padding: 100px 20px;
+            color: #fff;
+            font-family: 'Exo 2', sans-serif;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ДЕКОРАТИВНАЯ СЕТКА */
+        .tp-team-order::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle at 2px 2px, rgba(251, 191, 36, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+
+        .tp-order-box {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid #222;
+            padding: 60px 40px;
+            text-align: center;
+            border-top: 4px solid #FBBF24; /* Золотая полоса сверху */
+        }
+
+        /* ТЕХНИЧЕСКИЕ УГЛЫ */
+        .tp-corner {
+            position: absolute;
+            width: 20px; height: 20px;
+            border: 2px solid #FBBF24;
+            opacity: 0.5;
+        }
+        .tp-tl { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+        .tp-tr { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+        .tp-bl { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+        .tp-br { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+        .tp-order-box h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(20px, 5vw, 32px);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tp-order-box h2 span {
+            color: #FBBF24;
+        }
+
+        .tp-order-box p {
+            color: #888;
+            font-size: 16px;
+            margin-bottom: 45px;
+            line-height: 1.6;
+        }
+
+        /* КНОПКА-КОМАНДА */
+        .tp-btn-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .tp-order-btn {
+            background: #FBBF24;
+            color: #000;
+            text-decoration: none;
+            padding: 22px 50px;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            position: relative;
+            transition: 0.3s;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 0 0 rgba(251, 191, 36, 0);
+        }
+
+        .tp-order-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(251, 191, 36, 0.4);
+            letter-spacing: 4px;
+        }
+
+        .tp-whatsapp-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .tp-team-tag {
+            font-size: 12px;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 30px;
+            display: block;
+        }
+
+        /* АНИМАЦИЯ ПОЯВЛЕНИЯ */
+        .tp-order-box {
+            animation: boxFadeIn 1s ease-out;
+        }
+
+        @keyframes boxFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .tp-order-box { padding: 40px 20px; }
+            .tp-order-btn { padding: 18px 20px; font-size: 13px; }
+            .tp-order-box h2 { font-size: 18px; }
+            .tp-order-box p { font-size: 14px; }
+        }
+    </style>
+
+    <div class="tp-order-box">
+        <div class="tp-corner tp-tl"></div>
+        <div class="tp-corner tp-tr"></div>
+        <div class="tp-corner tp-bl"></div>
+        <div class="tp-corner tp-br"></div>
+
+        <div class="tp-order-header">
+            <h2>ЗАКАЗАТЬ УСЛУГУ У КОМАНДЫ <span>TALAS_PROFI</span></h2>
+            <p>Мы на связи 24/7. Нажмите на кнопку, чтобы обсудить вашу работу.</p>
+           <p>Мы делаем работу любой сложности.</p>
+        </div>
+
+        <div class="tp-btn-group">
+            <a href="https://wa.me/996755000228?text=Команда Talas_profi, мне нужны ваши услуги!" class="tp-order-btn">
+                СВЯЗАТЬСЯ С НАМИ
+            </a>
+        </div>
+
+        <span class="tp-team-tag">Talas profi    первая строительная команда в тласе</span>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+<section class="tp-portfolio-gravity">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Exo+2:wght@300;800&display=swap');
+
+        .tp-portfolio-gravity {
+            background-color: #000;
+            padding: 80px 0;
+            color: #fff;
+            font-family: 'Exo 2', sans-serif;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .tp-p-container {
+            max-width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tp-p-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 0 20px;
+        }
+
+        .tp-p-header h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(22px, 5vw, 36px);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0;
+        }
+
+        .tp-p-header h2 span {
+            color: #FBBF24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+
+        .tp-gravity-streams {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: auto;
+            justify-content: center;
+        }
+
+        .tp-p-stream {
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            position: relative;
+        }
+
+        .tp-p-track {
+            display: flex;
+            gap: 15px;
+            width: fit-content;
+        }
+
+        /* АНИМАЦИИ БЕСКОНЕЧНОГО ЦИКЛА */
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 7.5px)); }
+        }
+
+        @keyframes scrollRight {
+            0% { transform: translateX(calc(-50% - 7.5px)); }
+            100% { transform: translateX(0); }
+        }
+
+        .tp-stream-1 .tp-p-track { animation: scrollLeft 50s linear infinite; }
+        .tp-stream-2 .tp-p-track { animation: scrollRight 55s linear infinite; }
+        .tp-stream-3 .tp-p-track { animation: scrollLeft 60s linear infinite; }
+
+        .tp-p-stream:hover .tp-p-track { animation-play-state: paused; }
+
+        .tp-p-item {
+            width: 300px;
+            height: 200px;
+            background-color: #111;
+            border: 1px solid #222;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            cursor: pointer;
+        }
+
+        .tp-p-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1) brightness(0.5);
+            transition: 0.6s;
+        }
+
+        .tp-p-item:hover {
+            z-index: 100;
+            border-color: #FBBF24;
+            transform: scale(1.2) translateZ(50px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 30px rgba(251, 191, 36, 0.4);
+        }
+
+        .tp-p-item:hover img {
+            filter: grayscale(0) brightness(1);
+        }
+
+        .tp-item-mark {
+            position: absolute;
+            bottom: 10px; right: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            background: rgba(0,0,0,0.7);
+            padding: 2px 6px;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            .tp-p-item { width: 200px; height: 140px; }
+            .tp-stream-1 .tp-p-track { animation-duration: 30s; }
+            .tp-stream-2 .tp-p-track { animation-duration: 35s; }
+            .tp-stream-3 .tp-p-track { animation-duration: 40s; }
+        }
+    </style>
+
+    <div class="tp-p-container">
+        <div class="tp-p-header">
+            <h2>ПОРТФОЛИО <span>ПРОЕКТОВ</span></h2>
+        </div>
+
+        <div class="tp-gravity-streams">
+            
+            <div class="tp-p-stream tp-stream-1">
+                <div class="tp-p-track">
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_01</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_02</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_03</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1595844730298-b9f0ff98ffd0?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_04</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_05</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_01</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_02</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_03</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1595844730298-b9f0ff98ffd0?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_04</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_05</div></div>
+                </div>
+            </div>
+
+            <div class="tp-p-stream tp-stream-2">
+                <div class="tp-p-track">
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1541271696563-3be2f99a7b28?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_06</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_07</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1558227691-41ea78d1f631?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_08</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_09</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_10</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1541271696563-3be2f99a7b28?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_06</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_07</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1558227691-41ea78d1f631?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_08</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_09</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_10</div></div>
+                </div>
+            </div>
+
+            <div class="tp-p-stream tp-stream-3">
+                <div class="tp-p-track">
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_11</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_12</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_13</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1495033041221-5992a731805a?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_14</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1632629815363-283819d2487e?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_15</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_11</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1534398079543-7ae6d016b86a?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_12</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_13</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1495033041221-5992a731805a?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_14</div></div>
+                    <div class="tp-p-item"><img src="https://images.unsplash.com/photo-1632629815363-283819d2487e?q=80&w=500" alt="Work"><div class="tp-item-mark">OBJ_15</div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  <style>
+    .tp-portfolio-footer {
+        text-align: center;
+        margin-top: 50px;
+        padding-bottom: 20px;
+        position: relative;
+        z-index: 20;
+    }
+
+    .tp-more-btn {
+        display: inline-block;
+        padding: 18px 45px;
+        border: 1px solid #FBBF24;
+        color: #FBBF24;
+        text-decoration: none;
+        font-family: 'Syncopate', sans-serif;
+        font-size: 13px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        overflow: hidden;
+        background: transparent;
+    }
+
+    .tp-more-btn::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: #FBBF24;
+        transition: 0.4s;
+        z-index: -1;
+    }
+
+    .tp-more-btn:hover {
+        color: #000;
+        box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+        transform: translateY(-5px);
+    }
+
+    .tp-more-btn:hover::before {
+        left: 0;
+    }
+
+    /* Декоративная подпись под кнопкой */
+    .tp-archive-tag {
+        display: block;
+        margin-top: 15px;
+        font-size: 10px;
+        color: #333;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+</style>
+
+<div class="tp-portfolio-footer">
+    <a href="portfolio.html" class="tp-more-btn">
+        ОТКРЫТЬ ВЕСЬ АРХИВ
+    </a>
+    <span class="tp-archive-tag">FULL_DATABASE_ACCESS_2026</span>
+</div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <section class="tp-trust-grid-8">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Exo+2:wght@400;800&display=swap');
+
+        .tp-trust-grid-8 {
+            background-color: #000;
+            padding: 100px 20px;
+            color: #fff;
+            font-family: 'Exo 2', sans-serif;
+            position: relative;
+        }
+
+        .tp-trust-8-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tp-trust-8-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .tp-trust-8-header h2 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(22px, 5vw, 32px);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        .tp-trust-8-header h2 span { color: #FBBF24; }
+
+        /* СЕТКА НА 8 ПУНКТОВ */
+        .tp-grid-8 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            transition: 0.5s;
+        }
+
+        /* КАРТОЧКА */
+        .tp-trust-node {
+            background: rgba(15, 15, 15, 0.8);
+            border: 1px solid rgba(251, 191, 36, 0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        /* ЭФФЕКТ ПРИ НАВЕДЕНИИ */
+        .tp-grid-8:hover .tp-trust-node:not(:hover) {
+            opacity: 0.3; /* Приглушаем остальные */
+            filter: blur(2px) grayscale(1);
+            transform: scale(0.95);
+        }
+
+        .tp-trust-node:hover {
+            border-color: #FBBF24;
+            background: #000;
+            transform: scale(1.1) translateY(-10px);
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(251, 191, 36, 0.2);
+        }
+
+        /* ИКОНКА И НОМЕР */
+        .tp-node-num {
+            position: absolute;
+            top: 10px; right: 10px;
+            font-family: 'Syncopate', sans-serif;
+            font-size: 10px;
+            color: rgba(251, 191, 36, 0.3);
+        }
+
+        .tp-node-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .tp-trust-node:hover .tp-node-icon {
+            transform: scale(1.2);
+            filter: drop-shadow(0 0 10px #FBBF24);
+        }
+
+        .tp-trust-node h3 {
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .tp-trust-node p {
+            font-size: 12px;
+            color: #888;
+            line-height: 1.4;
+            margin: 0;
+            transition: 0.3s;
+        }
+
+        .tp-trust-node:hover p { color: #ccc; }
+
+        /* МОБИЛКА */
+        @media (max-width: 1024px) {
+            .tp-grid-8 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .tp-grid-8 { grid-template-columns: 1fr; }
+            .tp-trust-node:hover { transform: scale(1.05); }
+        }
+    </style>
+
+    <div class="tp-trust-8-container">
+        <div class="tp-trust-8-header">
+            <h2>8 СТОЛПОВ <span>ДОВЕРИЯ</span></h2>
+        </div>
+
+        <div class="tp-grid-8">
+            <div class="tp-trust-node">
+                <span class="tp-node-num">01</span>
+                <span class="tp-node-icon">📜</span>
+                <h3>ОФИЦИАЛЬНО</h3>
+                <p>Работаем по договору с четкими обязательствами.</p>
+            </div>
+
+            <div class="tp-trust-node">
+                <span class="tp-node-num">02</span>
+                <span class="tp-node-icon">⚖️</span>
+                <h3>ФИКС-ЦЕНА</h3>
+                <p>Смета не меняется после подписания контракта.</p>
+            </div>
+
+            <div class="tp-trust-node">
+                <span class="tp-node-num">03</span>
+                <span class="tp-node-icon">🛠️</span>
+                <h3>PRO-ИНСТРУМЕНТ</h3>
+                <p>Используем только современное оборудование.</p>
+            </div>
+
+            <div class="tp-trust-node">
+                <span class="tp-node-num">04</span>
+                <span class="tp-node-icon">🛡️</span>
+                <h3>ГАРАНТИЯ</h3>
+                <p>Бесплатное обслуживание систем до 5 лет.</p>
+            </div>
+
+            <div class="tp-trust-node">
+                <span class="tp-node-num">05</span>
+                <span class="tp-node-icon">⏱️</span>
+                <h3>СРОКИ</h3>
+                <p>Платим штраф за каждый день просрочки.</p>
+            </div>
+
+            <div class="tp-trust-node">
+                <span class="tp-node-num">06</span>
+                <span class="tp-node-icon">📱</span>
+                <h3>ОТЧЕТНОСТЬ</h3>
+                <p>Ежедневные фото/видео отчеты в WhatsApp.</p>
+            </div>
+
+            <div class="tp-trust-node">
+                <span class="tp-node-num">07</span>
+                <span class="tp-node-icon">📍</span>
+                <h3>ЛОКАЛЬНОСТЬ</h3>
+                <p>Мы свои, Таласские. Нас легко найти и проверить.</p>
+            </div>
+
+            <div class="tp-trust-node">
+                <span class="tp-node-num">08</span>
+                <span class="tp-node-icon">💎</span>
+                <h3>ЧИСТОТА</h3>
+                <p>Убираем весь строительный мусор за собой.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    
+
+
+    
     
     
   
