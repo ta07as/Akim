@@ -19,155 +19,163 @@
 
 
 
-<nav class="tp-main-header">
-    <div class="tp-header-container">
-        <a href="#" class="tp-nav-logo">TALAS<span>_PROFI</span></a>
-
-        <div class="tp-nav-desktop">
-            <a href="#services">УСЛУГИ</a>
-            <a href="#portfolio">РАБОТЫ</a>
-            <a href="#contacts">КОНТАКТЫ</a>
+<nav class="tp-elite-header">
+    <div class="tp-nav-upper">
+        <div class="tp-limit">
+            <div class="tp-status"><span>●</span> СИСТЕМА АКТИВНА // ТАЛАС - БИШКЕК</div>
+            <div class="tp-social-quick">
+                <a href="#">INSTAGRAM</a>
+                <a href="#">YOUTUBE</a>
+            </div>
         </div>
+    </div>
+    <div class="tp-nav-main">
+        <div class="tp-limit">
+            <a href="#" class="tp-main-logo">TALAS<span>_PROFI</span></a>
+            
+            <div class="tp-nav-center">
+                <a href="#services">УСЛУГИ</a>
+                <a href="#portfolio">РАБОТЫ</a>
+                <a href="#contacts">КОНТАКТЫ</a>
+            </div>
 
-        <div class="tp-nav-right">
-            <a href="tel:+996755000228" class="tp-nav-tel">+996 755 000 228</a>
-            <a href="https://wa.me/996755000228" class="tp-nav-wa">WHATSAPP</a>
-        </div>
+            <div class="tp-nav-right-block">
+                <div class="tp-nav-tel-group">
+                    <small>ДИСПЕТЧЕР 24/7</small>
+                    <a href="tel:+996755000228">+996 755 000 228</a>
+                </div>
+                <a href="https://wa.me/996755000228" class="tp-wa-glow">WHATSAPP</a>
+            </div>
 
-        <div class="tp-nav-burger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
+            <button class="tp-mob-toggle" onclick="toggleEliteMenu()">
+                <span></span><span></span>
+            </button>
         </div>
     </div>
 
-    <div class="tp-mobile-dropdown" id="mobileDropdown">
-        <a href="#services" onclick="toggleMenu()">УСЛУГИ</a>
-        <a href="#portfolio" onclick="toggleMenu()">РАБОТЫ</a>
-        <a href="#contacts" onclick="toggleMenu()">КОНТАКТЫ</a>
-        <div class="tp-mob-divider"></div>
+    <div class="tp-elite-mobile" id="eliteMenu">
+        <a href="#services" onclick="toggleEliteMenu()">УСЛУГИ</a>
+        <a href="#portfolio" onclick="toggleEliteMenu()">РАБОТЫ</a>
+        <a href="#contacts" onclick="toggleEliteMenu()">КОНТАКТЫ</a>
+        <hr style="border:0; border-top:1px solid #222; width:50%; margin:20px auto;">
         <a href="tel:+996755000228" style="color:#FBBF24;">ПОЗВОНИТЬ</a>
         <a href="https://wa.me/996755000228" style="color:#25D366;">WHATSAPP</a>
     </div>
-
-    <style>
-        /* 1. ГЛАВНОЕ: КОРРЕКТНЫЙ ОТСТУП */
-        body { 
-            margin: 0; 
-            padding-top: 90px !important; /* Ровно столько, чтобы текст не заплывал */
-        }
-
-        .tp-main-header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 90px;
-            background: #000;
-            border-bottom: 2px solid #FBBF24;
-            display: flex;
-            align-items: center;
-            z-index: 100000;
-            box-sizing: border-box;
-        }
-
-        .tp-header-container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* ЛОГОТИП */
-        .tp-nav-logo {
-            font-family: 'Arial Black', sans-serif;
-            font-size: 24px;
-            color: #fff;
-            text-decoration: none;
-            letter-spacing: 2px;
-        }
-        .tp-nav-logo span { color: #FBBF24; }
-
-        /* МЕНЮ ЦЕНТР */
-        .tp-nav-desktop { display: flex; gap: 40px; }
-        .tp-nav-desktop a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .tp-nav-desktop a:hover { color: #FBBF24; }
-
-        /* ПРАВАЯ ЧАСТЬ */
-        .tp-nav-right { display: flex; align-items: center; gap: 30px; }
-        .tp-nav-tel {
-            color: #fff;
-            text-decoration: none;
-            font-weight: 900;
-            font-size: 18px;
-            transition: 0.3s;
-        }
-        .tp-nav-tel:hover { color: #FBBF24; }
-        .tp-nav-wa {
-            background: #25D366;
-            color: #fff;
-            padding: 12px 25px;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 900;
-            border-radius: 4px;
-        }
-
-        /* БУРГЕР */
-        .tp-nav-burger { display: none; cursor: pointer; flex-direction: column; gap: 8px; }
-        .tp-nav-burger span { width: 35px; height: 3px; background: #FBBF24; }
-
-        /* МОБИЛЬНОЕ ВЫПАДАЮЩЕЕ МЕНЮ */
-        .tp-mobile-dropdown {
-            display: none;
-            position: absolute;
-            top: 90px;
-            left: 0;
-            width: 100%;
-            background: #000;
-            flex-direction: column;
-            padding: 30px;
-            text-align: center;
-            border-bottom: 3px solid #FBBF24;
-            box-sizing: border-box;
-        }
-        .tp-mobile-dropdown a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 20px;
-            padding: 15px 0;
-            font-weight: 900;
-            border-bottom: 1px solid #111;
-        }
-        .tp-mob-divider { height: 20px; }
-
-        /* АДАПТАЦИЯ (ТЕЛЕФОН) */
-        @media (max-width: 1024px) {
-            body { padding-top: 80px !important; }
-            .tp-main-header { height: 80px; }
-            .tp-nav-desktop, .tp-nav-right { display: none; }
-            .tp-nav-burger { display: flex; }
-            .tp-header-container { padding: 0 20px; }
-            .tp-mobile-dropdown.active { display: flex; }
-        }
-    </style>
-
-    <script>
-        function toggleMenu() {
-            document.getElementById('mobileDropdown').classList.toggle('active');
-        }
-    </script>
 </nav>
 
+<style>
+    /* ИСПРАВЛЕНИЕ ГЛОБАЛЬНОЙ ВЕРСТКИ */
+    :root { --h-pc: 120px; --h-mob: 80px; }
+    
+    * { box-sizing: border-box; }
+
+    body { 
+        margin: 0; 
+        padding-top: var(--h-pc) !important; /* Авто-отступ для контента */
+    }
+
+    .tp-elite-header {
+        position: fixed;
+        top: 0; left: 0; width: 100%;
+        z-index: 999999;
+        background: #000;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .tp-limit {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+    }
+
+    /* ВЕРХНЯЯ ПОЛОСКА */
+    .tp-nav-upper {
+        height: 35px;
+        background: #0a0a0a;
+        border-bottom: 1px solid #1a1a1a;
+        font-size: 10px;
+        color: #444;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .tp-status span { color: #FBBF24; margin-right: 5px; animation: blink 2s infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .tp-social-quick a { color: #444; text-decoration: none; margin-left: 20px; transition: 0.3s; }
+    .tp-social-quick a:hover { color: #fff; }
+
+    /* ОСНОВНАЯ ШАПКА */
+    .tp-nav-main {
+        height: 85px;
+        border-bottom: 2px solid #FBBF24;
+    }
+
+    .tp-main-logo {
+        font-size: 26px;
+        font-weight: 900;
+        color: #fff;
+        text-decoration: none;
+        letter-spacing: -1px;
+    }
+    .tp-main-logo span { color: #FBBF24; }
+
+    .tp-nav-center { display: flex; gap: 35px; }
+    .tp-nav-center a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
+    .tp-nav-center a:hover { color: #FBBF24; }
+
+    .tp-nav-right-block { display: flex; align-items: center; gap: 30px; }
+
+    .tp-nav-tel-group { text-align: right; }
+    .tp-nav-tel-group small { display: block; font-size: 9px; color: #FBBF24; font-weight: bold; margin-bottom: 2px; }
+    .tp-nav-tel-group a { color: #fff; text-decoration: none; font-size: 18px; font-weight: 900; }
+
+    .tp-wa-glow {
+        background: #25D366;
+        color: #fff;
+        text-decoration: none;
+        padding: 12px 20px;
+        font-size: 11px;
+        font-weight: 900;
+        box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
+    }
+
+    /* МОБИЛЬНЫЙ ВИД */
+    .tp-mob-toggle { display: none; background: none; border: none; flex-direction: column; gap: 7px; cursor: pointer; }
+    .tp-mob-toggle span { width: 30px; height: 3px; background: #FBBF24; }
+
+    .tp-elite-mobile {
+        position: fixed; top: -100%; left: 0; width: 100%;
+        background: #000; padding: 40px 20px;
+        display: flex; flex-direction: column; align-items: center;
+        transition: 0.5s; border-bottom: 3px solid #FBBF24; z-index: -1;
+    }
+    .tp-elite-mobile.active { top: var(--h-mob); }
+    .tp-elite-mobile a { color: #fff; text-decoration: none; font-size: 22px; font-weight: 900; padding: 15px; width: 100%; text-align: center; }
+
+    @media (max-width: 1024px) {
+        body { padding-top: var(--h-mob) !important; }
+        .tp-nav-upper, .tp-nav-center, .tp-nav-right-block { display: none; }
+        .tp-nav-main { height: var(--h-mob); }
+        .tp-mob-toggle { display: flex; }
+        .tp-main-logo { font-size: 20px; }
+    }
+</style>
+
+<script>
+    function toggleEliteMenu() {
+        document.getElementById('eliteMenu').classList.toggle('active');
+    }
+</script>
 
     
 
