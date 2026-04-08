@@ -19,157 +19,113 @@
 
 
 
-<nav class="tp-command-nav">
-    <div class="tp-nav-top-bar">
-        <div class="tp-nav-container">
-            <div class="tp-top-info">
-                <span>📍 ТАЛАС / БИШКЕК</span>
-                <span>⏱ 08:00 - 20:00</span>
-            </div>
-            <div class="tp-top-socials">
+<nav class="tp-nav-fixed">
+    <div class="tp-nav-top">
+        <div class="tp-container">
+            <span>📍 ТАЛАС / БИШКЕК</span>
+            <div class="tp-nav-soc">
                 <a href="#">INSTAGRAM</a>
                 <a href="#">YOUTUBE</a>
-                <a href="#">TELEGRAM</a>
             </div>
         </div>
     </div>
-
-    <div class="tp-nav-main">
-        <div class="tp-nav-container">
+    <div class="tp-nav-bottom">
+        <div class="tp-container">
             <a href="#" class="tp-logo">TALAS<span>_PROFI</span></a>
-
             <ul class="tp-nav-menu">
-                <li><a href="#hero">ГЛАВНАЯ</a></li>
                 <li><a href="#services">УСЛУГИ</a></li>
-                <li><a href="#trust">ОТЗЫВЫ</a></li>
                 <li><a href="#portfolio">РАБОТЫ</a></li>
                 <li><a href="#contacts">КОНТАКТЫ</a></li>
             </ul>
-
-            <div class="tp-nav-actions">
-                <a href="https://wa.me/996755000228" class="tp-btn-wa">WHATSAPP</a>
-                <a href="tel:+996755000228" class="tp-btn-call">+996 755 000 228</a>
+            <div class="tp-nav-right">
+                <a href="https://wa.me/996755000228" class="tp-wa-link">WA</a>
+                <a href="tel:+996755000228" class="tp-phone-link">+996 755 000 228</a>
             </div>
-
-            <div class="tp-nav-burger" onclick="toggleMobileMenu()">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-    </div>
-
-    <div class="tp-mobile-overlay" id="mobileMenu">
-        <div class="tp-mobile-content">
-            <div class="tp-close-menu" onclick="toggleMobileMenu()">×</div>
-            <a href="#hero">ГЛАВНАЯ</a>
-            <a href="#services">УСЛУГИ</a>
-            <a href="#trust">ПРЕИМУЩЕСТВА</a>
-            <a href="#portfolio">ПОРТФОЛИО</a>
-            <a href="#contacts">КОНТАКТЫ</a>
-            <hr>
-            <a href="tel:+996755000228" class="tp-mob-phone">+996 755 000 228</a>
-            <div class="tp-mob-soc">
-                <a href="#">IG</a> <a href="#">YT</a> <a href="#">TG</a>
+            <div class="tp-burger" onclick="document.querySelector('.tp-nav-menu').classList.toggle('active')">
+                <span></span><span></span>
             </div>
         </div>
     </div>
 
     <style>
-        /* ГЛОБАЛЬНЫЕ НАСТРОЙКИ */
-        :root { --gold: #FBBF24; --black: #000000; --dark: #0a0a0a; }
+        /* ГЛОБАЛЬНОЕ ИСПРАВЛЕНИЕ */
+        * { box-sizing: border-box; }
         
-        body { padding-top: 110px; } /* ВАЖНО: компенсация высоты навигации */
-
-        .tp-command-nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            z-index: 10000;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(15px);
-            font-family: 'Exo 2', sans-serif;
-            border-bottom: 1px solid #1a1a1a;
+        body { 
+            margin: 0; 
+            padding-top: 100px !important; /* Этот отступ спасает от наезда текста на меню */
         }
 
-        .tp-nav-container {
-            max-width: 1400px;
+        .tp-nav-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10000;
+            background: #000;
+            border-bottom: 1px solid #FBBF24;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .tp-container {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 25px;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* ВЕРХНЯЯ ПАНЕЛЬ */
-        .tp-nav-top-bar {
-            background: var(--dark);
-            padding: 8px 0;
-            border-bottom: 1px solid #111;
+        /* ВЕРХНЯЯ ПОЛОСКА */
+        .tp-nav-top {
+            background: #111;
+            padding: 5px 0;
             font-size: 10px;
-            font-weight: bold;
+            color: #666;
             letter-spacing: 1px;
-            color: #444;
         }
-        .tp-top-socials a { color: #666; text-decoration: none; margin-left: 20px; transition: 0.3s; }
-        .tp-top-socials a:hover { color: var(--gold); }
+        .tp-nav-soc a { color: #666; text-decoration: none; margin-left: 15px; }
 
-        /* ГЛАВНАЯ ПАНЕЛЬ */
-        .tp-nav-main { height: 75px; display: flex; align-items: center; }
-
-        .tp-logo { font-family: 'Syncopate', sans-serif; font-size: 20px; color: #fff; text-decoration: none; font-weight: 700; }
-        .tp-logo span { color: var(--gold); }
+        /* ОСНОВНОЕ МЕНЮ */
+        .tp-nav-bottom { height: 70px; display: flex; align-items: center; }
+        
+        .tp-logo { font-weight: 900; font-size: 20px; color: #fff; text-decoration: none; }
+        .tp-logo span { color: #FBBF24; }
 
         .tp-nav-menu { display: flex; list-style: none; gap: 25px; margin: 0; padding: 0; }
-        .tp-nav-menu a { color: #fff; text-decoration: none; font-size: 11px; font-weight: 900; letter-spacing: 1px; transition: 0.3s; }
-        .tp-nav-menu a:hover { color: var(--gold); }
+        .tp-nav-menu a { color: #fff; text-decoration: none; font-size: 12px; font-weight: bold; transition: 0.3s; }
+        .tp-nav-menu a:hover { color: #FBBF24; }
 
-        .tp-nav-actions { display: flex; align-items: center; gap: 20px; }
-        
-        .tp-btn-wa { 
-            color: #25D366; border: 1px solid #25D366; 
-            padding: 8px 15px; font-size: 10px; font-weight: 900; 
-            text-decoration: none; transition: 0.3s;
-        }
-        .tp-btn-wa:hover { background: #25D366; color: #fff; }
+        .tp-nav-right { display: flex; align-items: center; gap: 20px; }
+        .tp-wa-link { color: #25D366; text-decoration: none; font-weight: 900; border: 1px solid #25D366; padding: 5px 10px; font-size: 10px; }
+        .tp-phone-link { color: #fff; text-decoration: none; font-weight: 900; font-size: 16px; }
 
-        .tp-btn-call { color: #fff; text-decoration: none; font-weight: 900; font-size: 15px; }
+        .tp-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .tp-burger span { width: 25px; height: 2px; background: #FBBF24; }
 
-        /* МОБИЛЬНЫЙ БУРГЕР */
-        .tp-nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-        .tp-nav-burger span { width: 28px; height: 2px; background: var(--gold); }
-
-        /* МОБИЛЬНОЕ МЕНЮ (OVERLAY) */
-        .tp-mobile-overlay {
-            position: fixed; top: 0; right: -100%; width: 100%; height: 100vh;
-            background: rgba(0,0,0,0.98); transition: 0.5s; z-index: 10001;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .tp-mobile-overlay.active { right: 0; }
-        .tp-mobile-content { text-align: center; width: 100%; }
-        .tp-mobile-content a { display: block; color: #fff; text-decoration: none; font-size: 24px; font-family: 'Syncopate', sans-serif; padding: 15px; }
-        .tp-close-menu { font-size: 50px; color: var(--gold); cursor: pointer; margin-bottom: 20px; }
-        .tp-mob-phone { color: var(--gold) !important; font-size: 20px !important; }
-
-        /* АДАПТИВНОСТЬ */
-        @media (max-width: 1050px) {
-            .tp-nav-menu, .tp-nav-top-bar { display: none; }
-            .tp-nav-burger { display: flex; }
-            .tp-btn-call { display: none; }
-            body { padding-top: 75px; }
+        /* АДАПТАЦИЯ ПОД ТЕЛЕФОН */
+        @media (max-width: 850px) {
+            body { padding-top: 80px !important; }
+            .tp-nav-top, .tp-nav-menu, .tp-phone-link { display: none; }
+            .tp-nav-bottom { height: 60px; }
+            .tp-burger { display: flex; }
+            
+            /* Выпадающее меню для мобилки */
+            .tp-nav-menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                background: #111;
+                padding: 20px;
+                gap: 15px;
+                border-bottom: 2px solid #FBBF24;
+            }
         }
     </style>
-
-    <script>
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('active');
-        }
-        // Закрывать при клике на ссылку
-        document.querySelectorAll('.tp-mobile-content a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('mobileMenu').classList.remove('active');
-            });
-        });
-    </script>
 </nav>
-
 
 
 
