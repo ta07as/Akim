@@ -3,92 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talas_profi — Камера</title>
+    <title>Talas_profi — Мобильная Камера</title>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
-        body { background-color: #000000; color: #FFFFFF; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
-        h1 { color: #FBBF24; font-size: 24px; text-transform: uppercase; }
-        .camera-container { max-width: 100%; width: 400px; margin: 20px auto; border: 2px solid #FBBF24; border-radius: 8px; overflow: hidden; background: #111111; }
-        video { width: 100%; height: auto; display: block; }
-        .info-box { background: #111; border: 1px solid #333; padding: 15px; border-radius: 6px; display: inline-block; }
-        input { padding: 10px; font-size: 16px; background: #000; color: #FFF; border: 1px solid #FBBF24; border-radius: 4px; margin-right: 10px; width: 100px; text-align: center; text-transform: lowercase; }
-        button { background-color: #FBBF24; color: #000000; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 4px; }
-        #status { color: #AAAAAA; margin-top: 15px; font-size: 14px; }
+        :root { --bg: #000000; --card: #111111; --gold: #FBBF24; --text: #FFFFFF; --muted: #888888; --error: #EF4444; --success: #10B981; }
+        body { background-color: var(--bg); color: var(--text); font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
+        header { border-bottom: 1px solid #222; padding-bottom: 15px; margin-bottom: 20px; }
+        h1 { color: var(--gold); font-size: 22px; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
+        .dashboard { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+        .info-box { background: var(--card); border: 1px solid #333; padding: 15px; border-radius: 8px; width: 100%; max-width: 350px; box-sizing: border-box; }
+        input { padding: 12px; font-size: 18px; background: #000; color: var(--gold); border: 2px solid var(--gold); border-radius: 6px; width: 140px; text-align: center; text-transform: lowercase; font-weight: bold; letter-spacing: 2px; outline: none; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
+        button { background-color: var(--gold); color: #000000; border: none; padding: 14px 24px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 6px; width: 100%; text-transform: uppercase; transition: opacity 0.2s; }
+        button:hover { opacity: 0.9; }
+        button:disabled { background: #333; color: #666; cursor: not-allowed; }
+        .camera-container { max-width: 100%; width: 400px; margin: 15px auto; border: 2px solid var(--gold); border-radius: 12px; overflow: hidden; background: var(--card); aspect-ratio: 9/16; max-height: 400px; display: flex; align-items: center; justify-content: center; }
+        video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        #status { color: var(--muted); font-size: 14px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <h1>Камера-Передатчик</h1>
+    <header>
+        <h1>Talas_profi Encoder</h1>
+    </header>
 
-    <div class="info-box">
-        <p>Ваш ID камеры: <strong id="my-peer-id" style="color: #FBBF24; font-size: 20px;">...</strong></p>
-        <p>ID монитора:</p>
-        <input type="text" id="target-id-input" placeholder="например: x9k2" maxlength="6">
-        <button id="start-broadcast-btn">Транслировать</button>
+    <div class="dashboard">
+        <div class="info-box">
+            <label style="font-size: 13px; color: var(--muted); display: block; margin-bottom: 8px;">КОД ЦЕНТРА МОНИТОРИНГА</label>
+            <input type="text" id="target-id-input" placeholder="напр: x9k2" maxlength="4" autocomplete="off">
+            <button id="start-broadcast-btn" disabled>Подключить поток</button>
+        </div>
+        <div id="status">Инициализация аппаратной камеры...</div>
     </div>
 
     <div class="camera-container">
         <video id="local-video" autoplay playsinline muted></video>
     </div>
 
-    <div id="status">Инициализация камеры...</div>
-
     <script>
-        function generateShortId() {
-            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < 4; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-
-        const shortId = generateShortId();
-        const peer = new Peer(shortId);
-
+        const peer = new Peer();
         const localVideo = document.getElementById('local-video');
         const statusDiv = document.getElementById('status');
-        const idDisplay = document.getElementById('my-peer-id');
+        const connectBtn = document.getElementById('start-broadcast-btn');
         let localStream = null;
+        let activeCall = null;
 
-        peer.on('open', (id) => {
-            idDisplay.textContent = id;
-        });
-
-        peer.on('error', (err) => {
-            if(err.type === 'unavailable-id') {
-                location.reload();
+        async function initCamera() {
+            try {
+                localStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: { ideal: "environment" },
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }, 
+                    audio: false 
+                });
+                localVideo.srcObject = localStream;
+                statusDiv.textContent = "Камера готова. Введите код монитора.";
+                connectBtn.disabled = false;
+            } catch (err) {
+                statusDiv.textContent = "Ошибка доступа: проверьте разрешения камеры!";
+                console.error(err);
             }
-        });
+        }
 
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false })
-            .then((stream) => {
-                localStream = stream;
-                localVideo.srcObject = stream;
-                statusDiv.textContent = "Камера готова.";
-            })
-            .catch(err => {
-                statusDiv.textContent = "Ошибка доступа к камере!";
-            });
+        initCamera();
 
-        document.getElementById('start-broadcast-btn').addEventListener('click', () => {
+        connectBtn.addEventListener('click', () => {
             const targetId = document.getElementById('target-id-input').value.trim().toLowerCase();
-            if (!targetId || !localStream) {
-                alert("Введите ID монитора!");
+            if (targetId.length < 4) {
+                alert("Введите полный 4-значный код монитора!");
+                return;
+            }
+            if (!localStream) {
+                alert("Поток камеры не инициализирован!");
                 return;
             }
 
-            statusDiv.textContent = "Соединение...";
-            const call = peer.call(targetId, localStream);
-            
-            call.on('open', () => {
-                statusDiv.textContent = "Трансляция идет!";
+            connectBtn.disabled = true;
+            statusDiv.textContent = "Подключение к монитору " + targetId + "...";
+
+            activeCall = peer.call(targetId, localStream);
+
+            activeCall.on('open', () => {
+                statusDiv.textContent = "Трансляция запущена стабильно";
+                connectBtn.style.background = "#10B981";
+                connectBtn.textContent = "В ЭФИРЕ";
             });
-            call.on('error', (err) => {
-                statusDiv.textContent = "Ошибка: " + err;
+
+            activeCall.on('error', (err) => {
+                statusDiv.textContent = "Ошибка соединения. Повтор...";
+                connectBtn.disabled = false;
+                connectBtn.style.background = "var(--gold)";
+                connectBtn.textContent = "Подключить поток";
             });
         });
     </script>
-
 </body>
 </html>
