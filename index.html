@@ -2,104 +2,97 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Интерактивный урок</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ к камере</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h2 {
+            color: #FBBF24;
+            margin-bottom: 20px;
+        }
+        .camera-container {
+            max-width: 100%;
+            width: 400px;
+            margin: 0 auto;
+            border: 2px solid #FBBF24;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #111111;
+        }
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        button {
+            background-color: #FBBF24;
+            color: #000000;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        #error-msg {
+            color: #EF4444;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 
-
-
-
-
-<section class="tp-lesson-hero" style="background: #000; padding: 100px 20px; text-align: center;">
-    <span class="tp-badge" style="color: #FBBF24; letter-spacing: 4px;">УРОК №1</span>
-    <h1 style="color: #fff; font-size: 40px; text-transform: uppercase;">Приключения в <span style="color: #FBBF24;">мире знаний</span></h1>
-</section>
-
-<section class="tp-video-game-block" style="background: #0a0a0a; padding: 40px 0; border-top: 2px solid #FBBF24;">
-    <div style="max-width: 900px; margin: 0 auto; position: relative; border: 3px solid #1a1a1a; border-radius: 15px; overflow: hidden;">
-        
-        <video id="lessonVideo" style="width: 100%; display: block;" autoplay muted>
-            <source src="intro_walk.mp4" type="video/mp4">
-        </video>
-
-        <div id="quizOverlay" style="display: none; position: absolute; inset: 0; background: rgba(0,0,0,0.9); flex-direction: column; justify-content: center; align-items: center; z-index: 100;">
-            <h2 id="questionText" style="color: #FBBF24; font-size: 24px; margin-bottom: 30px; text-align: center; padding: 0 20px;"></h2>
-            <div id="optionsContainer" style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                </div>
-        </div>
-
+    <h2>Сканирование / Камера</h2>
+    
+    <div class="camera-container">
+        <!-- Видеопоток с камеры -->
+        <video id="camera-stream" autoplay playsinline muted></video>
     </div>
-</section>
 
-<section class="tp-numbers-block">
-    <div class="tp-numbers-container">
-        <div class="tp-number-card show">
-            <div class="tp-num-wrapper"><span class="num" id="score">0</span></div>
-            <span class="label">Очков набрано</span>
-        </div>
-        </div>
-</section>
+    <button id="start-btn">Включить камеру</button>
+    <div id="error-msg"></div>
 
-<script>
-    const video = document.getElementById('lessonVideo');
-    const overlay = document.getElementById('quizOverlay');
-    const questionText = document.getElementById('questionText');
-    const optionsContainer = document.getElementById('optionsContainer');
+    <script>
+        const videoElement = document.getElementById('camera-stream');
+        const startButton = document.getElementById('start-btn');
+        const errorMsg = document.getElementById('error-msg');
 
-    // База данных уровней
-    const levels = {
-        'intro': {
-            stopAt: 5, // на какой секунде показать вопрос
-            question: "Сколько колес у машины?",
-            options: [
-                { text: "Два", correct: false, nextVideo: "fail_reaction.mp4" },
-                { text: "Четыре", correct: true, nextVideo: "win_move_next.mp4" }
-            ]
-        }
-    };
-
-    video.ontimeupdate = () => {
-        // Если дошли до времени вопроса в текущем сценарии
-        if (Math.floor(video.currentTime) === levels.intro.stopAt) {
-            video.pause();
-            showQuiz(levels.intro);
-        }
-    };
-
-    function showQuiz(data) {
-        questionText.innerText = data.question;
-        optionsContainer.innerHTML = '';
-        
-        data.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.innerText = opt.text;
-            // Стилизуем кнопку под ваш бренд (желтая с черным текстом)
-            btn.style = "background: #FBBF24; color: #000; border: none; padding: 15px 40px; font-weight: 900; cursor: pointer; text-transform: uppercase;";
+        startButton.addEventListener('click', async () => {
+            errorMsg.textContent = '';
             
-            btn.onclick = () => {
-                overlay.style.display = 'none';
-                video.src = opt.nextVideo;
-                video.play();
-                if(opt.correct) updateScore();
-            };
-            optionsContainer.appendChild(btn);
+            try {
+                // Запрос доступа к тыловой камере телефона (если поддерживается)
+                const constraints = {
+                    video: {
+                        facingMode: { ideal: "environment" } // "user" для фронтальной, "environment" для задней
+                    }
+                };
+
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                
+                // Передаем поток в элемент <video>
+                videoElement.srcObject = stream;
+                startButton.style.display = 'none'; // Скрываем кнопку после успешного запуска
+                
+            } catch (err) {
+                console.error("Ошибка доступа к камере: ", err);
+                errorMsg.textContent = "Не удалось получить доступ к камере. Проверьте разрешения в настройках браузера.";
+            }
         });
-        
-        overlay.style.display = 'flex';
-    }
-
-    function updateScore() {
-        let s = document.getElementById('score');
-        s.innerText = parseInt(s.innerText) + 10;
-    }
-</script>
-
-
-
-
-
-
-
+    </script>
 
 </body>
 </html>
