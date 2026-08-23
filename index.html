@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Доступ к камере</title>
+    <title>Talas_profi — Просмотр камеры</title>
+    <!-- Подключаем PeerJS для связи между устройствами -->
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
         body {
             background-color: #000000;
@@ -13,203 +15,114 @@
             padding: 20px;
             margin: 0;
         }
-        h2 {
-            color: #FBBF24;
-            margin-bottom: 20px;
-        }
+        h1 { color: #FBBF24; font-size: 24px; text-transform: uppercase; }
         .camera-container {
             max-width: 100%;
             width: 400px;
-            margin: 0 auto;
+            margin: 20px auto;
             border: 2px solid #FBBF24;
             border-radius: 8px;
             overflow: hidden;
             background: #111111;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         video {
             width: 100%;
             height: auto;
             display: block;
         }
+        .info-box {
+            background: #111;
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            background: #000;
+            color: #FFF;
+            border: 1px solid #FBBF24;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
         button {
             background-color: #FBBF24;
             color: #000000;
             border: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
             font-size: 16px;
             font-weight: bold;
-            border-radius: 4px;
+            border5-radius: 4px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: opacity 0.2s;
+            border-radius: 4px;
         }
-        button:hover {
-            opacity: 0.9;
-        }
-        #error-msg {
-            color: #EF4444;
-            margin-top: 15px;
-            font-size: 14px;
-        }
+        #status { color: #AAAAAA; margin-top: 15px; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <h2>Сканирование / Камера</h2>
+    <h1>Talas_profi — Монитор</h1>
     
-    <div class="camera-container">
-        <!-- Видеопоток с камеры -->
-        <video id="camera-stream" autoplay playsinline muted></video>
+    <div class="info-box">
+        <p>Ваш ID приемника: <strong id="my-peer-id" style="color: #FBBF24;">Генерация...</strong></p>
+        <p>Введите ID второго устройства (камеры):</p>
+        <input type="text" id="remote-id-input" placeholder="ID камеры">
+        <button id="connect-btn">Подключить</button>
     </div>
 
-    <button id="start-btn">Включить камеру</button>
-    <div id="error-msg"></div>
+    <div class="camera-container">
+        <video id="remote-video" autoplay playsinline></video>
+    </div>
+
+    <div id="status">Ожидание подключения...</div>
 
     <script>
-        const videoElement = document.getElementById('camera-stream');
-        const startButton = document.getElementById('start-btn');
-        const errorMsg = document.getElementById('error-msg');
+        const peer = new Peer(); // Создаем узел связи
+        const remoteVideo = document.getElementById('remote-video');
+        const statusDiv = document.getElementById('status');
+        const idDisplay = document.getElementById('my-peer-id');
 
-        startButton.addEventListener('click', async () => {
-            errorMsg.textContent = '';
+        peer.on('open', (id) => {
+            idDisplay.textContent = id;
+            statusDiv.textContent = "Готово. Введите ID второго устройства сверху.";
+        });
+
+        // Когда второе устройство само звонит нам
+        peer.on('call', (call) => {
+            call.answer(); // Отвечаем на звонок без отправки своего видео
+            call.on('stream', (remoteStream) => {
+                remoteVideo.srcObject = remoteStream;
+                statusDiv.textContent = "Трансляция запущена!";
+            });
+        });
+
+        // Кнопка подключения (если мы инициируем связь)
+        document.getElementById('connect-btn').addEventListener('click', () => {
+            const remoteId = document.getElementById('remote-id-input').value.trim();
+            if (!remoteId) return;
+
+            statusDiv.textContent = "Подключение к " + remoteId + "...";
             
-            try {
-                // Запрос доступа к тыловой камере телефона (если поддерживается)
-                const constraints = {
-                    video: {
-                        facingMode: { ideal: "environment" } // "user" для фронтальной, "environment" для задней
-                    }
-                };
-
-                const stream = await navigator.mediaDevices.getUserMedia(constraints);
-                
-                // Передаем поток в элемент <video>
-                videoElement.srcObject = stream;
-                startButton.style.display = 'none'; // Скрываем кнопку после успешного запуска
-                
-            } catch (err) {
-                console.error("Ошибка доступа к камере: ", err);
-                errorMsg.textContent = "Не удалось получить доступ к камере. Проверьте разрешения в настройках браузера.";
-            }
+            // Запрашиваем пустой поток (так как мы только принимаем)
+            navigator.mediaDevices.getUserMedia({ video: false, audio: false })
+                .then((stream) => {
+                    const call = peer.call(remoteId, stream);
+                    call.on('stream', (remoteStream) => {
+                        remoteVideo.srcObject = remoteStream;
+                        statusDiv.textContent = "Трансляция активна!";
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                });
         });
     </script>
 
-
-
-
-
-
-// Основной скрипт приложения
-const AppController = {
-    config: {
-        debug: true
-    },
-
-    state: {
-        isInitialized: false,
-        isMicMuted: false,
-        isVideoOff: false
-    },
-
-    // Модуль управления медиа (камера и микрофон с функцией отключения)
-    media: {
-        stream: null,
-        videoTrack: null,
-        audioTracks: [],
-
-        async init(videoElement) {
-            try {
-                this.stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: { ideal: "environment" } },
-                    audio: true
-                });
-                
-                this.videoTrack = this.stream.getVideoTracks()[0] || null;
-                this.audioTracks = this.stream.getAudioTracks();
-
-                if (videoElement && this.videoTrack) {
-                    videoElement.srcObject = new MediaStream([this.videoTrack]);
-                }
-
-                AppController.state.isInitialized = true;
-                console.log("[MediaModule] Доступ к камере и микрофону получен.");
-                return true;
-            } catch (error) {
-                console.error("[MediaModule] Ошибка доступа к устройствам:", error);
-                return false;
-            }
-        },
-
-        // Управление микрофоном (true — включить, false — выключить/mute)
-        setMicState(enable) {
-            if (this.audioTracks.length === 0) return false;
-            
-            const targetState = enable !== undefined ? enable : !AppController.state.isMicMuted;
-            this.audioTracks.forEach(track => {
-                track.enabled = targetState;
-            });
-
-            AppController.state.isMicMuted = !targetState;
-            console.log(`[MediaModule] Микрофон: ${targetState ? "Активен" : "Отключен (Mute)"}`);
-            return targetState;
-        },
-
-        // Управление камерой (true — включить, false — выключить)
-        setVideoState(enable) {
-            if (!this.videoTrack) return false;
-
-            const targetState = enable !== undefined ? enable : !AppController.state.isVideoOff;
-            this.videoTrack.enabled = targetState;
-
-            AppController.state.isVideoOff = !targetState;
-            console.log(`[MediaModule] Камера: ${targetState ? "Включена" : "Выключена"}`);
-            return targetState;
-        },
-
-        // Полное освобождение ресурсов
-        destroy() {
-            if (this.stream) {
-                this.stream.getTracks().forEach(track => track.stop());
-                this.stream = null;
-                this.videoTrack = null;
-                this.audioTracks = [];
-                AppController.state.isInitialized = false;
-                console.log("[MediaModule] Потоки остановлены, ресурсы освобождены.");
-            }
-        }
-    },
-
-    // Инициализация общего скрипта
-    init(videoElementId) {
-        console.log("[App] Инициализация приложения...");
-        const videoEl = document.getElementById(videoElementId);
-        
-        // Пример автоматического запуска (можно вызывать по клику)
-        this.media.init(videoEl);
-    }
-};
-
-// Пример использования:
-// document.addEventListener('DOMContentLoaded', () => {
-//     AppController.init('my-video-element');
-// });
-// 
-// Как отключать микрофон из вашего кода:
-// AppController.media.setMicState(false); // выключить звук (mute)
-// AppController.media.setMicState(true);  // включить звук
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 </body>
 </html>
