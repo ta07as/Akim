@@ -3,93 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talas_profi — Монитор</title>
+    <title>Talas_profi — Мульти-Монитор (До 5 камер)</title>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
-        body { background-color: #000000; color: #FFFFFF; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
-        h1 { color: #FBBF24; font-size: 24px; text-transform: uppercase; }
-        .camera-container { max-width: 100%; width: 400px; margin: 20px auto; border: 2px solid #FBBF24; border-radius: 8px; overflow: hidden; background: #111111; min-height: 300px; display: flex; align-items: center; justify-content: center; }
-        video { width: 100%; height: auto; display: block; }
-        .info-box { background: #111; border: 1px solid #333; padding: 15px; border-radius: 6px; display: inline-block; margin-top: 10px; }
-        input { padding: 10px; font-size: 16px; background: #000; color: #FFF; border: 1px solid #FBBF24; border-radius: 4px; margin-right: 10px; width: 100px; text-align: center; text-transform: lowercase; }
-        button { background-color: #FBBF24; color: #000000; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 4px; }
-        #status { color: #AAAAAA; margin-top: 15px; font-size: 14px; }
+        :root { --bg: #000000; --card: #111111; --gold: #FBBF24; --text: #FFFFFF; --muted: #888888; --error: #EF4444; --success: #10B981; }
+        body { background-color: var(--bg); color: var(--text); font-family: Arial, sans-serif; text-align: center; padding: 15px; margin: 0; }
+        header { border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin-left: auto; margin-right: auto; }
+        h1 { color: var(--gold); font-size: 20px; text-transform: uppercase; letter-spacing: 2px; margin: 0; }
+        .dashboard { background: var(--card); border: 1px solid #333; padding: 12px 20px; border-radius: 8px; display: inline-block; margin-bottom: 15px; }
+        .id-display { color: var(--gold); font-size: 24px; font-weight: bold; letter-spacing: 3px; font-family: monospace; background: #000; padding: 4px 12px; border-radius: 4px; border: 1px dashed var(--gold); display: inline-block; margin-top: 5px; }
+        
+        /* Сетка для отображения до 5 камер */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .camera-card {
+            background: var(--card);
+            border: 2px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s;
+        }
+        .camera-card.active { border-color: var(--gold); }
+        video { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .cam-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0,0,0,0.7);
+            color: var(--gold);
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 4px;
+            font-family: monospace;
+            border: 1px solid #333;
+        }
+        .empty-slot { color: var(--muted); font-size: 14px; text-align: center; padding: 20px; }
+        #slots-counter { color: var(--gold); font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h1>Talas_profi — Монитор</h1>
+    <header>
+        <h1>Talas_profi Grid Control</h1>
+        <div style="font-size: 14px;">Активно камер: <span id="slots-counter">0</span> / 5</div>
+    </header>
     
-    <div class="info-box">
-        <p>Ваш короткий ID: <strong id="my-peer-id" style="color: #FBBF24; font-size: 20px;">...</strong></p>
-        <p>ID камеры:</p>
-        <input type="text" id="remote-id-input" placeholder="например: a1b2" maxlength="6">
-        <button id="connect-btn">Связать</button>
+    <div class="dashboard">
+        <div>Код для подключения камер:</div>
+        <div id="my-peer-id" class="id-display">Инициализация...</div>
     </div>
 
-    <div class="camera-container">
-        <video id="remote-video" autoplay playsinline></video>
+    <!-- Сетка видеопотоков -->
+    <div class="grid-container" id="grid">
+        <!-- Слоты будут заполняться динамически -->
     </div>
-
-    <div id="status">Генерация короткого ID...</div>
 
     <script>
-        // Функция генерации короткого ID (например: t73a)
+        const MAX_CAMERAS = 5;
+        const activeConnections = new Map();
+
         function generateShortId() {
             const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-            let result = '';
-            for (let i = 0; i < 4; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
+            let res = '';
+            for (let i = 0; i < 4; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
+            return res;
         }
 
         const shortId = generateShortId();
-        const peer = new Peer(shortId); // Создаем с коротким ID
-        
-        const remoteVideo = document.getElementById('remote-video');
-        const statusDiv = document.getElementById('status');
+        const peer = new Peer(shortId);
         const idDisplay = document.getElementById('my-peer-id');
+        const gridContainer = document.getElementById('grid');
+        const counterDisplay = document.getElementById('slots-counter');
 
         peer.on('open', (id) => {
             idDisplay.textContent = id;
-            statusDiv.textContent = "Готово. Введите ID камеры для подключения.";
+            initGrid();
         });
 
         peer.on('error', (err) => {
-            // Если такой короткий ID уже занят кем-то в сети, пробуем сгенерировать другой
-            if(err.type === 'unavailable-id') {
-                location.reload();
-            } else {
-                statusDiv.textContent = "Ошибка: " + err.type;
+            if(err.type === 'unavailable-id') location.reload();
+        });
+
+        // Создаем пустые ячейки сетки (до 5 штук)
+        function initGrid() {
+            gridContainer.innerHTML = '';
+            for (let i = 1; i <= MAX_CAMERAS; i++) {
+                const card = document.createElement('div');
+                card.className = 'camera-card';
+                card.id = `slot-${i}`;
+                card.innerHTML = `<div class="empty-slot">Слот #${i}<br>Ожидание подключения</div>`;
+                gridContainer.appendChild(card);
             }
-        });
+        }
 
+        // Обработка входящих вызовов от камер
         peer.on('call', (call) => {
+            if (activeConnections.size >= MAX_CAMERAS) {
+                call.close(); // Лимит исчерпан
+                return;
+            }
+
             call.answer();
-            call.on('stream', (remoteStream) => {
-                remoteVideo.srcObject = remoteStream;
-                statusDiv.textContent = "Трансляция активна!";
-            });
-        });
-
-        document.getElementById('connect-btn').addEventListener('click', () => {
-            const remoteId = document.getElementById('remote-id-input').value.trim().toLowerCase();
-            if (!remoteId) return;
-
-            statusDiv.textContent = "Подключение к " + remoteId + "...";
             
-            navigator.mediaDevices.getUserMedia({ video: false, audio: false })
-                .then((stream) => {
-                    const call = peer.call(remoteId, stream);
-                    call.on('stream', (remoteStream) => {
-                        remoteVideo.srcObject = remoteStream;
-                        statusDiv.textContent = "Трансляция активна!";
-                    });
-                })
-                .catch(err => console.error(err));
-        });
-    </script>
+            call.on('stream', (remoteStream) => {
+                // Находим первый свободный слот
+                for (let i = 1; i <= MAX_CAMERAS; i++) {
+                    const slot = document.getElementById(`slot-${i}`);
+                    if (!slot.classList.contains('active')) {
+                        slot.classList.add('active');
+                        slot.innerHTML = `
+                            <div class="cam-label">Камера #${i} (${call.peer.substring(0,4)})</div>
+                            <video autoplay playsinline></video>
+                        `;
+                        slot.querySelector('video').srcObject = remoteStream;
+                        activeConnections.set(call.peer, i);
+                        updateCounter();
+                        break;
+                    }
+                }
+            });
 
+            call.on('close', () => removeCamera(call.peer));
+            call.on('error', () => removeCamera(call.peer));
+        });
+
+        function removeCamera(peerId) {
+            if (activeConnections.has(peerId)) {
+                const slotIndex = activeConnections.get(peerId);
+                const slot = document.getElementById(`slot-${slotIndex}`);
+                slot.classList.remove('active');
+                slot.innerHTML = `<div class="empty-slot">Слот #${slotIndex}<br>Ожидание подключения</div>`;
+                activeConnections.delete(peerId);
+                updateCounter();
+            }
+        }
+
+        function updateCounter() {
+            counterDisplay.textContent = activeConnections.size;
+        }
+    </script>
 </body>
 </html>
