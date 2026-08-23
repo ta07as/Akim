@@ -94,5 +94,122 @@
         });
     </script>
 
+
+
+
+
+
+// Основной скрипт приложения
+const AppController = {
+    config: {
+        debug: true
+    },
+
+    state: {
+        isInitialized: false,
+        isMicMuted: false,
+        isVideoOff: false
+    },
+
+    // Модуль управления медиа (камера и микрофон с функцией отключения)
+    media: {
+        stream: null,
+        videoTrack: null,
+        audioTracks: [],
+
+        async init(videoElement) {
+            try {
+                this.stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { ideal: "environment" } },
+                    audio: true
+                });
+                
+                this.videoTrack = this.stream.getVideoTracks()[0] || null;
+                this.audioTracks = this.stream.getAudioTracks();
+
+                if (videoElement && this.videoTrack) {
+                    videoElement.srcObject = new MediaStream([this.videoTrack]);
+                }
+
+                AppController.state.isInitialized = true;
+                console.log("[MediaModule] Доступ к камере и микрофону получен.");
+                return true;
+            } catch (error) {
+                console.error("[MediaModule] Ошибка доступа к устройствам:", error);
+                return false;
+            }
+        },
+
+        // Управление микрофоном (true — включить, false — выключить/mute)
+        setMicState(enable) {
+            if (this.audioTracks.length === 0) return false;
+            
+            const targetState = enable !== undefined ? enable : !AppController.state.isMicMuted;
+            this.audioTracks.forEach(track => {
+                track.enabled = targetState;
+            });
+
+            AppController.state.isMicMuted = !targetState;
+            console.log(`[MediaModule] Микрофон: ${targetState ? "Активен" : "Отключен (Mute)"}`);
+            return targetState;
+        },
+
+        // Управление камерой (true — включить, false — выключить)
+        setVideoState(enable) {
+            if (!this.videoTrack) return false;
+
+            const targetState = enable !== undefined ? enable : !AppController.state.isVideoOff;
+            this.videoTrack.enabled = targetState;
+
+            AppController.state.isVideoOff = !targetState;
+            console.log(`[MediaModule] Камера: ${targetState ? "Включена" : "Выключена"}`);
+            return targetState;
+        },
+
+        // Полное освобождение ресурсов
+        destroy() {
+            if (this.stream) {
+                this.stream.getTracks().forEach(track => track.stop());
+                this.stream = null;
+                this.videoTrack = null;
+                this.audioTracks = [];
+                AppController.state.isInitialized = false;
+                console.log("[MediaModule] Потоки остановлены, ресурсы освобождены.");
+            }
+        }
+    },
+
+    // Инициализация общего скрипта
+    init(videoElementId) {
+        console.log("[App] Инициализация приложения...");
+        const videoEl = document.getElementById(videoElementId);
+        
+        // Пример автоматического запуска (можно вызывать по клику)
+        this.media.init(videoEl);
+    }
+};
+
+// Пример использования:
+// document.addEventListener('DOMContentLoaded', () => {
+//     AppController.init('my-video-element');
+// });
+// 
+// Как отключать микрофон из вашего кода:
+// AppController.media.setMicState(false); // выключить звук (mute)
+// AppController.media.setMicState(true);  // включить звук
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 </body>
 </html>
