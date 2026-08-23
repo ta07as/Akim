@@ -3,65 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talas_profi — Просмотр камеры</title>
-    <!-- Подключаем PeerJS для связи между устройствами -->
+    <title>Talas_profi — Монитор</title>
     <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
     <style>
-        body {
-            background-color: #000000;
-            color: #FFFFFF;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-        }
+        body { background-color: #000000; color: #FFFFFF; font-family: Arial, sans-serif; text-align: center; padding: 20px; margin: 0; }
         h1 { color: #FBBF24; font-size: 24px; text-transform: uppercase; }
-        .camera-container {
-            max-width: 100%;
-            width: 400px;
-            margin: 20px auto;
-            border: 2px solid #FBBF24;
-            border-radius: 8px;
-            overflow: hidden;
-            background: #111111;
-            min-height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .info-box {
-            background: #111;
-            border: 1px solid #333;
-            padding: 15px;
-            border-radius: 6px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-        input {
-            padding: 10px;
-            font-size: 16px;
-            background: #000;
-            color: #FFF;
-            border: 1px solid #FBBF24;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        button {
-            background-color: #FBBF24;
-            color: #000000;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            border5-radius: 4px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+        .camera-container { max-width: 100%; width: 400px; margin: 20px auto; border: 2px solid #FBBF24; border-radius: 8px; overflow: hidden; background: #111111; min-height: 300px; display: flex; align-items: center; justify-content: center; }
+        video { width: 100%; height: auto; display: block; }
+        .info-box { background: #111; border: 1px solid #333; padding: 15px; border-radius: 6px; display: inline-block; margin-top: 10px; }
+        input { padding: 10px; font-size: 16px; background: #000; color: #FFF; border: 1px solid #FBBF24; border-radius: 4px; margin-right: 10px; width: 100px; text-align: center; text-transform: lowercase; }
+        button { background-color: #FBBF24; color: #000000; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 4px; }
         #status { color: #AAAAAA; margin-top: 15px; font-size: 14px; }
     </style>
 </head>
@@ -70,46 +21,64 @@
     <h1>Talas_profi — Монитор</h1>
     
     <div class="info-box">
-        <p>Ваш ID приемника: <strong id="my-peer-id" style="color: #FBBF24;">Генерация...</strong></p>
-        <p>Введите ID второго устройства (камеры):</p>
-        <input type="text" id="remote-id-input" placeholder="ID камеры">
-        <button id="connect-btn">Подключить</button>
+        <p>Ваш короткий ID: <strong id="my-peer-id" style="color: #FBBF24; font-size: 20px;">...</strong></p>
+        <p>ID камеры:</p>
+        <input type="text" id="remote-id-input" placeholder="например: a1b2" maxlength="6">
+        <button id="connect-btn">Связать</button>
     </div>
 
     <div class="camera-container">
         <video id="remote-video" autoplay playsinline></video>
     </div>
 
-    <div id="status">Ожидание подключения...</div>
+    <div id="status">Генерация короткого ID...</div>
 
     <script>
-        const peer = new Peer(); // Создаем узел связи
+        // Функция генерации короткого ID (например: t73a)
+        function generateShortId() {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            for (let i = 0; i < 4; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        const shortId = generateShortId();
+        const peer = new Peer(shortId); // Создаем с коротким ID
+        
         const remoteVideo = document.getElementById('remote-video');
         const statusDiv = document.getElementById('status');
         const idDisplay = document.getElementById('my-peer-id');
 
         peer.on('open', (id) => {
             idDisplay.textContent = id;
-            statusDiv.textContent = "Готово. Введите ID второго устройства сверху.";
+            statusDiv.textContent = "Готово. Введите ID камеры для подключения.";
         });
 
-        // Когда второе устройство само звонит нам
+        peer.on('error', (err) => {
+            // Если такой короткий ID уже занят кем-то в сети, пробуем сгенерировать другой
+            if(err.type === 'unavailable-id') {
+                location.reload();
+            } else {
+                statusDiv.textContent = "Ошибка: " + err.type;
+            }
+        });
+
         peer.on('call', (call) => {
-            call.answer(); // Отвечаем на звонок без отправки своего видео
+            call.answer();
             call.on('stream', (remoteStream) => {
                 remoteVideo.srcObject = remoteStream;
-                statusDiv.textContent = "Трансляция запущена!";
+                statusDiv.textContent = "Трансляция активна!";
             });
         });
 
-        // Кнопка подключения (если мы инициируем связь)
         document.getElementById('connect-btn').addEventListener('click', () => {
-            const remoteId = document.getElementById('remote-id-input').value.trim();
+            const remoteId = document.getElementById('remote-id-input').value.trim().toLowerCase();
             if (!remoteId) return;
 
             statusDiv.textContent = "Подключение к " + remoteId + "...";
             
-            // Запрашиваем пустой поток (так как мы только принимаем)
             navigator.mediaDevices.getUserMedia({ video: false, audio: false })
                 .then((stream) => {
                     const call = peer.call(remoteId, stream);
@@ -118,9 +87,7 @@
                         statusDiv.textContent = "Трансляция активна!";
                     });
                 })
-                .catch(err => {
-                    console.error(err);
-                });
+                .catch(err => console.error(err));
         });
     </script>
 
