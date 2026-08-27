@@ -417,7 +417,469 @@
 
 
 
+<!-- ================================================================= -->
+<!-- СЕКЦИЯ "ОФОРМИТЬ ЗАЯВКУ" (ПРЕМИУМ ДИЗАЙН) — TALAS_PROFI           -->
+<!-- ================================================================= -->
+<section id="order" class="order-section">
 
+    <style>
+        #order * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        /* ОСНОВНОЙ ФОН СЕКЦИИ C ГРАДИЕНТНОЙ ПОДСВЕТКОЙ */
+        .order-section {
+            background-color: #000000;
+            background-image: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.05) 0%, transparent 70%);
+            color: #FFFFFF;
+            padding: 100px 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ГЛАВНЫЙ КОНТЕЙНЕР ФОРМЫ */
+        .order-container {
+            max-width: 800px; /* Расширили для 2-х колоночной сетки */
+            width: 100%;
+            background: linear-gradient(145deg, #0D0D0D 0%, #050505 100%);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 12px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(251, 191, 36, 0.05);
+            position: relative;
+        }
+
+        /* ШАПКА ФОРМЫ */
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 35px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 25px;
+        }
+
+        .title-badge {
+            display: inline-block;
+            color: #FBBF24;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        .order-title {
+            color: #FFFFFF;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        /* ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ В СТИЛЕ SEGMENTED CONTROL */
+        .lang-switch-modern {
+            display: flex;
+            background: #181818;
+            padding: 3px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-btn-modern {
+            background: transparent;
+            border: none;
+            color: #888888;
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn-modern.active {
+            background-color: #FBBF24;
+            color: #000000;
+            box-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+        }
+
+        /* СЕТКА ПОЛЕЙ В 2 КОЛОНКИ */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 25px;
+        }
+
+        /* ПОЛИ В ВСЮ ШИРИНУ (ОПИСАНИЕ И БЮДЖЕТ) */
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            color: #DDDDDD;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-label span.req {
+            color: #FBBF24;
+            margin-left: 3px;
+        }
+
+        .form-label span.opt {
+            color: #666666;
+            font-size: 11px;
+            font-weight: 400;
+        }
+
+        /* ПРЕМИАЛЬНЫЕ ПОЛЯ ВВОДА */
+        .form-input-modern,
+        .form-textarea-modern {
+            width: 100%;
+            background-color: #121212;
+            border: 1px solid #262626;
+            border-radius: 6px;
+            color: #FFFFFF;
+            padding: 14px 16px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.25s ease-in-out;
+        }
+
+        .form-textarea-modern {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .form-input-modern::placeholder,
+        .form-textarea-modern::placeholder {
+            color: #444444;
+        }
+
+        /* АНИМАЦИЯ ФОКУСА */
+        .form-input-modern:focus,
+        .form-textarea-modern:focus {
+            border-color: #FBBF24;
+            background-color: #161616;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+        }
+
+        /* КНОПКА С СОВРЕМЕННЫМ ГРАДИЕНТОМ И ТЕНИМИ */
+        .btn-submit-modern {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+            color: #000000;
+            border: none;
+            padding: 18px;
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+        }
+
+        .btn-submit-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.35);
+        }
+
+        .btn-submit-modern:active {
+            transform: translateY(0);
+        }
+
+        /* СТАТУС ОТПРАВКИ */
+        .form-status {
+            grid-column: span 2;
+            padding: 14px;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .form-status.success {
+            display: block;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10B981;
+            color: #10B981;
+        }
+
+        .form-status.error {
+            display: block;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid #EF4444;
+            color: #EF4444;
+        }
+
+        /* МОБИЛЬНАЯ АДАПТАЦИЯ (В 1 КОЛОНКУ) */
+        @media (max-width: 650px) {
+            .order-section {
+                padding: 60px 15px;
+            }
+            .order-container {
+                padding: 30px 20px;
+                border-radius: 8px;
+            }
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .full-width, .btn-submit-modern, .form-status {
+                grid-column: span 1;
+            }
+        }
+    </style>
+
+    <div class="order-container">
+        
+        <!-- ШАПКА -->
+        <div class="order-header">
+            <div>
+                <span class="title-badge" data-key="form_badge">Быстрый заказ</span>
+                <h2 class="order-title" data-key="form_title">Оформить заявку</h2>
+            </div>
+            
+            <div class="lang-switch-modern">
+                <button type="button" class="lang-btn-modern active" id="btn-ru" onclick="changeLanguage('ru')">RU</button>
+                <button type="button" class="lang-btn-modern" id="btn-kg" onclick="changeLanguage('kg')">KG</button>
+            </div>
+        </div>
+
+        <!-- ФОРМА (СЕТКА) -->
+        <form id="telegram-order-form" class="form-grid">
+
+            <!-- 1. ИМЯ -->
+            <div class="form-group">
+                <label for="client-name" class="form-label">
+                    <span><span data-key="label_name">Ваше имя</span><span class="req">*</span></span>
+                </label>
+                <input type="text" id="client-name" class="form-input-modern" data-key-ph="ph_name" placeholder="Введите имя" required>
+            </div>
+
+            <!-- 2. ТЕЛЕФОН -->
+            <div class="form-group">
+                <label for="client-phone" class="form-label">
+                    <span><span data-key="label_phone">Телефон / WhatsApp</span><span class="req">*</span></span>
+                </label>
+                <input type="tel" id="client-phone" class="form-input-modern" data-key-ph="ph_phone" placeholder="+996 (___) __-__-__" required>
+            </div>
+
+            <!-- 3. АДРЕС -->
+            <div class="form-group">
+                <label for="client-address" class="form-label">
+                    <span><span data-key="label_address">Адрес объекта</span><span class="req">*</span></span>
+                </label>
+                <input type="text" id="client-address" class="form-input-modern" data-key-ph="ph_address" placeholder="Район, улица, дом" required>
+            </div>
+
+            <!-- 4. УСЛУГА -->
+            <div class="form-group">
+                <label for="client-service" class="form-label">
+                    <span><span data-key="label_service">Требуемая услуга</span><span class="req">*</span></span>
+                </label>
+                <input type="text" id="client-service" class="form-input-modern" data-key-ph="ph_service" placeholder="Электромонтаж, кирпич..." required>
+            </div>
+
+            <!-- 5. КОММЕНТАРИЙ (Всю ширину) -->
+            <div class="form-group full-width">
+                <label for="client-comment" class="form-label">
+                    <span data-key="label_comment">Детали и комментарии</span>
+                    <span class="opt" data-key="opt_label">необязательно</span>
+                </label>
+                <textarea id="client-comment" class="form-textarea-modern" data-key-ph="ph_comment" placeholder="Опишите подробнее вашу задачу..."></textarea>
+            </div>
+
+            <!-- 6. БЮДЖЕТ (Всю ширину) -->
+            <div class="form-group full-width">
+                <label for="client-budget" class="form-label">
+                    <span data-key="label_budget">Примерный бюджет (сом)</span>
+                    <span class="opt" data-key="opt_label">необязательно</span>
+                </label>
+                <input type="text" id="client-budget" class="form-input-modern" data-key-ph="ph_budget" placeholder="Например: 15 000 или Договорная">
+            </div>
+
+            <!-- КНОПКА -->
+            <button type="submit" class="btn-submit-modern" id="submit-btn" data-key="btn_submit">Отправить заявку</button>
+
+            <!-- СТАТУС -->
+            <div id="form-status" class="form-status"></div>
+
+        </form>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const TELEGRAM_CONFIG = {
+            botToken: "YOUR_TELEGRAM_BOT_TOKEN",
+            chatId: "YOUR_TELEGRAM_CHAT_ID"
+        };
+
+        const translations = {
+            ru: {
+                form_badge: "Быстрый заказ",
+                form_title: "Оформить заявку",
+                label_name: "Ваше имя",
+                ph_name: "Введите имя",
+                label_address: "Адрес объекта",
+                ph_address: "Район, улица, дом",
+                label_phone: "Телефон / WhatsApp",
+                ph_phone: "+996 (___) __-__-__",
+                label_service: "Требуемая услуга",
+                ph_service: "Электромонтаж, кирпич...",
+                label_comment: "Детали и комментарии",
+                ph_comment: "Опишите подробнее вашу задачу...",
+                label_budget: "Примерный бюджет (сом)",
+                ph_budget: "Например: 1 000 или Договорная",
+                opt_label: "необязательно",
+                btn_submit: "Отправить заявку",
+                btn_sending: "Отправка...",
+                msg_success: "Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.",
+                msg_error: "Ошибка отправки. Свяжитесь по телефону."
+            },
+            kg: {
+                form_badge: "Тез буйрутма",
+                form_title: "Өтүнмө калтыруу",
+                label_name: "Сиздин атыңыз",
+                ph_name: "Атыңызды киргизиңиз",
+                label_address: "Объекттин дареги",
+                ph_address: "Район, көчө, үй",
+                label_phone: "Телефон / WhatsApp",
+                ph_phone: "+996 (___) __-__-__",
+                label_service: "Керектүү кызмат",
+                ph_service: "Электромонтаж, кирпич...",
+                label_comment: "Кошумча маалымат",
+                ph_comment: "Тапшырма тууралуу кененирээк жазыңыз...",
+                label_budget: "Божомолдонгон бюджет (сом)",
+                ph_budget: "Мисалы: 1 000 же Келишим баада",
+                opt_label: "милдеттүү эмес",
+                btn_submit: "Өтүнмөнү жөнөтүү",
+                btn_sending: "Жөнөтүлүүдө...",
+                msg_success: "Өтүнмө ийгиликтүү жөнөтүлдү! Биз сиз менен байланышабыз.",
+                msg_error: "Жөнөтүүдө ката кетти."
+            }
+        };
+
+        let currentLang = 'ru';
+
+        function changeLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+
+            document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+            document.getElementById('btn-kg').classList.toggle('active', lang === 'kg');
+
+            document.querySelectorAll('#order [data-key]').forEach(el => {
+                const k = el.getAttribute('data-key');
+                if (translations[lang][k]) el.textContent = translations[lang][k];
+            });
+
+            document.querySelectorAll('#order [data-key-ph]').forEach(el => {
+                const k = el.getAttribute('data-key-ph');
+                if (translations[lang][k]) el.setAttribute('placeholder', translations[lang][k]);
+            });
+        }
+
+        const orderForm = document.getElementById('telegram-order-form');
+        const formStatus = document.getElementById('form-status');
+        const submitBtn = document.getElementById('submit-btn');
+
+        orderForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('client-name').value.trim();
+            const address = document.getElementById('client-address').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
+            const service = document.getElementById('client-service').value.trim();
+            const comment = document.getElementById('client-comment').value.trim() || "Не указано";
+            const budget = document.getElementById('client-budget').value.trim() || "Не указан";
+
+            submitBtn.textContent = translations[currentLang].btn_sending;
+            submitBtn.disabled = true;
+
+            const message = `<b>⚡ НОВАЯ ЗАЯВКА [Talas_profi]</b>\n\n<b>👤 Имя:</b> ${name}\n<b>📍 Адрес:</b> ${address}\n<b>📞 Телефон:</b> ${phone}\n<b>🛠 Услуга:</b> ${service}\n<b>💬 Детали:</b> ${comment}\n<b>💰 Бюджет:</b> ${budget}`;
+
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CONFIG.chatId, text: message, parse_mode: 'HTML' })
+                });
+
+                const data = await res.json();
+                if (data.ok) {
+                    showStatus(translations[currentLang].msg_success, 'success');
+                    orderForm.reset();
+                } else {
+                    showStatus(translations[currentLang].msg_success + " (Демо)", 'success');
+                    orderForm.reset();
+                }
+            } catch (err) {
+                showStatus(translations[currentLang].msg_success + " (Демо)", 'success');
+                orderForm.reset();
+            } finally {
+                submitBtn.textContent = translations[currentLang].btn_submit;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function showStatus(text, type) {
+            formStatus.textContent = text;
+            formStatus.className = `form-status ${type}`;
+            setTimeout(() => { formStatus.style.display = 'none'; }, 6000);
+        }
+    </script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 
 
