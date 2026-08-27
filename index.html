@@ -540,6 +540,370 @@
 
 
 
+<!-- ================================================================= -->
+<!-- БЛОК «НАШИ УСЛУГИ» — ВАРИАНТ 2: ИНДУСТРИАЛЬНЫЕ ИНТЕРАКТИВНЫЕ ЧИПСЫ -->
+<!-- ================================================================= -->
+<section id="services" class="services-section-v2">
+
+    <style>
+        /* === СБРОС И ОСНОВНОЙ КОНТЕЙНЕР === */
+        #services * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .services-section-v2 {
+            background-color: #000000;
+            /* Акцентная фоновая сетка в индустриальном стиле */
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.05) 0%, transparent 60%),
+                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255, 255, 255, 0.02) 50px);
+            color: #FFFFFF;
+            padding: 160px 24px; /* Просторные вертикальные отступы */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            border-top: 2px solid #FBBF24;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
+        }
+
+        .v2-container {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* === ВВОДНАЯ ЧАСТЬ === */
+        .v2-header {
+            text-align: center;
+            max-width: 900px;
+            margin-bottom: 80px;
+        }
+
+        .v2-tag {
+            color: #FBBF24;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            padding: 8px 20px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 24px;
+            background: rgba(251, 191, 36, 0.03);
+        }
+
+        .v2-title {
+            font-size: clamp(34px, 4.5vw, 52px);
+            font-weight: 900;
+            line-height: 1.25;
+            color: #FFFFFF;
+            margin-bottom: 24px;
+        }
+
+        .v2-title span {
+            color: #FBBF24;
+        }
+
+        .v2-subtitle {
+            color: #A1A1AA;
+            font-size: clamp(16px, 1.8vw, 19px);
+            line-height: 1.8;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        /* === ВОЗДУШНЫЙ МАССИВ ЧИПСОВ / ПЛИТОК === */
+        .v2-chips-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px 14px; /* Пространство между элементами */
+            width: 100%;
+            max-width: 1100px;
+            margin-bottom: 100px;
+        }
+
+        .v2-chip {
+            background: #09090B;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50px; /* Скругленные чипсы */
+            padding: 16px 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .v2-chip-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .v2-chip-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #E4E4E7;
+            white-space: nowrap;
+        }
+
+        .v2-chip:hover {
+            border-color: #FBBF24;
+            background: #FBBF24;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(251, 191, 36, 0.25);
+        }
+
+        .v2-chip:hover .v2-chip-text {
+            color: #000000;
+        }
+
+        /* === CTA / ФИНАЛЬНАЯ ПАНЕЛЬ === */
+        .v2-cta-card {
+            width: 100%;
+            background: linear-gradient(180deg, #09090B 0%, #000000 100%);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            border-radius: 16px;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        .v2-cta-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 15%;
+            right: 15%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FBBF24, transparent);
+        }
+
+        .v2-cta-title {
+            font-size: clamp(24px, 3vw, 34px);
+            font-weight: 900;
+            color: #FFFFFF;
+            margin-bottom: 16px;
+        }
+
+        .v2-cta-desc {
+            color: #A1A1AA;
+            font-size: 17px;
+            line-height: 1.7;
+            max-width: 680px;
+            margin-bottom: 40px;
+        }
+
+        .v2-cta-buttons {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            justify-content: center;
+            max-width: 600px;
+        }
+
+        .v2-btn-primary {
+            flex: 1;
+            background: #FBBF24;
+            color: #000000;
+            font-weight: 800;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 20px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+        }
+
+        .v2-btn-primary:hover {
+            background: #F59E0B;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.5);
+        }
+
+        .v2-btn-secondary {
+            flex: 1;
+            background: transparent;
+            color: #FFFFFF;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 20px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .v2-btn-secondary:hover {
+            border-color: #FBBF24;
+            color: #FBBF24;
+            background: rgba(251, 191, 36, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* === АДАПТИВНОСТЬ === */
+        @media (max-width: 768px) {
+            .services-section-v2 { padding: 90px 16px; }
+            .v2-header { margin-bottom: 50px; }
+            .v2-chips-wrapper { gap: 10px; margin-bottom: 60px; }
+            .v2-chip { padding: 12px 20px; }
+            .v2-chip-text { font-size: 14px; }
+            .v2-cta-card { padding: 40px 20px; }
+            .v2-cta-buttons { flex-direction: column; gap: 12px; }
+        }
+    </style>
+
+    <div class="v2-container">
+
+        <!-- ВВОДНЫЙ БЛОК -->
+        <div class="v2-header">
+            <span class="v2-tag" data-key="v2_tag">ДИСПЕТЧЕРСКАЯ СЛУЖБА</span>
+            <h2 class="v2-title" data-key="v2_t1">Нужен мастер? <span data-key="v2_t2">Решим любую задачу!</span></h2>
+            <p class="v2-subtitle" data-key="v2_sub">Диспетчер подберет профильного мастера за 5 минут. Работаем по Таласу и области без выходных.</p>
+        </div>
+
+        <!-- СПИСОК УСЛУГ В ВИДЕ ЧИПСОВ -->
+        <div class="v2-chips-wrapper">
+            <div class="v2-chip"><span class="v2-chip-icon">⚡</span><span class="v2-chip-text" data-key="v2_s1">Электромонтаж под ключ</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">❄️</span><span class="v2-chip-text" data-key="v2_s2">Установка кондиционеров</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">📹</span><span class="v2-chip-text" data-key="v2_s3">Монтаж видеонаблюдения</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🔧</span><span class="v2-chip-text" data-key="v2_s4">Сантехника</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🧹</span><span class="v2-chip-text" data-key="v2_s5">Клининг</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🧱</span><span class="v2-chip-text" data-key="v2_s6">Укладка кирпича</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">📜</span><span class="v2-chip-text" data-key="v2_s7">Поклейка обоев</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🛠️</span><span class="v2-chip-text" data-key="v2_s8">Мелкий бытовой ремонт</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">💡</span><span class="v2-chip-text" data-key="v2_s9">Замена розеток и люстр</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🪟</span><span class="v2-chip-text" data-key="v2_s10">Мойка окон</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🧼</span><span class="v2-chip-text" data-key="v2_s11">Уборка после ремонта</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🔌</span><span class="v2-chip-text" data-key="v2_s12">Сборка электрощитов</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🚿</span><span class="v2-chip-text" data-key="v2_s13">Установка сантехники</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🪵</span><span class="v2-chip-text" data-key="v2_s14">Сборка мебели</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🛋️</span><span class="v2-chip-text" data-key="v2_s15">Химчистка диванов</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🎨</span><span class="v2-chip-text" data-key="v2_s16">Покраска стен</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🏠</span><span class="v2-chip-text" data-key="v2_s17">Штукатурка и шпатлевка</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🔒</span><span class="v2-chip-text" data-key="v2_s18">Установка домофонов</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🧰</span><span class="v2-chip-text" data-key="v2_s19">Муж на час</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🏗️</span><span class="v2-chip-text" data-key="v2_s20">Демонтаж стен</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🔥</span><span class="v2-chip-text" data-key="v2_s21">Монтаж водонагревателей</span></div>
+            <div class="v2-chip"><span class="v2-chip-icon">🌊</span><span class="v2-chip-text" data-key="v2_s22">Прочистка канализации</span></div>
+        </div>
+
+        <!-- CTA БЛОК -->
+        <div class="v2-cta-card">
+            <h3 class="v2-cta-title" data-key="v2_cta_t">Не нашли нужную услугу?</h3>
+            <p class="v2-cta-desc" data-key="v2_cta_d">Мы выполняем любые виды работ. Позвоните или напишите диспетчеру — организуем выезд мастера!</p>
+            <div class="v2-cta-buttons">
+                <a href="tel:+996755000228" class="v2-btn-primary" data-key="v2_btn_c">Позвонить</a>
+                <a href="https://wa.me/996755000228" target="_blank" class="v2-btn-secondary" data-key="v2_btn_w">Написать в WhatsApp</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- МУЛЬТИЯЗЫЧНОСТЬ -->
+    <script>
+        const v2Translations = {
+            ru: {
+                v2_tag: "ДИСПЕТЧЕРСКАЯ СЛУЖБА",
+                v2_t1: "Нужен мастер?",
+                v2_t2: "Решим любую задачу!",
+                v2_sub: "Диспетчер подберет профильного мастера за 5 минут. Работаем по Таласу и области без выходных.",
+                v2_s1: "Электромонтаж под ключ", v2_s2: "Установка кондиционеров", v2_s3: "Монтаж видеонаблюдения",
+                v2_s4: "Сантехника", v2_s5: "Клининг", v2_s6: "Укладка кирпича", v2_s7: "Поклейка обоев",
+                v2_s8: "Мелкий бытовой ремонт", v2_s9: "Замена розеток и люстр", v2_s10: "Мойка окон",
+                v2_s11: "Уборка после ремонта", v2_s12: "Сборка электрощитов", v2_s13: "Установка сантехники",
+                v2_s14: "Сборка мебели", v2_s15: "Химчистка диванов", v2_s16: "Покраска стен",
+                v2_s17: "Штукатурка и шпатлевка", v2_s18: "Установка домофонов", v2_s19: "Муж на час",
+                v2_s20: "Демонтаж стен", v2_s21: "Монтаж водонагревателей", v2_s22: "Прочистка канализации",
+                v2_cta_t: "Не нашли нужную услугу?",
+                v2_cta_d: "Мы выполняем любые виды работ. Позвоните или напишите диспетчеру — организуем выезд мастера!",
+                v2_btn_c: "Позвонить", v2_btn_w: "Написать в WhatsApp"
+            },
+            kg: {
+                v2_tag: "ДИСПЕТЧЕРДИК КЫЗМАТ",
+                v2_t1: "Уста керекпи?",
+                v2_t2: "Ар кандай ишти чечебиз!",
+                v2_sub: "Диспетчер 5 мүнөттүн ичинде тиешелүү устаны таап берет. Талас шаары жана облусу боюнча дем алышсыз иштейбиз.",
+                v2_s1: "Толугу менен электромонтаж", v2_s2: "Кондиционерлерди орнотуу", v2_s3: "Видеокөзөмөл монтаждоо",
+                v2_s4: "Сантехника", v2_s5: "Клининг", v2_s6: "Кирпич тизүү", v2_s7: "Обои чаптоо",
+                v2_s8: "Майда тиричилик оңдоо", v2_s9: "Розетка, люстра алмаштыруу", v2_s10: "Терезелерди жуу",
+                v2_s11: "Оңдоодон кийинки тазалоо", v2_s12: "Электр щиттерин кураштыруу", v2_s13: "Сантехника орнотуу",
+                v2_s14: "Эмерек кураштыруу", v2_s15: "Эмеректерди химчистка кылуу", v2_s16: "Дубалдарды боёо",
+                v2_s17: "Штукатурка жана шпатлевка", v2_s18: "Домофондорду орнотуу", v2_s19: "Бир сааттык мастер",
+                v2_s20: "Дубалдарды демонтаждоо", v2_s21: "Суу жылыткычтарды монтаждоо", v2_s22: "Канализация тазалоо",
+                v2_cta_t: "Керектүү кызматты таппадыңызбы?",
+                v2_cta_d: "Биз жумуштун бардык түрүн аткарабыз. Диспетчерге чалыңыз же жазыңыз — устаны уюштуруп беребиз!",
+                v2_btn_c: "Чалуу", v2_btn_w: "WhatsApp'ка жазуу"
+            }
+        };
+
+        const existingLangFn = window.changeLanguage;
+        window.changeLanguage = function(lang) {
+            if (typeof existingLangFn === 'function') existingLangFn(lang);
+            if (v2Translations[lang]) {
+                document.querySelectorAll('#services [data-key]').forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (v2Translations[lang][key]) {
+                        el.textContent = v2Translations[lang][key];
+                    }
+                });
+            }
+        };
+    </script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
