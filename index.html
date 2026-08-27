@@ -1365,6 +1365,455 @@
 
 
 
+<!-- ================================================================= -->
+<!-- БЛОК "О НАС" — РАСШИРЕННЫЙ (ПРОФЕССИОНАЛЬНЫЙ ИНДУСТРИАЛЬНЫЙ СТИЛЬ)  -->
+<!-- ================================================================= -->
+<section id="about" class="about-section">
+
+    <style>
+        #about * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .about-section {
+            background-color: #000000;
+            background-image: 
+                radial-gradient(circle at 15% 30%, rgba(251, 191, 36, 0.05) 0%, transparent 60%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px;
+            color: #FFFFFF;
+            padding: 80px 24px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid #27272A;
+        }
+
+        .about-container {
+            max-width: 1280px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        /* ЗАГОЛОВОК */
+        .about-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .about-subtitle {
+            color: #FBBF24;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-subtitle::before {
+            content: '';
+            width: 20px;
+            height: 2px;
+            background: #FBBF24;
+        }
+
+        .about-title {
+            font-size: 34px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #FFFFFF;
+            line-height: 1.2;
+        }
+
+        .about-title span {
+            color: #FBBF24;
+        }
+
+        /* ОСНОВНАЯ СЕТКА: 2 КОЛОНКИ */
+        .about-main-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
+            align-items: stretch;
+        }
+
+        /* ЛЕВАЯ КОЛОНКА: ОПИСАНИЕ И ЭТАПЫ */
+        .about-info-col {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .about-lead-p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #E4E4E7;
+            font-weight: 600;
+            border-left: 3px solid #FBBF24;
+            padding-left: 16px;
+        }
+
+        .about-body-p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #A1A1AA;
+        }
+
+        /* СХЕМА РАБОТЫ (3 ЭТАПА) */
+        .about-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .step-box {
+            background: #09090B;
+            border: 1px solid #27272A;
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .step-num {
+            font-size: 11px;
+            font-weight: 900;
+            color: #000000;
+            background: #FBBF24;
+            padding: 2px 8px;
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        .step-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+
+        .step-desc {
+            font-size: 12px;
+            color: #71717A;
+            line-height: 1.4;
+        }
+
+        /* ПРАВАЯ КОЛОНКА: ПРЕИМУЩЕСТВА С ИКОНКАМИ */
+        .about-features-col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .feature-item {
+            background: #09090B;
+            border: 1px solid #27272A;
+            border-left: 3px solid #FBBF24;
+            padding: 18px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .feature-icon-wrap {
+            background: rgba(251, 191, 36, 0.1);
+            color: #FBBF24;
+            width: 42px;
+            height: 42px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .feature-content h4 {
+            font-size: 15px;
+            font-weight: 800;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .feature-content p {
+            font-size: 13px;
+            color: #A1A1AA;
+            line-height: 1.5;
+        }
+
+        /* НИЖНЯЯ ПАНЕЛЬ: СТАТИСТИКА */
+        .about-stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            background: #09090B;
+            border: 1px solid #27272A;
+            padding: 24px;
+            border-radius: 8px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            border-right: 1px solid #27272A;
+            padding-right: 16px;
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+            padding-right: 0;
+        }
+
+        .stat-val {
+            font-size: 28px;
+            font-weight: 900;
+            color: #FBBF24;
+            line-height: 1;
+        }
+
+        .stat-lbl {
+            font-size: 12px;
+            color: #71717A;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* АДАПТИВНОСТЬ */
+        @media (max-width: 1024px) {
+            .about-main-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+            .stat-item {
+                border-right: none;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .about-steps {
+                grid-template-columns: 1fr;
+            }
+            .about-stats-bar {
+                grid-template-columns: 1fr;
+            }
+            .about-title {
+                font-size: 26px;
+            }
+        }
+    </style>
+
+    <div class="about-container">
+        
+        <!-- ЗАГОЛОВОК -->
+        <div class="about-header">
+            <div class="about-subtitle" data-key="ab_sub">Профессиональный агрегатор услуг</div>
+            <h2 class="about-title" data-key="ab_title">Ваш единый диспетчерский центр <span>Talas_profi</span></h2>
+        </div>
+
+        <!-- ОСНОВНОЙ БЛОК -->
+        <div class="about-main-grid">
+            
+            <!-- ЛЕВАЯ ЧАСТЬ: ИНФОРМАЦИЯ И ПОШАГОВЫЙ ПРОЦЕСС -->
+            <div class="about-info-col">
+                <p class="about-lead-p" data-key="ab_lead">
+                    Talas_profi — это централизованный сервис подбора и координации квалифицированных мастеров в Таласе, районах и Бишкеке.
+                </p>
+
+                <p class="about-body-p" data-key="ab_p1">
+                    Мы избавляем клиентов от риска столкнуться с недобросовестными рабочими. Наша служба берёт на себя полный цикл: от приёма заявки и подбора узкопрофильного специалиста под конкретную задачу до финального контроля качества выполненных работ.
+                </p>
+
+                <p class="about-body-p" data-key="ab_p2">
+                    В нашей базе — проверенные мастера по электромонтажу, обслуживанию кондиционеров, установке систем видеонаблюдения, сантехнике и профессиональному клинингу.
+                </p>
+
+                <!-- 3 ПРОСТЫХ ЭТАПА -->
+                <div class="about-steps">
+                    <div class="step-box">
+                        <span class="step-num">01</span>
+                        <div class="step-title" data-key="ab_st1_t">Заявка</div>
+                        <div class="step-desc" data-key="ab_st1_d">Вы звоните или пишете в WhatsApp диспетчеру.</div>
+                    </div>
+
+                    <div class="step-box">
+                        <span class="step-num">02</span>
+                        <div class="step-title" data-key="ab_st2_t">Подбор</div>
+                        <div class="step-desc" data-key="ab_st2_d">Назначаем мастера и согласовываем смету.</div>
+                    </div>
+
+                    <div class="step-box">
+                        <span class="step-num">03</span>
+                        <div class="step-title" data-key="ab_st3_t">Результат</div>
+                        <div class="step-desc" data-key="ab_st3_d">Мастер выполняет работу, мы даём гарантию.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ПРАВАЯ ЧАСТЬ: ПРЕИМУЩЕСТВА -->
+            <div class="about-features-col">
+                
+                <div class="feature-item">
+                    <div class="feature-icon-wrap">⚡</div>
+                    <div class="feature-content">
+                        <h4 data-key="ab_f1_t">Экономия вашего времени</h4>
+                        <p data-key="ab_f1_d">Больше не нужно искать специалистов на сайтах объявлений — диспетчер организует выезд за 1 звонок.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-wrap">🛠️</div>
+                    <div class="feature-content">
+                        <h4 data-key="ab_f2_t">Свой инструмент и опыт</h4>
+                        <p data-key="ab_f2_d">К вам приезжают мастера с профессиональным оборудованием, готовые к сложным техническим задачам.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-wrap">📜</div>
+                    <div class="feature-content">
+                        <h4 data-key="ab_f3_t">Прозрачный расчёт</h4>
+                        <p data-key="ab_f3_d">Все цены утверждаются строго до начала выполнения работ. Никаких скрытых комиссий.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon-wrap">🛡️</div>
+                    <div class="feature-content">
+                        <h4 data-key="ab_f4_t">Контроль и гарантия</h4>
+                        <p data-key="ab_f4_d">Диспетчерская служба контролирует качество выполнения работ на всех этапах.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- НИЖНИЕ ПОКАЗАТЕЛИ -->
+        <div class="about-stats-bar">
+            <div class="stat-item">
+                <div class="stat-val">24 / 7</div>
+                <div class="stat-lbl" data-key="ab_st_1">Приём заявок</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-val">20+</div>
+                <div class="stat-lbl" data-key="ab_st_2">Направлений услуг</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-val">100%</div>
+                <div class="stat-lbl" data-key="ab_st_3">Проверенные мастера</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-val">0 сом</div>
+                <div class="stat-lbl" data-key="ab_st_4">Скрытых переплат</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- МУЛЬТИЯЗЫЧНОСТЬ -->
+    <script>
+        const aboutTranslations = {
+            ru: {
+                ab_sub: "Профессиональный агрегатор услуг",
+                ab_title: "Ваш единый диспетчерский центр Talas_profi",
+                ab_lead: "Talas_profi — это централизованный сервис подбора и координации квалифицированных мастеров в Таласе, районах и Бишкеке.",
+                ab_p1: "Мы избавляем клиентов от риска столкнуться с недобросовестными рабочими. Наша служба берёт на себя полный цикл: от приёма заявки и подбора узкопрофильного специалиста под конкретную задачу до финального контроля качества выполненных работ.",
+                ab_p2: "В нашей базе — проверенные мастера по электромонтажу, обслуживанию кондиционеров, установке систем видеонаблюдения, сантехнике и профессиональному клинингу.",
+                ab_st1_t: "Заявка",
+                ab_st1_d: "Вы звоните или пишете в WhatsApp диспетчеру.",
+                ab_st2_t: "Подбор",
+                ab_st2_d: "Назначаем мастера и согласовываем смету.",
+                ab_st3_t: "Результат",
+                ab_st3_d: "Мастер выполняет работу, мы даём гарантию.",
+                ab_f1_t: "Экономия вашего времени",
+                ab_f1_d: "Больше не нужно искать специалистов на сайтах объявлений — диспетчер организует выезд за 1 звонок.",
+                ab_f2_t: "Свой инструмент и опыт",
+                ab_f2_d: "К вам приезжают мастера с профессиональным оборудованием, готовые к сложным техническим задачам.",
+                ab_f3_t: "Прозрачный расчёт",
+                ab_f3_d: "Все цены утверждаются строго до начала выполнения работ. Никаких скрытых комиссий.",
+                ab_f4_t: "Контроль и гарантия",
+                ab_f4_d: "Диспетчерская служба контролирует качество выполнения работ на всех этапах.",
+                ab_st_1: "Приём заявок",
+                ab_st_2: "Направлений услуг",
+                ab_st_3: "Проверенные мастера",
+                ab_st_4: "Скрытых переплат"
+            },
+            kg: {
+                ab_sub: "Кесипкөй кызматтар агрегатору",
+                ab_title: "Сиздин бирдиктүү диспетчердик борборуңуз Talas_profi",
+                ab_lead: "Talas_profi — Талас шаары, райондор жана Бишкек боюнча квалификациялуу усталарды тандоо жана координациялоо сервиси.",
+                ab_p1: "Биз кардарларды жоопкерчиликсиз жумушчулардан коргойбуз. Биздин кызмат бардык процессти өзүнө алат: арызды кабыл алуудан баштап, атайын адисти тандоого жана жумуштун сапатын текшерүүгө чейин.",
+                ab_p2: "Бизде электромонтаж, кондиционерлерди тейлөө, видеокөзөмөл орнотуу, сантехника жана кесипкөй тазалоо (клининг) боюнча ишенимдүү усталар бар.",
+                ab_st1_t: "Буйрутма",
+                ab_st1_d: "Диспетчерге чаласыз же WhatsApp аркылуу жазасыз.",
+                ab_st2_t: "Тандоо",
+                ab_st2_d: "Устаны дайындап, сметаны макулдашабыз.",
+                ab_st3_t: "Жыйынтык",
+                ab_st3_d: "Уста жумушту аткарат, биз кепилдик беребиз.",
+                ab_f1_t: "Убактыңызды үнөмдөө",
+                ab_f1_d: "Изденүүнүн кереги жок — диспетчер 1 чалуу менен устанын баруусун уюштурат.",
+                ab_f2_t: "Өз шаймандары жана тажрыйбасы",
+                ab_f2_d: "Сизге кесипкөй жабдуулары бар, татаал тапшырмаларды аткара алган усталар келет.",
+                ab_f3_t: "Ачык эсептешүү",
+                ab_f3_d: "Баардык баалар иш башталганга чейин бекитилет. Жашыруун төлөмдөр жок.",
+                ab_f4_t: "Көзөмөл жана кепилдик",
+                ab_f4_d: "Диспетчердик кызмат жумуштун сапатын ар бир этапта көзөмөлдөйт.",
+                ab_st_1: "Буйрутма кабыл алуу",
+                ab_st_2: "Кызмат багыттары",
+                ab_st_3: "Текшерилген усталар",
+                ab_st_4: "Жашыруун төлөмсүз"
+            }
+        };
+
+        const prevLangFnAbout = window.changeLanguage;
+        window.changeLanguage = function(lang) {
+            if (typeof prevLangFnAbout === 'function') prevLangFnAbout(lang);
+
+            if (aboutTranslations[lang]) {
+                document.querySelectorAll('#about [data-key]').forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (aboutTranslations[lang][key]) {
+                        el.textContent = aboutTranslations[lang][key];
+                    }
+                });
+            }
+        };
+    </script>
+</section>
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 
