@@ -1374,7 +1374,538 @@
 
 
 
-    
+    <!-- ================================================================= -->
+<!-- ПОДВАЛ САЙТА (FOOTER) — УВЕЛИЧЕННЫЕ МЕЖСТРОЧНЫЕ ЗАЗОРЫ            -->
+<!-- ================================================================= -->
+<footer id="footer" class="footer-section">
+
+    <style>
+        #footer * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .footer-section {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 70px 32px 40px 32px;
+            border-top: 3px solid #FBBF24;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .footer-container {
+            max-width: 1300px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        /* ОСНОВНАЯ СЕТКА КОЛОНОК */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1.2fr 1fr 1.2fr;
+            gap: 40px 35px;
+            align-items: start;
+        }
+
+        /* 1. БРЕНД */
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+            font-weight: 900;
+            color: #FFFFFF;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo span {
+            color: #FBBF24;
+        }
+
+        .footer-brand-desc {
+            color: #A1A1AA;
+            font-size: 14px;
+            line-height: 1.8; /* Увеличен межстрочный интервал текста */
+        }
+
+        .footer-badge-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid #FBBF24;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #FBBF24;
+            font-weight: 700;
+            width: fit-content;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10B981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10B981;
+        }
+
+        /* 2. ЗАГОЛОВКИ КОЛОНОК */
+        .footer-col-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #FBBF24;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 28px; /* Увеличен отступ под заголовком */
+            display: block;
+        }
+
+        /* 3. СПИСКИ ССЫЛОКС УВЕЛИЧЕННЫМ ЗАЗОРОМ */
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* УВЕЛИЧЕН ЗАЗОР МЕЖДУ СТРОКАМИ ССЫЛОК */
+        }
+
+        .footer-links li {
+            display: block;
+        }
+
+        .footer-links a {
+            color: #D4D4D8;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            padding: 8px 0; /* Увеличен кликабельный отступ сверху и снизу */
+            line-height: 1.5;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #FBBF24;
+        }
+
+        /* 4. ЗОНА ОБСЛУЖИВАНИЯ */
+        .coverage-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 18px; /* Увеличен зазор между пунктами зоны выезда */
+        }
+
+        .coverage-list li {
+            color: #A1A1AA;
+            font-size: 13px;
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .coverage-list li::before {
+            content: '•';
+            color: #FBBF24;
+        }
+
+        /* 5. КОНТАКТЫ */
+        .contacts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 22px; /* Увеличен зазор между контактными блоками */
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .contact-icon {
+            font-size: 18px;
+            color: #FBBF24;
+            margin-top: 2px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px; /* Отступ между подписью и номером/адресом */
+        }
+
+        .contact-label {
+            font-size: 11px;
+            color: #71717A;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-value {
+            color: #FFFFFF;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ */
+        .lang-switch {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .lang-btn {
+            background: #18181B;
+            border: 1px solid #3F3F46;
+            color: #A1A1AA;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .lang-btn.active {
+            background: #FBBF24;
+            color: #000000;
+            border-color: #FBBF24;
+        }
+
+        /* ПРЕИМУЩЕСТВА */
+        .footer-features {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 30px 0;
+            border-top: 1px solid #27272A;
+            border-bottom: 1px solid #27272A;
+        }
+
+        .feature-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #09090B;
+            border: 1px solid #27272A;
+            padding: 16px 18px;
+            border-radius: 8px;
+        }
+
+        .feature-icon {
+            font-size: 24px;
+            color: #FBBF24;
+        }
+
+        .feature-text h5 {
+            color: #FFFFFF;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .feature-text p {
+            color: #71717A;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+
+        /* НИЖНЯЯ СТРОКА */
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding-top: 10px;
+            font-size: 12px;
+            color: #71717A;
+        }
+
+        .legal-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .legal-links a {
+            color: #71717A;
+            text-decoration: none;
+        }
+
+        .legal-links a:hover {
+            color: #FBBF24;
+        }
+
+        /* АДАПТИВ */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-features {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+            .footer-features {
+                grid-template-columns: 1fr;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+
+    <div class="footer-container">
+        
+        <div class="footer-grid">
+            
+            <!-- 1. БРЕНД -->
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <span>⚡</span> TALAS_PROFI
+                </div>
+                <p class="footer-brand-desc" data-key="ft_desc">
+                    Единый диспетчерский центр подбора профессиональных мастеров. Оперативный выезд специалистов по ремонту и монтажу.
+                </p>
+                <div class="footer-badge-item">
+                    <span class="status-dot"></span>
+                    <span data-key="ft_status">Диспетчер 24/7</span>
+                </div>
+            </div>
+
+            <!-- 2. НАВИГАЦИЯ -->
+            <div>
+                <span class="footer-col-title" data-key="ft_col1">Навигация</span>
+                <ul class="footer-links">
+                    <li><a href="#services" data-key="ft_l1">Все услуги</a></li>
+                    <li><a href="#about" data-key="ft_l2">О компании</a></li>
+                    <li><a href="#how-it-works" data-key="ft_l3">Схема работы</a></li>
+                    <li><a href="#reviews" data-key="ft_l4">Отзывы клиентов</a></li>
+                    <li><a href="#contacts" data-key="ft_l5">Контакты</a></li>
+                </ul>
+            </div>
+
+            <!-- 3. УСЛУГИ -->
+            <div>
+                <span class="footer-col-title" data-key="ft_col2">Услуги</span>
+                <ul class="footer-links">
+                    <li><a href="#services" data-key="ft_s1">Электромонтаж</a></li>
+                    <li><a href="#services" data-key="ft_s2">Установка кондиционеров</a></li>
+                    <li><a href="#services" data-key="ft_s3">Видеонаблюдение</a></li>
+                    <li><a href="#services" data-key="ft_s4">Сантехника</a></li>
+                    <li><a href="#services" data-key="ft_s5">Клининг и уборка</a></li>
+                </ul>
+            </div>
+
+            <!-- 4. ОХВАТ -->
+            <div>
+                <span class="footer-col-title" data-key="ft_col4">Зона выезда</span>
+                <ul class="coverage-list">
+                    <li data-key="ft_cov_1">г. Талас</li>
+                    <li data-key="ft_cov_2">Бакай-Ата</li>
+                    <li data-key="ft_cov_3">Кара-Буура</li>
+                    <li data-key="ft_cov_4">Манас</li>
+                    <li data-key="ft_cov_5">г. Бишкек</li>
+                </ul>
+            </div>
+
+            <!-- 5. КОНТАКТЫ -->
+            <div>
+                <span class="footer-col-title" data-key="ft_col3">Контакты</span>
+                <div class="contacts-list">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <div class="contact-info">
+                            <span class="contact-label" data-key="ft_lbl_phone">Диспетчер</span>
+                            <a href="tel:+996755000228" class="contact-value">+996 755 000 228</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">💬</span>
+                        <div class="contact-info">
+                            <span class="contact-label">WhatsApp</span>
+                            <a href="https://wa.me/996755000228" target="_blank" class="contact-value">+996 755 000 228</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <div class="contact-info">
+                            <span class="contact-label" data-key="ft_lbl_loc">Локация</span>
+                            <span class="contact-value" data-key="ft_loc_val">г. Талас</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lang-switch">
+                    <button type="button" class="lang-btn active" onclick="changeLanguage('ru')">RU</button>
+                    <button type="button" class="lang-btn" onclick="changeLanguage('kg')">KG</button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ИНФО-КАРТОЧКИ -->
+        <div class="footer-features">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">
+                    <h5 data-key="ft_f1_t">Быстрый выезд</h5>
+                    <p data-key="ft_f1_d">Мастер отправляется сразу после заявки</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍🔧</div>
+                <div class="feature-text">
+                    <h5 data-key="ft_f2_t">Опытные мастера</h5>
+                    <p data-key="ft_f2_d">Проверенные специалисты с инструментом</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📜</div>
+                <div class="feature-text">
+                    <h5 data-key="ft_f3_t">Прозрачные цены</h5>
+                    <p data-key="ft_f3_d">Согласование сметы до начала работ</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤝</div>
+                <div class="feature-text">
+                    <h5 data-key="ft_f4_t">Контроль качества</h5>
+                    <p data-key="ft_f4_d">Гарантия на выполненные работы</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- КОПИРАЙТ -->
+        <div class="footer-bottom">
+            <div>© 2026 <strong>Talas_profi</strong>. <span data-key="ft_copy">Все права защищены. Диспетчерская служба.</span></div>
+            <div class="legal-links">
+                <a href="#" data-key="ft_privacy">Конфиденциальность</a>
+                <a href="#" data-key="ft_terms">Условия</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const footerTranslations = {
+            ru: {
+                ft_desc: "Единый диспетчерский центр подбора профессиональных мастеров. Оперативный выезд специалистов по ремонту и монтажу.",
+                ft_status: "Диспетчер 24/7",
+                ft_col1: "Навигация",
+                ft_l1: "Все услуги",
+                ft_l2: "О компании",
+                ft_l3: "Схема работы",
+                ft_l4: "Отзывы клиентов",
+                ft_l5: "Контакты",
+                ft_col2: "Услуги",
+                ft_s1: "Электромонтаж",
+                ft_s2: "Установка кондиционеров",
+                ft_s3: "Видеонаблюдение",
+                ft_s4: "Сантехника",
+                ft_s5: "Клининг и уборка",
+                ft_col4: "Зона выезда",
+                ft_cov_1: "г. Талас",
+                ft_cov_2: "Бакай-Ата",
+                ft_cov_3: "Кара-Буура",
+                ft_cov_4: "Манас",
+                ft_cov_5: "г. Бишкек",
+                ft_col3: "Контакты",
+                ft_lbl_phone: "Диспетчер",
+                ft_lbl_loc: "Локация",
+                ft_loc_val: "г. Талас",
+                ft_f1_t: "Быстрый выезд",
+                ft_f1_d: "Мастер отправляется сразу после заявки",
+                ft_f2_t: "Опытные мастера",
+                ft_f2_d: "Проверенные специалисты с инструментом",
+                ft_f3_t: "Прозрачные цены",
+                ft_f3_d: "Согласование сметы до начала работ",
+                ft_f4_t: "Контроль качества",
+                ft_f4_d: "Гарантия на выполненные работы",
+                ft_copy: "Все права защищены. Диспетчерская служба.",
+                ft_privacy: "Конфиденциальность",
+                ft_terms: "Условия"
+            },
+            kg: {
+                ft_desc: "Кесипкөй усталарды тандоо боюнча бирдиктүү диспетчердик борбор. Оңдоо жана монтаждоо боюнча адистердин ыкчам чыгуусу.",
+                ft_status: "Диспетчер 24/7",
+                ft_col1: "Навигация",
+                ft_l1: "Бардык кызматтар",
+                ft_l2: "Компания жөнүндө",
+                ft_l3: "Иштөө тартиби",
+                ft_l4: "Пикирлер",
+                ft_l5: "Байланыш",
+                ft_col2: "Кызматтар",
+                ft_s1: "Электромонтаж",
+                ft_s2: "Кондиционер орнотуу",
+                ft_s3: "Видеокөзөмөл",
+                ft_s4: "Сантехника",
+                ft_s5: "Тазалоо (клининг)",
+                ft_col4: "Тейлөө аймагы",
+                ft_cov_1: "Талас ш.",
+                ft_cov_2: "Бакай-Ата",
+                ft_cov_3: "Кара-Буура",
+                ft_cov_4: "Манас",
+                ft_cov_5: "Бишкек ш.",
+                ft_col3: "Байланыш",
+                ft_lbl_phone: "Диспетчер",
+                ft_lbl_loc: "Аймак",
+                ft_loc_val: "Талас ш.",
+                ft_f1_t: "Ыкчам баруу",
+                ft_f1_d: "Уста буйрутмадан кийин дароо жолго чыгат",
+                ft_f2_t: "Тажрыйбалуу усталар",
+                ft_f2_d: "Шаймандары бар ишенимдүү адистер",
+                ft_f3_t: "Ачык баалар",
+                ft_f3_d: "Иш башталганга чейин бааны макулдашуу",
+                ft_f4_t: "Сапатты көзөмөлдөө",
+                ft_f4_d: "Аткарылган иштерге кепилдик",
+                ft_copy: "Бардык укуктар корголгон. Диспетчердик кызмат.",
+                ft_privacy: "Купуялуулук",
+                ft_terms: "Шарттар"
+            }
+        };
+
+        const globalLangFn = window.changeLanguage;
+        window.changeLanguage = function(lang) {
+            if (typeof globalLangFn === 'function') globalLangFn(lang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+            });
+
+            if (footerTranslations[lang]) {
+                document.querySelectorAll('#footer [data-key]').forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (footerTranslations[lang][key]) {
+                        el.textContent = footerTranslations[lang][key];
+                    }
+                });
+            }
+        };
+    </script>
+</footer>
 
 
 
