@@ -412,456 +412,350 @@
 
 
 
-    <!-- АВТОНОМНЫЙ БЛОК: ЗАГОЛОВОК И ОПИСАНИЕ (HERO) -->
-<section class="talas-hero-block">
-    <div class="talas-hero-container">
-        <div class="talas-hero-content">
-            <h1 data-key="heroTitle">Талас шаарындагы бирдиктүү <span>диспетчердик борбор</span></h1>
-            <p data-key="heroDesc">Үйүңүзгө же объектиңизге уста керекпи? Сиз бизге кайрыласыз — биз заявканы тез арада кабыл алып, тажрыйбалуу профилик адисти жиберебиз. Ишенимдүү, тез жана ашыкча түйшүксүз.</p>
-            <a href="https://wa.me/996755000228" class="talas-hero-btn" data-key="heroBtn" target="_blank">WhatsApp аркылуу жазуу</a>
-        </div>
-        
-        <div class="talas-hero-card">
-            <h3 data-key="cardTitle">Борбордук байланыш</h3>
-            <p data-key="cardDesc">Бардык суроолор жана заказдар боюнча түз байланышыңыз.</p>
-            <div class="talas-hero-phone">+996 755 000 228</div>
-        </div>
-    </div>
-</section>
-
-<style>
-    .talas-hero-block {
-        background-color: #000000;
-        color: #FFFFFF;
-        padding: 80px 20px;
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    .talas-hero-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 40px;
-        align-items: center;
-    }
-
-    .talas-hero-content h1 {
-        font-size: 48px;
-        font-weight: 800;
-        margin-bottom: 20px;
-        line-height: 1.2;
-        color: #FFFFFF;
-    }
-
-    .talas-hero-content h1 span {
-        color: #FBBF24;
-    }
-
-    .talas-hero-content p {
-        color: #A3A3A3;
-        font-size: 18px;
-        margin-bottom: 30px;
-        line-height: 1.6;
-    }
-
-    .talas-hero-btn {
-        background-color: #FBBF24;
-        color: #000000;
-        padding: 12px 24px;
-        border-radius: 4px;
-        font-weight: 700;
-        text-decoration: none;
-        font-size: 15px;
-        transition: opacity 0.2s;
-        display: inline-block;
-    }
-
-    .talas-hero-btn:hover {
-        opacity: 0.9;
-    }
-
-    .talas-hero-card {
-        background-color: #111111;
-        border: 1px solid #262626;
-        padding: 40px;
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .talas-hero-card h3 {
-        color: #FBBF24;
-        margin-bottom: 15px;
-        font-size: 22px;
-    }
-
-    .talas-hero-card p {
-        color: #A3A3A3;
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-
-    .talas-hero-phone {
-        color: #FFFFFF;
-        font-weight: 800;
-        font-size: 20px;
-        letter-spacing: 1px;
-    }
-
-    @media (max-width: 900px) {
-        .talas-hero-container {
-            grid-template-columns: 1fr;
-            text-align: center;
-            padding: 20px 0;
-        }
-        .talas-hero-content h1 {
-            font-size: 34px;
-        }
-    }
-</style>
+    
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ================================================================= -->
-<!-- БЛОК «НАШИ УСЛУГИ» — ВАРИАНТ 2: ИНДУСТРИАЛЬНЫЕ ИНТЕРАКТИВНЫЕ ЧИПСЫ -->
-<!-- ================================================================= -->
-<section id="services" class="services-section-v2">
+<section class="talas-hero-v4">
 
     <style>
-        /* === СБРОС И ОСНОВНОЙ КОНТЕЙНЕР === */
-        #services * {
+        .talas-hero-v4 * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
-        .services-section-v2 {
+        .talas-hero-v4 {
             background-color: #000000;
-            /* Акцентная фоновая сетка в индустриальном стиле */
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.05) 0%, transparent 60%),
-                repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(255, 255, 255, 0.02) 50px);
+                radial-gradient(circle at 50% 30%, rgba(251, 191, 36, 0.12) 0%, transparent 70%),
+                radial-gradient(ellipse at center, rgba(0,0,0,0) 0%, #000000 80%);
             color: #FFFFFF;
-            padding: 160px 24px; /* Просторные вертикальные отступы */
+            padding: 100px 20px 80px 20px;
             width: 100%;
             display: flex;
             justify-content: center;
-            border-top: 2px solid #FBBF24;
-            border-bottom: 1px solid rgba(251, 191, 36, 0.2);
-        }
-
-        .v2-container {
-            max-width: 1200px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
             align-items: center;
-        }
-
-        /* === ВВОДНАЯ ЧАСТЬ === */
-        .v2-header {
-            text-align: center;
-            max-width: 900px;
-            margin-bottom: 80px;
-        }
-
-        .v2-tag {
-            color: #FBBF24;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            border: 1px solid rgba(251, 191, 36, 0.4);
-            padding: 8px 20px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 24px;
-            background: rgba(251, 191, 36, 0.03);
-        }
-
-        .v2-title {
-            font-size: clamp(34px, 4.5vw, 52px);
-            font-weight: 900;
-            line-height: 1.25;
-            color: #FFFFFF;
-            margin-bottom: 24px;
-        }
-
-        .v2-title span {
-            color: #FBBF24;
-        }
-
-        .v2-subtitle {
-            color: #A1A1AA;
-            font-size: clamp(16px, 1.8vw, 19px);
-            line-height: 1.8;
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
-        /* === ВОЗДУШНЫЙ МАССИВ ЧИПСОВ / ПЛИТОК === */
-        .v2-chips-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 16px 14px; /* Пространство между элементами */
-            width: 100%;
-            max-width: 1100px;
-            margin-bottom: 100px;
-        }
-
-        .v2-chip {
-            background: #09090B;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 50px; /* Скругленные чипсы */
-            padding: 16px 28px;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .v2-chip-icon {
-            font-size: 18px;
-            line-height: 1;
-        }
-
-        .v2-chip-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #E4E4E7;
-            white-space: nowrap;
-        }
-
-        .v2-chip:hover {
-            border-color: #FBBF24;
-            background: #FBBF24;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(251, 191, 36, 0.25);
-        }
-
-        .v2-chip:hover .v2-chip-text {
-            color: #000000;
-        }
-
-        /* === CTA / ФИНАЛЬНАЯ ПАНЕЛЬ === */
-        .v2-cta-card {
-            width: 100%;
-            background: linear-gradient(180deg, #09090B 0%, #000000 100%);
-            border: 1px solid rgba(251, 191, 36, 0.35);
-            border-radius: 16px;
-            padding: 60px 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            border-bottom: 1px solid #18181B;
             position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
         }
 
-        .v2-cta-card::before {
+        /* ЖЁЛТАЯ АКЦЕНТНАЯ ПОЛОСА НАВЕРХУ С ПЛАВНОЙ АНИМАЦИЕЙ */
+        .talas-hero-v4::before {
             content: '';
             position: absolute;
-            top: -1px;
-            left: 15%;
-            right: 15%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #FBBF24, transparent);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent 0%, #FBBF24 50%, transparent 100%);
+            animation: pulseGlow 6s ease-in-out infinite;
         }
 
-        .v2-cta-title {
-            font-size: clamp(24px, 3vw, 34px);
-            font-weight: 900;
-            color: #FFFFFF;
-            margin-bottom: 16px;
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
-        .v2-cta-desc {
-            color: #A1A1AA;
-            font-size: 17px;
-            line-height: 1.7;
-            max-width: 680px;
-            margin-bottom: 40px;
-        }
-
-        .v2-cta-buttons {
+        .hero-v4-container {
+            max-width: 900px;
+            width: 100%;
             display: flex;
-            gap: 20px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 32px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* КЛЮЧЕВЫЕ КАДРЫ: БОЛЕЕ ГЛУБОКИЙ И МЕДЛЕННЫЙ ПОДЪЕМ */
+        @keyframes fadeInUpSlow {
+            from {
+                opacity: 0;
+                transform: translateY(35px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ПИЛЮЛЯ / БЕЙДЖ (Время анимации увеличено до 1.4s, задержка 0.2s) */
+        .hero-v4-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #09090B;
+            border: 1px solid #27272A;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #FBBF24;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            
+            animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .hero-v4-badge span {
+            color: #FFFFFF;
+        }
+
+        /* ЗАГОЛОВОК (Задержка 0.5s) */
+        .hero-v4-title {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.08;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            
+            animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .hero-v4-title strong {
+            color: #FBBF24;
+            font-weight: 900;
+        }
+
+        /* ПОДЗАГОЛОВОК (Задержка 0.8s) */
+        .hero-v4-desc {
+            font-size: 18px;
+            color: #A1A1AA;
+            max-width: 680px;
+            line-height: 1.6;
+            font-weight: 400;
+            
+            animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.8s;
+            opacity: 0;
+        }
+
+        /* БЛОК КНОПОК (Задержка 1.1s) */
+        .hero-v4-cta-wrap {
+            display: flex;
+            align-items: center;
+            gap: 16px;
             width: 100%;
             justify-content: center;
-            max-width: 600px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+            
+            animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.1s;
+            opacity: 0;
         }
 
-        .v2-btn-primary {
-            flex: 1;
+        .hero-v4-btn-main {
             background: #FBBF24;
             color: #000000;
+            padding: 18px 36px;
+            border-radius: 8px;
             font-weight: 800;
+            text-decoration: none;
             font-size: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 20px 30px;
-            border-radius: 8px;
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .v2-btn-primary:hover {
+        .hero-v4-btn-main:hover {
             background: #F59E0B;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.45);
         }
 
-        .v2-btn-secondary {
-            flex: 1;
-            background: transparent;
+        .hero-v4-btn-sec {
+            background: #09090B;
             color: #FFFFFF;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-weight: 700;
-            font-size: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 20px 30px;
+            border: 1px solid #27272A;
+            padding: 18px 32px;
             border-radius: 8px;
+            font-weight: 700;
             text-decoration: none;
-            text-align: center;
-            transition: all 0.3s ease;
+            font-size: 15px;
+            transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .v2-btn-secondary:hover {
+        .hero-v4-btn-sec:hover {
             border-color: #FBBF24;
             color: #FBBF24;
-            background: rgba(251, 191, 36, 0.05);
-            transform: translateY(-2px);
+            background: #121215;
+            transform: translateY(-3px);
         }
 
-        /* === АДАПТИВНОСТЬ === */
+        /* МИНИ-СЧЕТЧИКИ ВНИЗУ (Задержка 1.4s) */
+        .hero-v4-stats {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #18181B;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 16px;
+            
+            animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 1.4s;
+            opacity: 0;
+        }
+
+        .v4-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .v4-stat-num {
+            font-size: 20px;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+
+        .v4-stat-lbl {
+            font-size: 12px;
+            color: #71717A;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .v4-divider {
+            width: 1px;
+            height: 24px;
+            background: #27272A;
+        }
+
+        /* АДАПТИВНОСТЬ */
         @media (max-width: 768px) {
-            .services-section-v2 { padding: 90px 16px; }
-            .v2-header { margin-bottom: 50px; }
-            .v2-chips-wrapper { gap: 10px; margin-bottom: 60px; }
-            .v2-chip { padding: 12px 20px; }
-            .v2-chip-text { font-size: 14px; }
-            .v2-cta-card { padding: 40px 20px; }
-            .v2-cta-buttons { flex-direction: column; gap: 12px; }
+            .talas-hero-v4 {
+                padding: 70px 16px 50px 16px;
+            }
+            .hero-v4-title {
+                font-size: 34px;
+            }
+            .hero-v4-desc {
+                font-size: 15px;
+            }
+            .hero-v4-cta-wrap {
+                flex-direction: column;
+                width: 100%;
+            }
+            .hero-v4-btn-main, .hero-v4-btn-sec {
+                width: 100%;
+                justify-content: center;
+            }
+            .hero-v4-stats {
+                gap: 16px;
+            }
+            .v4-stat-num {
+                font-size: 16px;
+            }
+            .v4-stat-lbl {
+                font-size: 10px;
+            }
         }
     </style>
 
-    <div class="v2-container">
-
-        <!-- ВВОДНЫЙ БЛОК -->
-        <div class="v2-header">
-            <span class="v2-tag" data-key="v2_tag">ДИСПЕТЧЕРСКАЯ СЛУЖБА</span>
-            <h2 class="v2-title" data-key="v2_t1">Нужен мастер? <span data-key="v2_t2">Решим любую задачу!</span></h2>
-            <p class="v2-subtitle" data-key="v2_sub">Диспетчер подберет профильного мастера за 5 минут. Работаем по Таласу и области без выходных.</p>
+    <div class="hero-v4-container">
+        
+        <div class="hero-v4-badge" data-key="v4Badge">
+            Talas_profi <span>• Талас / Бишкек</span>
         </div>
 
-        <!-- СПИСОК УСЛУГ В ВИДЕ ЧИПСОВ -->
-        <div class="v2-chips-wrapper">
-            <div class="v2-chip"><span class="v2-chip-icon">⚡</span><span class="v2-chip-text" data-key="v2_s1">Электромонтаж под ключ</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">❄️</span><span class="v2-chip-text" data-key="v2_s2">Установка кондиционеров</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">📹</span><span class="v2-chip-text" data-key="v2_s3">Монтаж видеонаблюдения</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🔧</span><span class="v2-chip-text" data-key="v2_s4">Сантехника</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🧹</span><span class="v2-chip-text" data-key="v2_s5">Клининг</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🧱</span><span class="v2-chip-text" data-key="v2_s6">Укладка кирпича</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">📜</span><span class="v2-chip-text" data-key="v2_s7">Поклейка обоев</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🛠️</span><span class="v2-chip-text" data-key="v2_s8">Мелкий бытовой ремонт</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">💡</span><span class="v2-chip-text" data-key="v2_s9">Замена розеток и люстр</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🪟</span><span class="v2-chip-text" data-key="v2_s10">Мойка окон</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🧼</span><span class="v2-chip-text" data-key="v2_s11">Уборка после ремонта</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🔌</span><span class="v2-chip-text" data-key="v2_s12">Сборка электрощитов</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🚿</span><span class="v2-chip-text" data-key="v2_s13">Установка сантехники</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🪵</span><span class="v2-chip-text" data-key="v2_s14">Сборка мебели</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🛋️</span><span class="v2-chip-text" data-key="v2_s15">Химчистка диванов</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🎨</span><span class="v2-chip-text" data-key="v2_s16">Покраска стен</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🏠</span><span class="v2-chip-text" data-key="v2_s17">Штукатурка и шпатлевка</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🔒</span><span class="v2-chip-text" data-key="v2_s18">Установка домофонов</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🧰</span><span class="v2-chip-text" data-key="v2_s19">Муж на час</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🏗️</span><span class="v2-chip-text" data-key="v2_s20">Демонтаж стен</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🔥</span><span class="v2-chip-text" data-key="v2_s21">Монтаж водонагревателей</span></div>
-            <div class="v2-chip"><span class="v2-chip-icon">🌊</span><span class="v2-chip-text" data-key="v2_s22">Прочистка канализации</span></div>
+        <h1 class="hero-v4-title" data-key="v4Title">
+            Профессиональные услуги<br>в <strong>один клик</strong>
+        </h1>
+
+        <p class="hero-v4-desc" data-key="v4Desc">
+            Электромонтаж, кондиционеры, сантехника и клининг. Направляем проверенных мастеров с профильным инструментом и гарантией качества.
+        </p>
+
+        <div class="hero-v4-cta-wrap">
+            <a href="https://wa.me/996755000228" class="hero-v4-btn-main" data-key="v4BtnMain" target="_blank">
+                💬 Написать в WhatsApp
+            </a>
+            <a href="tel:+996755000228" class="hero-v4-btn-sec" data-key="v4BtnSec">
+                📞 +996 755 000 228
+            </a>
         </div>
 
-        <!-- CTA БЛОК -->
-        <div class="v2-cta-card">
-            <h3 class="v2-cta-title" data-key="v2_cta_t">Не нашли нужную услугу?</h3>
-            <p class="v2-cta-desc" data-key="v2_cta_d">Мы выполняем любые виды работ. Позвоните или напишите диспетчеру — организуем выезд мастера!</p>
-            <div class="v2-cta-buttons">
-                <a href="tel:+996755000228" class="v2-btn-primary" data-key="v2_btn_c">Позвонить</a>
-                <a href="https://wa.me/996755000228" target="_blank" class="v2-btn-secondary" data-key="v2_btn_w">Написать в WhatsApp</a>
+        <div class="hero-v4-stats">
+            <div class="v4-stat">
+                <span class="v4-stat-num">100%</span>
+                <span class="v4-stat-lbl" data-key="v4St1">Качество</span>
+            </div>
+            <div class="v4-divider"></div>
+            <div class="v4-stat">
+                <span class="v4-stat-num" data-key="v4St2Val">Свои</span>
+                <span class="v4-stat-lbl" data-key="v4St2">Инструменты</span>
+            </div>
+            <div class="v4-divider"></div>
+            <div class="v4-stat">
+                <span class="v4-stat-num">24/7</span>
+                <span class="v4-stat-lbl" data-key="v4St3">Диспетчер</span>
             </div>
         </div>
 
     </div>
 
-    <!-- МУЛЬТИЯЗЫЧНОСТЬ -->
     <script>
-        const v2Translations = {
+        const v4Translations = {
             ru: {
-                v2_tag: "ДИСПЕТЧЕРСКАЯ СЛУЖБА",
-                v2_t1: "Нужен мастер?",
-                v2_t2: "Решим любую задачу!",
-                v2_sub: "Диспетчер подберет профильного мастера за 5 минут. Работаем по Таласу и области без выходных.",
-                v2_s1: "Электромонтаж под ключ", v2_s2: "Установка кондиционеров", v2_s3: "Монтаж видеонаблюдения",
-                v2_s4: "Сантехника", v2_s5: "Клининг", v2_s6: "Укладка кирпича", v2_s7: "Поклейка обоев",
-                v2_s8: "Мелкий бытовой ремонт", v2_s9: "Замена розеток и люстр", v2_s10: "Мойка окон",
-                v2_s11: "Уборка после ремонта", v2_s12: "Сборка электрощитов", v2_s13: "Установка сантехники",
-                v2_s14: "Сборка мебели", v2_s15: "Химчистка диванов", v2_s16: "Покраска стен",
-                v2_s17: "Штукатурка и шпатлевка", v2_s18: "Установка домофонов", v2_s19: "Муж на час",
-                v2_s20: "Демонтаж стен", v2_s21: "Монтаж водонагревателей", v2_s22: "Прочистка канализации",
-                v2_cta_t: "Не нашли нужную услугу?",
-                v2_cta_d: "Мы выполняем любые виды работ. Позвоните или напишите диспетчеру — организуем выезд мастера!",
-                v2_btn_c: "Позвонить", v2_btn_w: "Написать в WhatsApp"
+                v4Badge: "Talas_profi <span>• Талас / Бишкек</span>",
+                v4Title: "Профессиональные услуги<br>в <strong>один клик</strong>",
+                v4Desc: "Электромонтаж, кондиционеры, сантехника и клининг. Направляем проверенных мастеров с профильным инструментом и гарантией качества.",
+                v4BtnMain: "💬 Написать в WhatsApp",
+                v4BtnSec: "📞 +996 755 000 228",
+                v4St1: "Качество",
+                v4St2Val: "Свои",
+                v4St2: "Инструменты",
+                v4St3: "Диспетчер"
             },
             kg: {
-                v2_tag: "ДИСПЕТЧЕРДИК КЫЗМАТ",
-                v2_t1: "Уста керекпи?",
-                v2_t2: "Ар кандай ишти чечебиз!",
-                v2_sub: "Диспетчер 5 мүнөттүн ичинде тиешелүү устаны таап берет. Талас шаары жана облусу боюнча дем алышсыз иштейбиз.",
-                v2_s1: "Толугу менен электромонтаж", v2_s2: "Кондиционерлерди орнотуу", v2_s3: "Видеокөзөмөл монтаждоо",
-                v2_s4: "Сантехника", v2_s5: "Клининг", v2_s6: "Кирпич тизүү", v2_s7: "Обои чаптоо",
-                v2_s8: "Майда тиричилик оңдоо", v2_s9: "Розетка, люстра алмаштыруу", v2_s10: "Терезелерди жуу",
-                v2_s11: "Оңдоодон кийинки тазалоо", v2_s12: "Электр щиттерин кураштыруу", v2_s13: "Сантехника орнотуу",
-                v2_s14: "Эмерек кураштыруу", v2_s15: "Эмеректерди химчистка кылуу", v2_s16: "Дубалдарды боёо",
-                v2_s17: "Штукатурка жана шпатлевка", v2_s18: "Домофондорду орнотуу", v2_s19: "Бир сааттык мастер",
-                v2_s20: "Дубалдарды демонтаждоо", v2_s21: "Суу жылыткычтарды монтаждоо", v2_s22: "Канализация тазалоо",
-                v2_cta_t: "Керектүү кызматты таппадыңызбы?",
-                v2_cta_d: "Биз жумуштун бардык түрүн аткарабыз. Диспетчерге чалыңыз же жазыңыз — устаны уюштуруп беребиз!",
-                v2_btn_c: "Чалуу", v2_btn_w: "WhatsApp'ка жазуу"
+                v4Badge: "Talas_profi <span>• Талас / Бишкек</span>",
+                v4Title: "Профессионалдуу кызматтар<br><strong>бир чыкылдатуу менен</strong>",
+                v4Desc: "Электромонтаж, кондиционерлер, сантехника жана клининг. Өз шаймандары бар ишенимдүү адистерди жөнөтөбүз.",
+                v4BtnMain: "💬 WhatsApp аркылуу жазуу",
+                v4BtnSec: "📞 +996 755 000 228",
+                v4St1: "Сапат",
+                v4St2Val: "Өз",
+                v4St2: "Шаймандары",
+                v4St3: "Диспетчер"
             }
         };
 
-        const existingLangFn = window.changeLanguage;
+        const prevLangFnV4 = window.changeLanguage;
         window.changeLanguage = function(lang) {
-            if (typeof existingLangFn === 'function') existingLangFn(lang);
-            if (v2Translations[lang]) {
-                document.querySelectorAll('#services [data-key]').forEach(el => {
+            if (typeof prevLangFnV4 === 'function') prevLangFnV4(lang);
+
+            if (v4Translations[lang]) {
+                document.querySelectorAll('.talas-hero-v4 [data-key]').forEach(el => {
                     const key = el.getAttribute('data-key');
-                    if (v2Translations[lang][key]) {
-                        el.textContent = v2Translations[lang][key];
+                    if (v4Translations[lang][key]) {
+                        if (key === 'v4Title' || key === 'v4Badge') {
+                            el.innerHTML = v4Translations[lang][key];
+                        } else {
+                            el.textContent = v4Translations[lang][key];
+                        }
                     }
                 });
             }
@@ -869,6 +763,405 @@
     </script>
 </section>
 
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ================================================================= -->
+<!-- БЛОК «ВСЕ УСЛУГИ» — МАКСИМАЛЬНЫЙ ВОЗДУХ ПЕРЕД ДИСПЕТЧЕРОМ -->
+<!-- ================================================================= -->
+<section id="services-air" class="services-air-section">
+
+    <style>
+        #services-air * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .services-air-section {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 120px 24px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            border-top: 1px solid #18181B;
+            border-bottom: 1px solid #18181B;
+        }
+
+        .sa-container {
+            max-width: 820px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Заголовок */
+        .sa-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .sa-title {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FFFFFF;
+            margin-bottom: 28px;
+            line-height: 1.3;
+        }
+
+        .sa-title span {
+            color: #FBBF24;
+        }
+
+        .sa-subtitle {
+            font-size: clamp(16px, 2vw, 20px);
+            color: #A1A1AA;
+            max-width: 720px;
+            line-height: 1.8;
+            letter-spacing: 0.5px;
+            font-weight: 400;
+        }
+
+        /* Список услуг */
+        .sa-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sa-item {
+            background: #09090B;
+            border: 1px solid #27272A;
+            border-radius: 16px;
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            color: #FFFFFF;
+        }
+
+        .sa-item:hover {
+            border-color: #FBBF24;
+            background: #121215;
+            transform: translateY(-4px);
+            box-shadow: 0 16px 35px rgba(251, 191, 36, 0.12);
+        }
+
+        .sa-item-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .sa-icon {
+            font-size: 28px;
+            width: 52px;
+            height: 52px;
+            background: #18181B;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+        }
+
+        .sa-item:hover .sa-icon {
+            background: #FBBF24;
+            color: #000000;
+            transform: scale(1.08);
+        }
+
+        .sa-name {
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .sa-arrow-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #71717A;
+            font-size: 14px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+        }
+
+        .sa-arrow {
+            font-size: 20px;
+            transition: transform 0.4s ease;
+        }
+
+        .sa-item:hover .sa-arrow-box {
+            color: #FBBF24;
+        }
+
+        .sa-item:hover .sa-arrow {
+            transform: translateX(8px);
+        }
+
+        /* БЛОК ДИСПЕТЧЕРА С ЖЕСТКИМ ОГРОМНЫМ ВОЗДУХОМ СВЕРХУ */
+        .sa-action-box {
+            text-align: center;
+            width: 100%;
+            background: rgba(251, 191, 36, 0.03);
+            border: 1px dashed rgba(251, 191, 36, 0.25);
+            border-radius: 24px;
+            padding: 80px 40px;
+            
+            /* ЖЕСТКИЙ ВОЗДУХ МЕЖДУ СТИКЕРОМ И ДИСПЕТЧЕРОМ */
+            margin-top: 50px !important;
+        }
+
+        .sa-action-text {
+            font-size: 19px;
+            color: #FFFFFF;
+            margin-bottom: 40px;
+            font-weight: 600;
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+        }
+
+        .sa-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            background: #FBBF24;
+            color: #000000;
+            font-weight: 900;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 22px 52px;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 25px rgba(251, 191, 36, 0.25);
+        }
+
+        .sa-btn:hover {
+            background: #FFFFFF;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .services-air-section { padding: 80px 16px; }
+            .sa-header { margin-bottom: 40px; }
+            .sa-item { padding: 22px 18px; }
+            .sa-arrow-text { display: none; }
+            .sa-action-box { 
+                margin-top: 90px !important; /* Адаптированный воздух для мобилок */
+                padding: 50px 20px; 
+            }
+            .sa-action-text { margin-bottom: 30px; }
+        }
+    </style>
+
+    <div class="sa-container">
+
+        <!-- ЗАГОЛОВОК -->
+        <div class="sa-header">
+            <h2 class="sa-title" data-key="sa_title">Все услуги в <span>Talas_profi</span></h2>
+            <p class="sa-subtitle" data-key="sa_subtitle">У нас вы можете найти мастеров под любую задачу. Выберите необходимый сервис и оформите вызов прямо сейчас.</p>
+        </div>
+
+        <!-- СПИСОК УСЛУГ -->
+        <div class="sa-list">
+
+            <a href="https://wa.me/996755000228?text=Заказ%20электрика" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">⚡</div>
+                    <span class="sa-name" data-key="sa_1">Электромонтажные работы</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+            <a href="https://wa.me/996755000228?text=Заказ%20кондиционера" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">❄️</div>
+                    <span class="sa-name" data-key="sa_2">Кондиционирование и Климат</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+            <a href="https://wa.me/996755000228?text=Заказ%20видеонаблюдения" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">📹</div>
+                    <span class="sa-name" data-key="sa_3">Видеонаблюдение и Домофоны</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+            <a href="https://wa.me/996755000228?text=Заказ%20сантехника" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">🔧</div>
+                    <span class="sa-name" data-key="sa_4">Сантехнические услуги</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+            <a href="https://wa.me/996755000228?text=Заказ%20клининга" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">🧹</div>
+                    <span class="sa-name" data-key="sa_5">Профессиональный Клининг</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+            <a href="https://wa.me/996755000228?text=Заказ%20кирпичной%20кладки" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">🧱</div>
+                    <span class="sa-name" data-key="sa_6">Укладка кирпича и Кладка</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+            <a href="https://wa.me/996755000228?text=Заказ%20поклейки%20обоев" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">🎨</div>
+                    <span class="sa-name" data-key="sa_7">Поклейка обоев и Отделка</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+            <a href="https://wa.me/996755000228?text=Заказ%20другой%20услуги" target="_blank" class="sa-item">
+                <div class="sa-item-left">
+                    <div class="sa-icon">🛠️</div>
+                    <span class="sa-name" data-key="sa_8">Другие строительные работы</span>
+                </div>
+                <div class="sa-arrow-box">
+                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow">➔</span>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- БЛОК ДИСПЕТЧЕРА -->
+        <div class="sa-action-box">
+            <p class="sa-action-text" data-key="sa_action">Нужно решение индивидуальной задачи? Напишите нам — мы подберем специалиста под любой запрос.</p>
+            <a href="https://wa.me/996755000228" target="_blank" class="sa-btn" data-key="sa_btn">Написать диспетчеру</a>
+        </div>
+
+    </div>
+
+    <!-- МУЛЬТИЯЗЫЧНОСТЬ -->
+    <script>
+        const saTranslations = {
+            ru: {
+                sa_title: "Все услуги в <span>Talas_profi</span>",
+                sa_subtitle: "У нас вы можете найти мастеров под любую задачу. Выберите необходимый сервис и оформите вызов прямо сейчас.",
+                sa_1: "Электромонтажные работы",
+                sa_2: "Кондиционирование и Климат",
+                sa_3: "Видеонаблюдение и Домофоны",
+                sa_4: "Сантехнические услуги",
+                sa_5: "Профессиональный Клининг",
+                sa_6: "Укладка кирпича и Кладка",
+                sa_7: "Поклейка обоев и Отделка",
+                sa_8: "Другие строительные работы",
+                sa_call: "Вызвать",
+                sa_action: "Нужно решение индивидуальной задачи? Напишите нам — мы подберем специалиста под любой запрос.",
+                sa_btn: "Написать диспетчеру"
+            },
+            kg: {
+                sa_title: "Бардык кызматтар <span>Talas_profi</span> де",
+                sa_subtitle: "Бизден каалаган тапшырмага адистерди таба аласыз. Керектүү кызматты тандап, азыр чакырыңыз.",
+                sa_1: "Электромонтаж иштери",
+                sa_2: "Кондиционерлер жана Климат",
+                sa_3: "Видеокөзөмөл жана Домофондор",
+                sa_4: "Сантехникалык кызматтар",
+                sa_5: "Профессионалдуу Клининг",
+                sa_6: "Кирпич тизүү иштери",
+                sa_7: "Обои чаптоо жана Жасалгалоо",
+                sa_8: "Башка курулуш жумуштары",
+                sa_call: "Чакыруу",
+                sa_action: "Жекече тапшырмага чечим керекпи? Бизге жазыңыз — каалаган суроо боюнча адис таап беребиз.",
+                sa_btn: "Диспетчерге жазуу"
+            }
+        };
+
+        const prevLangFnSA = window.changeLanguage;
+        window.changeLanguage = function(lang) {
+            if (typeof prevLangFnSA === 'function') prevLangFnSA(lang);
+
+            if (saTranslations[lang]) {
+                document.querySelectorAll('#services-air [data-key]').forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (saTranslations[lang][key]) {
+                        if (key === 'sa_title') {
+                            el.innerHTML = saTranslations[lang][key];
+                        } else {
+                            el.textContent = saTranslations[lang][key];
+                        }
+                    }
+                });
+            }
+        };
+    </script>
+</section>
 
 
 
@@ -911,441 +1204,297 @@
 
 
 
-
 <!-- ================================================================= -->
-<!-- СЕКЦИЯ "ОФОРМИТЬ ЗАЯВКУ" (ПРЕМИУМ ДИЗАЙН) — TALAS_PROFI           -->
+<!-- СЕКЦИЯ "ОФОРМИТЬ ЗАЯВКУ" (ВАРИАНТ 3: MINIMAL GLOW) — TALAS_PROFI   -->
 <!-- ================================================================= -->
-<section id="order" class="order-section">
+<section id="order-v3" class="order-v3-section">
 
     <style>
-        #order * {
+        #order-v3 * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
-        /* ОСНОВНОЙ ФОН СЕКЦИИ C ГРАДИЕНТНОЙ ПОДСВЕТКОЙ */
-        .order-section {
-            background-color: #000000;
-            background-image: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.05) 0%, transparent 70%);
-            color: #FFFFFF;
-            padding: 100px 20px;
+        .order-v3-section {
+            background-color: #050505;
+            padding: 80px 20px;
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* ГЛАВНЫЙ КОНТЕЙНЕР ФОРМЫ */
-        .order-container {
-            max-width: 800px; /* Расширили для 2-х колоночной сетки */
+        .order-v3-card {
+            max-width: 680px;
             width: 100%;
-            background: linear-gradient(145deg, #0D0D0D 0%, #050505 100%);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 12px;
-            padding: 50px 40px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(251, 191, 36, 0.05);
-            position: relative;
+            background: #000000;
+            border: 2px solid #FBBF24;
+            border-radius: 24px;
+            padding: 45px 35px;
+            box-shadow: 0 0 50px rgba(251, 191, 36, 0.12);
         }
 
-        /* ШАПКА ФОРМЫ */
-        .order-header {
+        .order-v3-top {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 35px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 25px;
+            align-items: center;
+            margin-bottom: 30px;
         }
 
-        .title-badge {
-            display: inline-block;
-            color: #FBBF24;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-        }
-
-        .order-title {
+        .order-v3-title {
             color: #FFFFFF;
-            font-size: 30px;
-            font-weight: 800;
+            font-size: 28px;
+            font-weight: 900;
             letter-spacing: -0.5px;
         }
 
-        /* ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ В СТИЛЕ SEGMENTED CONTROL */
-        .lang-switch-modern {
+        .lang-switch-v3 {
             display: flex;
-            background: #181818;
-            padding: 3px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 4px;
+            background: #121212;
+            padding: 4px;
+            border-radius: 10px;
+            border: 1px solid #262626;
         }
 
-        .lang-btn-modern {
+        .lang-btn-v3 {
             background: transparent;
             border: none;
-            color: #888888;
-            padding: 6px 14px;
+            color: #71717A;
+            padding: 5px 12px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+            border-radius: 6px;
+            transition: 0.2s;
         }
 
-        .lang-btn-modern.active {
-            background-color: #FBBF24;
+        .lang-btn-v3.active {
+            background: #FBBF24;
             color: #000000;
-            box-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
         }
 
-        /* СЕТКА ПОЛЕЙ В 2 КОЛОНКИ */
-        .form-grid {
+        .form-v3-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px 25px;
+            gap: 16px;
         }
 
-        /* ПОЛИ В ВСЮ ШИРИНУ (ОПИСАНИЕ И БЮДЖЕТ) */
-        .full-width {
-            grid-column: span 2;
+        .full-v3 { grid-column: span 2; }
+
+        .input-v3-wrap {
+            position: relative;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-label {
-            color: #DDDDDD;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .form-label span.req {
-            color: #FBBF24;
-            margin-left: 3px;
-        }
-
-        .form-label span.opt {
-            color: #666666;
-            font-size: 11px;
-            font-weight: 400;
-        }
-
-        /* ПРЕМИАЛЬНЫЕ ПОЛЯ ВВОДА */
-        .form-input-modern,
-        .form-textarea-modern {
+        .input-v3 {
             width: 100%;
-            background-color: #121212;
-            border: 1px solid #262626;
-            border-radius: 6px;
+            background: #0F0F11;
+            border: 1px solid #27272A;
+            border-radius: 12px;
             color: #FFFFFF;
-            padding: 14px 16px;
+            padding: 16px;
             font-size: 14px;
             outline: none;
-            transition: all 0.25s ease-in-out;
+            transition: all 0.2s ease;
         }
 
-        .form-textarea-modern {
+        .textarea-v3 {
             resize: vertical;
             min-height: 90px;
         }
 
-        .form-input-modern::placeholder,
-        .form-textarea-modern::placeholder {
-            color: #444444;
+        .input-v3::placeholder {
+            color: #52525B;
         }
 
-        /* АНИМАЦИЯ ФОКУСА */
-        .form-input-modern:focus,
-        .form-textarea-modern:focus {
+        .input-v3:focus {
             border-color: #FBBF24;
-            background-color: #161616;
-            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.15);
+            background: #141417;
+            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.1);
         }
 
-        /* КНОПКА С СОВРЕМЕННЫМ ГРАДИЕНТОМ И ТЕНИМИ */
-        .btn-submit-modern {
+        .btn-v3 {
             grid-column: span 2;
-            background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+            background: #FBBF24;
             color: #000000;
             border: none;
             padding: 18px;
             font-size: 15px;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             cursor: pointer;
-            border-radius: 6px;
+            border-radius: 12px;
             margin-top: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.2);
+            transition: 0.2s;
         }
 
-        .btn-submit-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.35);
+        .btn-v3:hover {
+            background: #F59E0B;
+            transform: scale(1.01);
         }
 
-        .btn-submit-modern:active {
-            transform: translateY(0);
-        }
-
-        /* СТАТУС ОТПРАВКИ */
-        .form-status {
+        .status-v3 {
             grid-column: span 2;
-            padding: 14px;
-            font-size: 14px;
+            padding: 12px;
+            font-size: 13px;
             text-align: center;
-            border-radius: 6px;
+            border-radius: 8px;
             display: none;
+            font-weight: 600;
         }
 
-        .form-status.success {
-            display: block;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid #10B981;
-            color: #10B981;
-        }
+        .status-v3.success { display: block; background: rgba(16, 185, 129, 0.15); color: #10B981; }
+        .status-v3.error { display: block; background: rgba(239, 68, 68, 0.15); color: #EF4444; }
 
-        .form-status.error {
-            display: block;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid #EF4444;
-            color: #EF4444;
-        }
-
-        /* МОБИЛЬНАЯ АДАПТАЦИЯ (В 1 КОЛОНКУ) */
-        @media (max-width: 650px) {
-            .order-section {
-                padding: 60px 15px;
-            }
-            .order-container {
-                padding: 30px 20px;
-                border-radius: 8px;
-            }
-            .order-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            .full-width, .btn-submit-modern, .form-status {
-                grid-column: span 1;
-            }
+        @media (max-width: 600px) {
+            .order-v3-card { padding: 30px 20px; border-radius: 16px; }
+            .form-v3-grid { grid-template-columns: 1fr; }
+            .full-v3, .btn-v3, .status-v3 { grid-column: span 1; }
         }
     </style>
 
-    <div class="order-container">
-        
-        <!-- ШАПКА -->
-        <div class="order-header">
-            <div>
-                <span class="title-badge" data-key="form_badge">Быстрый заказ</span>
-                <h2 class="order-title" data-key="form_title">Оформить заявку</h2>
-            </div>
-            
-            <div class="lang-switch-modern">
-                <button type="button" class="lang-btn-modern active" id="btn-ru" onclick="changeLanguage('ru')">RU</button>
-                <button type="button" class="lang-btn-modern" id="btn-kg" onclick="changeLanguage('kg')">KG</button>
+    <div class="order-v3-card">
+        <div class="order-v3-top">
+            <h2 class="order-v3-title" data-key="v3_title">Быстрый заказ</h2>
+            <div class="lang-switch-v3">
+                <button type="button" class="lang-btn-v3 active" id="v3-btn-ru" onclick="changeLanguageV3('ru')">RU</button>
+                <button type="button" class="lang-btn-v3" id="v3-btn-kg" onclick="changeLanguageV3('kg')">KG</button>
             </div>
         </div>
 
-        <!-- ФОРМА (СЕТКА) -->
-        <form id="telegram-order-form" class="form-grid">
-
-            <!-- 1. ИМЯ -->
-            <div class="form-group">
-                <label for="client-name" class="form-label">
-                    <span><span data-key="label_name">Ваше имя</span><span class="req">*</span></span>
-                </label>
-                <input type="text" id="client-name" class="form-input-modern" data-key-ph="ph_name" placeholder="Введите имя" required>
+        <form id="telegram-v3-form" class="form-v3-grid">
+            
+            <div class="input-v3-wrap">
+                <input type="text" id="v3-name" class="input-v3" data-key-ph="ph_name" placeholder="Имя *" required>
             </div>
 
-            <!-- 2. ТЕЛЕФОН -->
-            <div class="form-group">
-                <label for="client-phone" class="form-label">
-                    <span><span data-key="label_phone">Телефон / WhatsApp</span><span class="req">*</span></span>
-                </label>
-                <input type="tel" id="client-phone" class="form-input-modern" data-key-ph="ph_phone" placeholder="+996 (___) __-__-__" required>
+            <div class="input-v3-wrap">
+                <input type="tel" id="v3-phone" class="input-v3" data-key-ph="ph_phone" placeholder="Телефон / WhatsApp *" required>
             </div>
 
-            <!-- 3. АДРЕС -->
-            <div class="form-group">
-                <label for="client-address" class="form-label">
-                    <span><span data-key="label_address">Адрес объекта</span><span class="req">*</span></span>
-                </label>
-                <input type="text" id="client-address" class="form-input-modern" data-key-ph="ph_address" placeholder="Район, улица, дом" required>
+            <div class="input-v3-wrap">
+                <input type="text" id="v3-address" class="input-v3" data-key-ph="ph_address" placeholder="Адрес объекта *" required>
             </div>
 
-            <!-- 4. УСЛУГА -->
-            <div class="form-group">
-                <label for="client-service" class="form-label">
-                    <span><span data-key="label_service">Требуемая услуга</span><span class="req">*</span></span>
-                </label>
-                <input type="text" id="client-service" class="form-input-modern" data-key-ph="ph_service" placeholder="Электромонтаж, кирпич..." required>
+            <div class="input-v3-wrap">
+                <input type="text" id="v3-service" class="input-v3" data-key-ph="ph_service" placeholder="Какая услуга нужна? *" required>
             </div>
 
-            <!-- 5. КОММЕНТАРИЙ (Всю ширину) -->
-            <div class="form-group full-width">
-                <label for="client-comment" class="form-label">
-                    <span data-key="label_comment">Детали и комментарии</span>
-                    <span class="opt" data-key="opt_label">необязательно</span>
-                </label>
-                <textarea id="client-comment" class="form-textarea-modern" data-key-ph="ph_comment" placeholder="Опишите подробнее вашу задачу..."></textarea>
+            <div class="input-v3-wrap full-v3">
+                <textarea id="v3-comment" class="input-v3 textarea-v3" data-key-ph="ph_comment" placeholder="Детали задачи (необязательно)"></textarea>
             </div>
 
-            <!-- 6. БЮДЖЕТ (Всю ширину) -->
-            <div class="form-group full-width">
-                <label for="client-budget" class="form-label">
-                    <span data-key="label_budget">Примерный бюджет (сом)</span>
-                    <span class="opt" data-key="opt_label">необязательно</span>
-                </label>
-                <input type="text" id="client-budget" class="form-input-modern" data-key-ph="ph_budget" placeholder="Например: 15 000 или Договорная">
+            <div class="input-v3-wrap full-v3">
+                <input type="text" id="v3-budget" class="input-v3" data-key-ph="ph_budget" placeholder="Планируемый бюджет в сомах (необязательно)">
             </div>
 
-            <!-- КНОПКА -->
-            <button type="submit" class="btn-submit-modern" id="submit-btn" data-key="btn_submit">Отправить заявку</button>
-
-            <!-- СТАТУС -->
-            <div id="form-status" class="form-status"></div>
+            <button type="submit" class="btn-v3" id="v3-submit-btn" data-key="btn_submit">Отправить заявку</button>
+            <div id="v3-status" class="status-v3"></div>
 
         </form>
     </div>
 
-    <!-- JAVASCRIPT -->
     <script>
-        const TELEGRAM_CONFIG = {
+        const TELEGRAM_CONFIG_V3 = {
             botToken: "YOUR_TELEGRAM_BOT_TOKEN",
             chatId: "YOUR_TELEGRAM_CHAT_ID"
         };
 
-        const translations = {
+        const translationsV3 = {
             ru: {
-                form_badge: "Быстрый заказ",
-                form_title: "Оформить заявку",
-                label_name: "Ваше имя",
-                ph_name: "Введите имя",
-                label_address: "Адрес объекта",
-                ph_address: "Район, улица, дом",
-                label_phone: "Телефон / WhatsApp",
-                ph_phone: "+996 (___) __-__-__",
-                label_service: "Требуемая услуга",
-                ph_service: "Электромонтаж, кирпич...",
-                label_comment: "Детали и комментарии",
-                ph_comment: "Опишите подробнее вашу задачу...",
-                label_budget: "Примерный бюджет (сом)",
-                ph_budget: "Например: 1 000 или Договорная",
-                opt_label: "необязательно",
+                v3_title: "Быстрый заказ",
+                ph_name: "Имя *",
+                ph_phone: "Телефон / WhatsApp *",
+                ph_address: "Адрес объекта *",
+                ph_service: "Какая услуга нужна? *",
+                ph_comment: "Детали задачи (необязательно)",
+                ph_budget: "Планируемый бюджет в сомах (необязательно)",
                 btn_submit: "Отправить заявку",
                 btn_sending: "Отправка...",
-                msg_success: "Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.",
-                msg_error: "Ошибка отправки. Свяжитесь по телефону."
+                msg_success: "Заявка принята! Мы скоро свяжемся.",
+                msg_error: "Ошибка при отправке."
             },
             kg: {
-                form_badge: "Тез буйрутма",
-                form_title: "Өтүнмө калтыруу",
-                label_name: "Сиздин атыңыз",
-                ph_name: "Атыңызды киргизиңиз",
-                label_address: "Объекттин дареги",
-                ph_address: "Район, көчө, үй",
-                label_phone: "Телефон / WhatsApp",
-                ph_phone: "+996 (___) __-__-__",
-                label_service: "Керектүү кызмат",
-                ph_service: "Электромонтаж, кирпич...",
-                label_comment: "Кошумча маалымат",
-                ph_comment: "Тапшырма тууралуу кененирээк жазыңыз...",
-                label_budget: "Божомолдонгон бюджет (сом)",
-                ph_budget: "Мисалы: 1 000 же Келишим баада",
-                opt_label: "милдеттүү эмес",
+                v3_title: "Тез буйрутма",
+                ph_name: "Атыңыз *",
+                ph_phone: "Телефон / WhatsApp *",
+                ph_address: "Объекттин дареги *",
+                ph_service: "Кандай кызмат керек? *",
+                ph_comment: "Тапшырма тууралуу (милдеттүү эмес)",
+                ph_budget: "Божомолдонгон бюджет сом менен (милдеттүү эмес)",
                 btn_submit: "Өтүнмөнү жөнөтүү",
                 btn_sending: "Жөнөтүлүүдө...",
-                msg_success: "Өтүнмө ийгиликтүү жөнөтүлдү! Биз сиз менен байланышабыз.",
-                msg_error: "Жөнөтүүдө ката кетти."
+                msg_success: "Өтүнмө кабыл алынды! Байланышабыз.",
+                msg_error: "Ката кетти."
             }
         };
 
-        let currentLang = 'ru';
+        let currentLangV3 = 'ru';
 
-        function changeLanguage(lang) {
-            if (!translations[lang]) return;
-            currentLang = lang;
+        function changeLanguageV3(lang) {
+            if (!translationsV3[lang]) return;
+            currentLangV3 = lang;
 
-            document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
-            document.getElementById('btn-kg').classList.toggle('active', lang === 'kg');
+            document.getElementById('v3-btn-ru').classList.toggle('active', lang === 'ru');
+            document.getElementById('v3-btn-kg').classList.toggle('active', lang === 'kg');
 
-            document.querySelectorAll('#order [data-key]').forEach(el => {
+            document.querySelectorAll('#order-v3 [data-key]').forEach(el => {
                 const k = el.getAttribute('data-key');
-                if (translations[lang][k]) el.textContent = translations[lang][k];
+                if (translationsV3[lang][k]) el.textContent = translationsV3[lang][k];
             });
 
-            document.querySelectorAll('#order [data-key-ph]').forEach(el => {
+            document.querySelectorAll('#order-v3 [data-key-ph]').forEach(el => {
                 const k = el.getAttribute('data-key-ph');
-                if (translations[lang][k]) el.setAttribute('placeholder', translations[lang][k]);
+                if (translationsV3[lang][k]) el.setAttribute('placeholder', translationsV3[lang][k]);
             });
         }
 
-        const orderForm = document.getElementById('telegram-order-form');
-        const formStatus = document.getElementById('form-status');
-        const submitBtn = document.getElementById('submit-btn');
-
-        orderForm.addEventListener('submit', async function(e) {
+        document.getElementById('telegram-v3-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const name = document.getElementById('client-name').value.trim();
-            const address = document.getElementById('client-address').value.trim();
-            const phone = document.getElementById('client-phone').value.trim();
-            const service = document.getElementById('client-service').value.trim();
-            const comment = document.getElementById('client-comment').value.trim() || "Не указано";
-            const budget = document.getElementById('client-budget').value.trim() || "Не указан";
+            const name = document.getElementById('v3-name').value.trim();
+            const phone = document.getElementById('v3-phone').value.trim();
+            const address = document.getElementById('v3-address').value.trim();
+            const service = document.getElementById('v3-service').value.trim();
+            const comment = document.getElementById('v3-comment').value.trim() || "Не указано";
+            const budget = document.getElementById('v3-budget').value.trim() || "Не указан";
+            const btn = document.getElementById('v3-submit-btn');
+            const status = document.getElementById('v3-status');
 
-            submitBtn.textContent = translations[currentLang].btn_sending;
-            submitBtn.disabled = true;
+            btn.textContent = translationsV3[currentLangV3].btn_sending;
+            btn.disabled = true;
 
-            const message = `<b>⚡ НОВАЯ ЗАЯВКА [Talas_profi]</b>\n\n<b>👤 Имя:</b> ${name}\n<b>📍 Адрес:</b> ${address}\n<b>📞 Телефон:</b> ${phone}\n<b>🛠 Услуга:</b> ${service}\n<b>💬 Детали:</b> ${comment}\n<b>💰 Бюджет:</b> ${budget}`;
+            const msg = `<b>⚡ ЗАЯВКА [Talas_profi]</b>\n\n<b>👤 Имя:</b> ${name}\n<b>📞 Тел:</b> ${phone}\n<b>📍 Адрес:</b> ${address}\n<b>🛠 Услуга:</b> ${service}\n<b>💬 Коммент:</b> ${comment}\n<b>💰 Бюджет:</b> ${budget}`;
 
             try {
-                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.botToken}/sendMessage`, {
+                const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG_V3.botToken}/sendMessage`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CONFIG.chatId, text: message, parse_mode: 'HTML' })
+                    body: JSON.stringify({ chat_id: TELEGRAM_CONFIG_V3.chatId, text: msg, parse_mode: 'HTML' })
                 });
-
                 const data = await res.json();
                 if (data.ok) {
-                    showStatus(translations[currentLang].msg_success, 'success');
-                    orderForm.reset();
+                    status.textContent = translationsV3[currentLangV3].msg_success;
+                    status.className = "status-v3 success";
+                    this.reset();
                 } else {
-                    showStatus(translations[currentLang].msg_success + " (Демо)", 'success');
-                    orderForm.reset();
+                    status.textContent = translationsV3[currentLangV3].msg_error;
+                    status.className = "status-v3 error";
                 }
             } catch (err) {
-                showStatus(translations[currentLang].msg_success + " (Демо)", 'success');
-                orderForm.reset();
+                status.textContent = translationsV3[currentLangV3].msg_error;
+                status.className = "status-v3 error";
             } finally {
-                submitBtn.textContent = translations[currentLang].btn_submit;
-                submitBtn.disabled = false;
+                btn.textContent = translationsV3[currentLangV3].btn_submit;
+                btn.disabled = false;
+                setTimeout(() => { status.style.display = 'none'; }, 5000);
             }
         });
-
-        function showStatus(text, type) {
-            formStatus.textContent = text;
-            formStatus.className = `form-status ${type}`;
-            setTimeout(() => { formStatus.style.display = 'none'; }, 6000);
-        }
     </script>
 </section>
-
 
 
 
