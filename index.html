@@ -1,207 +1,458 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <!-- Мета-теги для кодировки и корректной работы на мобильных устройствах -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Нижнее меню с боковой панелью Talas_profi</title>
-    
-    <style>
-        /* СБРОС БАЗОВЫХ СТИЛЕЙ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!DOCTYPE html> <html lang="ru"> <head> <!-- Мета-теги для кодировки и корректной работы на мобильных устройствах --> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talas_profi</title>
 
-        /* ОСНОВНОЕ ТЕЛО СТРАНИЦЫ */
-        body {
-            background-color: #000000; /* Глубокий черный фон */
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: #FFFFFF;
-            padding-bottom: 80px; /* Отступ снизу, чтобы нижнее меню не перекрывало контент */
-        }
+<style>
+    /* ========================================== */
+    /*  БАЗОВЫЕ СТИЛИ                              */
+    /* ========================================== */
 
-        /* ========================================== */
-        /*  1. СТИЛИ НИЖНЕГО МЕНЮ НАВИГАЦИИ           */
-        /* ========================================== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: #000000;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        color: #FFFFFF;
+
+        /* Место под фиксированное нижнее меню */
+        padding-bottom: 80px;
+
+        overflow-x: hidden;
+    }
+
+
+    /* ========================================== */
+    /*  НИЖНЕЕ МЕНЮ                                */
+    /* ========================================== */
+
+    .bottom-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        height: 65px;
+
+        background-color: #000000;
+        border-top: 2px solid #FBBF24;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        z-index: 1000;
+
+        /* Защита от нижней системной панели телефона */
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+
+
+    /* ========================================== */
+    /*  ОБЫЧНЫЕ КНОПКИ НИЖНЕГО МЕНЮ                */
+    /* ========================================== */
+
+    .nav-item {
+        position: relative;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        width: 25%;
+        height: 100%;
+
+        background: none;
+        border: none;
+
+        color: #FFFFFF;
+        text-decoration: none;
+
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        cursor: pointer;
+
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease;
+    }
+
+
+    /* ========================================== */
+    /*  ИКОНКИ НИЖНЕГО МЕНЮ                        */
+    /* ========================================== */
+
+    .nav-item svg {
+        width: 22px;
+        height: 22px;
+
+        fill: none;
+        stroke: #FFFFFF;
+        stroke-width: 2;
+
+        stroke-linecap: round;
+        stroke-linejoin: round;
+
+        margin-bottom: 4px;
+
+        transition: stroke 0.2s ease;
+    }
+
+
+    /* Активная кнопка / наведение */
+
+    .nav-item:hover,
+    .nav-item.active {
+        color: #FBBF24;
+    }
+
+    .nav-item:hover svg,
+    .nav-item.active svg {
+        stroke: #FBBF24;
+    }
+
+
+    /* ========================================== */
+    /*  ЕДИНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА                 */
+    /* ========================================== */
+
+    /*
+        ВАЖНО:
+
+        Этот переключатель предназначен для ВСЕГО САЙТА.
+
+        В HTML мы позже добавим:
+
+        <div class="language-switcher">
+            <button data-language="ky">Кыргызча</button>
+            <button data-language="ru">Русский</button>
+        </div>
+
+        JavaScript будет менять язык всей страницы,
+        а не отдельного блока.
+    */
+
+    .language-switcher {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 50%;
+
+        gap: 4px;
+
+        padding: 4px;
+
+        background-color: #111111;
+        border: 1px solid #333333;
+        border-radius: 8px;
+    }
+
+
+    /* Кнопки выбора языка */
+
+    .language-switcher button {
+        flex: 1;
+
+        min-width: 0;
+
+        padding: 7px 8px;
+
+        background: transparent;
+        border: none;
+        border-radius: 6px;
+
+        color: #FFFFFF;
+
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease;
+    }
+
+
+    /* Активный язык */
+
+    .language-switcher button.active {
+        background-color: #FBBF24;
+        color: #000000;
+    }
+
+
+    /* Наведение */
+
+    .language-switcher button:hover {
+        background-color: #FBBF24;
+        color: #000000;
+    }
+
+
+    /* ========================================== */
+    /*  ЗАТЕМНЕНИЕ ПРИ ОТКРЫТИИ БОКОВОГО МЕНЮ      */
+    /* ========================================== */
+
+    .menu-overlay {
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.7);
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease;
+
+        z-index: 1001;
+    }
+
+
+    /* Активное затемнение */
+
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+
+    /* ========================================== */
+    /*  БОКОВОЕ МЕНЮ                               */
+    /* ========================================== */
+
+    .sidebar-menu {
+        position: fixed;
+
+        top: 0;
+        right: -280px;
+
+        width: 280px;
+        max-width: 85vw;
+        height: 100%;
+
+        background-color: #000000;
+
+        border-left: 2px solid #FBBF24;
+
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.8);
+
+        display: flex;
+        flex-direction: column;
+
+        z-index: 1002;
+
+        transition: right 0.3s ease;
+    }
+
+
+    /* Открытое боковое меню */
+
+    .sidebar-menu.active {
+        right: 0;
+    }
+
+
+    /* ========================================== */
+    /*  ШАПКА БОКОВОГО МЕНЮ                        */
+    /* ========================================== */
+
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 20px;
+
+        border-bottom: 1px solid #222222;
+    }
+
+
+    /* Заголовок */
+
+    .sidebar-title {
+        color: #FBBF24;
+
+        font-size: 18px;
+        font-weight: 700;
+
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+
+    /* ========================================== */
+    /*  КНОПКА ЗАКРЫТИЯ                            */
+    /* ========================================== */
+
+    .close-btn {
+        width: 36px;
+        height: 36px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: none;
+        border: none;
+
+        color: #FFFFFF;
+
+        font-size: 28px;
+        line-height: 1;
+
+        cursor: pointer;
+
+        transition: color 0.2s ease;
+    }
+
+    .close-btn:hover {
+        color: #FBBF24;
+    }
+
+
+    /* ========================================== */
+    /*  НАВИГАЦИЯ В БОКОВОМ МЕНЮ                   */
+    /* ========================================== */
+
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+
+        padding: 10px 0;
+
+        overflow-y: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+
+    /* Отдельная ссылка */
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+
+        min-height: 55px;
+
+        padding: 15px 20px;
+
+        color: #FFFFFF;
+
+        text-decoration: none;
+
+        font-size: 15px;
+        font-weight: 500;
+
+        border-bottom: 1px solid #111111;
+
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease,
+            padding-left 0.2s ease;
+    }
+
+
+    /* Иконка ссылки */
+
+    .sidebar-link svg {
+        flex-shrink: 0;
+
+        width: 20px;
+        height: 20px;
+
+        margin-right: 15px;
+
+        stroke: #FBBF24;
+        stroke-width: 2;
+
+        fill: none;
+
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+
+    /* Наведение */
+
+    .sidebar-link:hover {
+        background-color: #111111;
+
+        color: #FBBF24;
+
+        padding-left: 25px;
+    }
+
+
+    /* ========================================== */
+    /*  МОБИЛЬНАЯ АДАПТАЦИЯ                         */
+    /* ========================================== */
+
+    @media (max-width: 480px) {
+
         .bottom-nav {
-            position: fixed;            /* Фиксация внизу экрана */
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background-color: #000000;
-            border-top: 2px solid #FBBF24; /* Золотая верхушка панели */
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;              /* Всегда поверх контента страницы */
+            height: 62px;
         }
 
-        /* Элемент кнопки в нижнем меню */
         .nav-item {
-            display: flex;
-            flex-direction: column;    /* Иконка сверху, текст снизу */
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            color: #FFFFFF;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            width: 25%;                /* Ровно 1/4 часть ширины */
-            height: 100%;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            font-size: 9px;
+            letter-spacing: 0.2px;
         }
 
-        /* Иконки в нижнем меню */
         .nav-item svg {
-            width: 22px;
-            height: 22px;
-            fill: none;
-            stroke: #FFFFFF;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            margin-bottom: 4px;
-            transition: stroke 0.2s ease;
-        }
-
-        /* Активная кнопка и состояние при наведении */
-        .nav-item:hover,
-        .nav-item.active {
-            color: #FBBF24;
-        }
-
-        .nav-item:hover svg,
-        .nav-item.active svg {
-            stroke: #FBBF24;
-        }
-
-
-        /* ========================================== */
-        /*  2. СТИЛИ БОКОВОГО ВСПЛЫВАЮЩЕГО МЕНЮ       */
-        /* ========================================== */
-
-        /* Темное полупрозрачное перекрытие (Затемнение фона при открытии меню) */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Черный с прозрачностью 70% */
-            opacity: 0;
-            visibility: hidden;         /* Скрыто по умолчанию */
-            transition: all 0.3s ease;
-            z-index: 1001;              /* Слой выше нижнего меню */
-        }
-
-        /* Класс для активации затемнения фона */
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Само выезжающее боковое меню */
-        .sidebar-menu {
-            position: fixed;
-            top: 0;
-            right: -280px;              /* Спрятано за правым краем экрана (-280px) */
-            width: 280px;               /* Ширина выезжающей панели */
-            height: 100%;
-            background-color: #000000;  /* Глубокий черный фон */
-            border-left: 2px solid #FBBF24; /* Золотая линия слева */
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            z-index: 1002;              /* Поверх затемняющего фона */
-            transition: right 0.3s ease; /* Плавный выезд справа */
-        }
-
-        /* Класс, который выдвигает боковое меню на экран */
-        .sidebar-menu.active {
-            right: 0;                   /* Показывается на экране */
-        }
-
-        /* Шапка бокового меню (Заголовок и кнопка Закрыть) */
-        .sidebar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid #222222;
-        }
-
-        /* Заголовок в меню */
-        .sidebar-title {
-            color: #FBBF24;             /* Золотой акцент */
-            font-size: 18px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Кнопка "Крестик" для закрытия меню */
-        .close-btn {
-            background: none;
-            border: none;
-            color: #FFFFFF;
-            font-size: 28px;
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s ease;
-        }
-
-        .close-btn:hover {
-            color: #FBBF24;
-        }
-
-        /* Список ссылок внутри бургер-меню */
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            padding: 10px 0;
-            overflow-y: auto;          /* Добавляет прокрутку, если ссылок станет слишком много */
-        }
-
-        /* Каждая отдельная ссылка в боковом меню (6 ШТУК) */
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: #FFFFFF;            /* Белый текст по умолчанию */
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 500;
-            border-bottom: 1px solid #111111; /* Тонкая разделительная черта */
-            transition: all 0.2s ease;
-        }
-
-        /* Иконка слева от текста ссылки */
-        .sidebar-link svg {
             width: 20px;
             height: 20px;
-            stroke: #FBBF24;           /* Золотые иконки */
-            stroke-width: 2;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            margin-right: 15px;        /* Отступ от иконки до текста */
         }
 
-        /* Эффект при наведении или нажатии на ссылку */
-        .sidebar-link:hover {
-            background-color: #111111; /* Легкое подсвечивание фона */
-            color: #FBBF24;            /* Смена цвета текста на золотой */
-            padding-left: 25px;        /* Легкое смещение текста вправо при наведении */
+        .language-switcher {
+            width: 48%;
+            gap: 2px;
         }
-    </style>
+
+        .language-switcher button {
+            padding: 7px 4px;
+            font-size: 9px;
+        }
+
+        .sidebar-menu {
+            width: 280px;
+        }
+    }
+
+
+    /* ========================================== */
+    /*  ДОПОЛНИТЕЛЬНАЯ ЗАЩИТА ОТ СИСТЕМНОГО       */
+    /*  УВЕЛИЧЕНИЯ ШРИФТА НА МОБИЛЬНЫХ             */
+    /* ========================================== */
+
+    @media (max-width: 768px) {
+
+        .sidebar-link {
+            font-size: 15px;
+        }
+    }
+
+</style>
+
 </head>
 <body>
 
@@ -240,180 +491,248 @@
 
 
 
+  <!-- ========================================== --> <!-- 1. НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ --> <!-- ========================================== --> <nav class="bottom-nav">
+<!-- Кнопка 1: Главная -->
+<a href="#hero" class="nav-item active">
+    <svg viewBox="0 0 24 24">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+
+    <span data-i18n="nav_home">Главная</span>
+</a>
+
+
+<!-- Кнопка 2: Услуги -->
+<a href="#services" class="nav-item">
+    <svg viewBox="0 0 24 24">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+    </svg>
+
+    <span data-i18n="nav_services">Услуги</span>
+</a>
+
+
+<!-- ========================================== -->
+<!--  ЦЕНТРАЛЬНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА           -->
+<!-- ========================================== -->
+
+<div class="language-switcher" aria-label="Выбор языка">
+
+    <button
+        type="button"
+        class="language-btn active"
+        data-language="ky"
+        onclick="setLanguage('ky')"
+    >
+        Кыргызча
+    </button>
+
+    <button
+        type="button"
+        class="language-btn"
+        data-language="ru"
+        onclick="setLanguage('ru')"
+    >
+        Русский
+    </button>
+
+</div>
+
+
+<!-- Кнопка 4: Заявка -->
+<a href="#zayavka" class="nav-item">
+    <svg viewBox="0 0 24 24">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+        <polyline points="14 2 14 8 20 8"></polyline>
+        <line x1="16" y1="13" x2="8" y2="13"></line>
+        <line x1="16" y1="17" x2="8" y2="17"></line>
+        <polyline points="10 9 9 9 8 9"></polyline>
+    </svg>
+
+    <span data-i18n="nav_application">Заявка</span>
+</a>
+
+
+<!-- Кнопка 5: Бургер-меню -->
+<button
+    type="button"
+    class="nav-item"
+    id="burger-menu-btn"
+    onclick="openMenu()"
+>
+    <svg viewBox="0 0 24 24">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+
+    <span data-i18n="nav_menu">Меню</span>
+</button>
+
+</nav> <!-- ========================================== --> <!-- 2. ВСПЛЫВАЮЩЕЕ БОКОВОЕ БУРГЕР-МЕНЮ --> <!-- ========================================== --> <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()" ></div> <div class="sidebar-menu" id="sidebarMenu">
+<!-- Шапка бокового меню -->
+<div class="sidebar-header">
+
+    <span
+        class="sidebar-title"
+        data-i18n="sidebar_navigation"
+    >
+        Навигация
+    </span>
+
+    <button
+        type="button"
+        class="close-btn"
+        onclick="closeMenu()"
+        aria-label="Закрыть"
+    >
+        &times;
+    </button>
+
+</div>
+
+
+<!-- ========================================== -->
+<!--  ССЫЛКИ БОКОВОГО МЕНЮ                       -->
+<!-- ========================================== -->
+
+<nav class="sidebar-nav">
+
+    <!-- О компании -->
+    <a
+        href="#about"
+        class="sidebar-link"
+        onclick="closeMenu()"
+    >
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+
+        <span data-i18n="sidebar_about">
+            О компании
+        </span>
+    </a>
+
+
+    <!-- Прайс-лист -->
+    <a
+        href="#prices"
+        class="sidebar-link"
+        onclick="closeMenu()"
+    >
+        <svg viewBox="0 0 24 24">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+
+        <span data-i18n="sidebar_prices">
+            Прайс-лист
+        </span>
+    </a>
+
+
+    <!-- Наши работы -->
+    <a
+        href="#portfolio"
+        class="sidebar-link"
+        onclick="closeMenu()"
+    >
+        <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+        </svg>
+
+        <span data-i18n="sidebar_portfolio">
+            Наши работы
+        </span>
+    </a>
+
+
+    <!-- Отзывы -->
+    <a
+        href="#reviews"
+        class="sidebar-link"
+        onclick="closeMenu()"
+    >
+        <svg viewBox="0 0 24 24">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+
+        <span data-i18n="sidebar_reviews">
+            Отзывы
+        </span>
+    </a>
+
+
+    <!-- Частые вопросы -->
+    <a
+        href="#faq"
+        class="sidebar-link"
+        onclick="closeMenu()"
+    >
+        <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+
+        <span data-i18n="sidebar_faq">
+            Частые вопросы
+        </span>
+    </a>
+
+
+    <!-- Контакты -->
+    <a
+        href="#contacts"
+        class="sidebar-link"
+        onclick="closeMenu()"
+    >
+        <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+        </svg>
+
+        <span data-i18n="sidebar_contacts">
+            Контакты
+        </span>
+    </a>
+
+</nav>
+
+</div> <!-- ========================================== --> <!-- 3. JAVASCRIPT --> <!-- ========================================== --> <script> /* ========================================== */ /* СЛОВАРЬ ПЕРЕВОДОВ ЭТОГО БЛОКА */ /* ========================================== */ window.siteTranslations = window.siteTranslations || {}; window.siteTranslations.ky = window.siteTranslations.ky || {}; window.siteTranslations.ru = window.siteTranslations.ru || {}; /* Кыргызский */ Object.assign(window.siteTranslations.ky, { nav_home: "Башкы бет", nav_services: "Кызматтар", nav_application: "Арыз", nav_menu: "Меню", sidebar_navigation: "Навигация", sidebar_about: "Компания жөнүндө", sidebar_prices: "Баалар", sidebar_portfolio: "Биздин иштер", sidebar_reviews: "Пикирлер", sidebar_faq: "Көп берилүүчү суроолор", sidebar_contacts: "Байланыштар" }); /* Русский */ Object.assign(window.siteTranslations.ru, { nav_home: "Главная", nav_services: "Услуги", nav_application: "Заявка", nav_menu: "Меню", sidebar_navigation: "Навигация", sidebar_about: "О компании", sidebar_prices: "Прайс-лист", sidebar_portfolio: "Наши работы", sidebar_reviews: "Отзывы", sidebar_faq: "Частые вопросы", sidebar_contacts: "Контакты" }); /* ========================================== */ /* ГЛОБАЛЬНАЯ ФУНКЦИЯ ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА */ /* ========================================== */ function setLanguage(language) { /* * Проверяем, существует ли выбранный язык. */ if (!window.siteTranslations[language]) { return; } /* * Получаем все элементы сайта, * у которых есть data-i18n. * * Поэтому следующие блоки мы тоже * будем подключать к этой системе. */ const elements = document.querySelectorAll("[data-i18n]"); elements.forEach(function(element) { const key = element.getAttribute("data-i18n"); const translation = window.siteTranslations[language][key]; if (translation !== undefined) { element.textContent = translation; } }); /* * Обновляем активную кнопку языка. */ document .querySelectorAll(".language-btn") .forEach(function(button) { button.classList.toggle( "active", button.getAttribute("data-language") === language ); }); /* * Меняем язык самого HTML-документа. */ document.documentElement.lang = language === "ky" ? "ky" : "ru"; /* * Запоминаем выбранный язык. * * После обновления страницы язык * можно будет восстановить. */ try { localStorage.setItem( "siteLanguage", language ); } catch (error) { console.warn( "Не удалось сохранить язык:", error ); } } /* ========================================== */ /* ОТКРЫТИЕ БОКОВОГО МЕНЮ */ /* ========================================== */ function openMenu() { document .getElementById("sidebarMenu") .classList.add("active"); document .getElementById("menuOverlay") .classList.add("active"); document.body.style.overflow = "hidden"; } /* ========================================== */ /* ЗАКРЫТИЕ БОКОВОГО МЕНЮ */ /* ========================================== */ function closeMenu() { document .getElementById("sidebarMenu") .classList.remove("active"); document .getElementById("menuOverlay") .classList.remove("active"); document.body.style.overflow = ""; } /* ========================================== */ /* ESC — ЗАКРЫТЬ МЕНЮ */ /* ========================================== */ document.addEventListener( "keydown", function(event) { if (event.key === "Escape") { closeMenu(); } } ); /* ========================================== */ /* ВОССТАНОВЛЕНИЕ ЯЗЫКА ПОСЛЕ ОБНОВЛЕНИЯ */ /* ========================================== */ document.addEventListener( "DOMContentLoaded", function() { let savedLanguage = "ky"; try { savedLanguage = localStorage.getItem("siteLanguage") || "ky"; } catch (error) { savedLanguage = "ky"; } setLanguage(savedLanguage); } ); </script>
+
+
+
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-    <!-- ========================================== -->
-    <!--  1. НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ (4 КНОПКИ)   -->
-    <!-- ========================================== -->
-    <nav class="bottom-nav">
-
-        <!-- Кнопка 1: Главная -->
-        <a href="#hero" class="nav-item active">
-            <svg viewBox="0 0 24 24">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            <span>Главная</span>
-        </a>
-
-        <!-- Кнопка 2: Услуги -->
-        <a href="#services" class="nav-item">
-            <svg viewBox="0 0 24 24">
-                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-            </svg>
-            <span>Услуги</span>
-        </a>
-
-        <!-- Кнопка 3: Заявка -->
-        <a href="#zayavka" class="nav-item">
-            <svg viewBox="0 0 24 24">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-            </svg>
-            <span>Заявка</span>
-        </a>
-
-        <!-- Кнопка 4: Бургер-меню (Вызывает боковое окно по onclick) -->
-        <button type="button" class="nav-item" id="burger-menu-btn" onclick="openMenu()">
-            <svg viewBox="0 0 24 24">
-                <line x1="3" y1="12" x2="21" y2="12"></line>
-                <line x1="3" y1="6" x2="21" y2="6"></line>
-                <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-            <span>Меню</span>
-        </button>
-
-    </nav>
-
-
-    <!-- ========================================== -->
-    <!--  2. ВСПЛЫВАЮЩЕЕ БОКОВОЕ БУРГЕР-МЕНЮ         -->
-    <!-- ========================================== -->
-
-    <!-- Затемняющий фон за меню (при клике на него меню тоже закрывается) -->
-    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-
-    <!-- Сам выезжающий блок бокового меню -->
-    <div class="sidebar-menu" id="sidebarMenu">
-        
-        <!-- Шапка бокового меню -->
-        <div class="sidebar-header">
-            <span class="sidebar-title">Навигация</span>
-            <!-- Кнопка "Закрыть" (Крестик) -->
-            <button type="button" class="close-btn" onclick="closeMenu()">&times;</button>
-        </div>
-
-        <!-- СПИСОК ИЗ 6 ССЫЛОК ВНУТРИ БУРГЕРА -->
-        <nav class="sidebar-nav">
-
-            <!-- Ссылка 1: О компании / О нас -->
-            <a href="#about" class="sidebar-link" onclick="closeMenu()">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                </svg>
-                <span>О компании</span>
-            </a>
-
-            <!-- Ссылка 2: Прайс-лист / Цены -->
-            <a href="#prices" class="sidebar-link" onclick="closeMenu()">
-                <svg viewBox="0 0 24 24">
-                    <line x1="12" y1="1" x2="12" y2="23"></line>
-                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                </svg>
-                <span>Прайс-лист</span>
-            </a>
-
-            <!-- Ссылка 3: Наши работы / Портфолио -->
-            <a href="#portfolio" class="sidebar-link" onclick="closeMenu()">
-                <svg viewBox="0 0 24 24">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                </svg>
-                <span>Наши работы</span>
-            </a>
-
-            <!-- Ссылка 4: Отзывы клиентов -->
-            <a href="#reviews" class="sidebar-link" onclick="closeMenu()">
-                <svg viewBox="0 0 24 24">
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-                </svg>
-                <span>Отзывы</span>
-            </a>
-
-            <!-- Ссылка 5: Вопросы и ответы (FAQ) -->
-            <a href="#faq" class="sidebar-link" onclick="closeMenu()">
-                <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-                <span>Частые вопросы</span>
-            </a>
-
-            <!-- Ссылка 6: Контакты -->
-            <a href="#contacts" class="sidebar-link" onclick="closeMenu()">
-                <svg viewBox="0 0 24 24">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                <span>Контакты</span>
-            </a>
-
-        </nav>
-    </div>
-
-
-    <!-- ========================================== -->
-    <!--  3. JAVASCRIPT ДЛЯ УПРАВЛЕНИЯ БОКОВЫМ МЕНЮ -->
-    <!-- ========================================== -->
-    <script>
-        // Функция открытия бокового меню
-        function openMenu() {
-            document.getElementById("sidebarMenu").classList.add("active");
-            document.getElementById("menuOverlay").classList.add("active");
-        }
-
-        // Функция закрытия бокового меню
-        function closeMenu() {
-            document.getElementById("sidebarMenu").classList.remove("active");
-            document.getElementById("menuOverlay").classList.remove("active");
-        }
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
 
 
 
@@ -443,7 +762,6 @@
             overflow: hidden;
         }
 
-        /* ЖЁЛТАЯ АКЦЕНТНАЯ ПОЛОСА НАВЕРХУ С ПЛАВНОЙ АНИМАЦИЕЙ */
         .talas-hero-v4::before {
             content: '';
             position: absolute;
@@ -451,13 +769,23 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, transparent 0%, #FBBF24 50%, transparent 100%);
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                #FBBF24 50%,
+                transparent 100%
+            );
             animation: pulseGlow 6s ease-in-out infinite;
         }
 
         @keyframes pulseGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+            0%, 100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         .hero-v4-container {
@@ -472,19 +800,18 @@
             z-index: 2;
         }
 
-        /* КЛЮЧЕВЫЕ КАДРЫ: БОЛЕЕ ГЛУБОКИЙ И МЕДЛЕННЫЙ ПОДЪЕМ */
         @keyframes fadeInUpSlow {
             from {
                 opacity: 0;
                 transform: translateY(35px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        /* ПИЛЮЛЯ / БЕЙДЖ (Время анимации увеличено до 1.4s, задержка 0.2s) */
         .hero-v4-badge {
             display: inline-flex;
             align-items: center;
@@ -499,7 +826,7 @@
             text-transform: uppercase;
             color: #FBBF24;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            
+
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
             opacity: 0;
@@ -509,7 +836,6 @@
             color: #FFFFFF;
         }
 
-        /* ЗАГОЛОВОК (Задержка 0.5s) */
         .hero-v4-title {
             font-size: 56px;
             font-weight: 900;
@@ -517,7 +843,7 @@
             letter-spacing: -1px;
             text-transform: uppercase;
             color: #FFFFFF;
-            
+
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.5s;
             opacity: 0;
@@ -528,20 +854,18 @@
             font-weight: 900;
         }
 
-        /* ПОДЗАГОЛОВОК (Задержка 0.8s) */
         .hero-v4-desc {
             font-size: 18px;
             color: #A1A1AA;
             max-width: 680px;
             line-height: 1.6;
             font-weight: 400;
-            
+
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.8s;
             opacity: 0;
         }
 
-        /* БЛОК КНОПОК (Задержка 1.1s) */
         .hero-v4-cta-wrap {
             display: flex;
             align-items: center;
@@ -550,7 +874,7 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 8px;
-            
+
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 1.1s;
             opacity: 0;
@@ -566,7 +890,10 @@
             font-size: 15px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            transition:
+                transform 0.3s ease,
+                background-color 0.3s ease,
+                box-shadow 0.3s ease;
             box-shadow: 0 0 25px rgba(251, 191, 36, 0.25);
             display: inline-flex;
             align-items: center;
@@ -588,7 +915,11 @@
             font-weight: 700;
             text-decoration: none;
             font-size: 15px;
-            transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                color 0.3s ease,
+                background 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -601,7 +932,6 @@
             transform: translateY(-3px);
         }
 
-        /* МИНИ-СЧЕТЧИКИ ВНИЗУ (Задержка 1.4s) */
         .hero-v4-stats {
             display: flex;
             align-items: center;
@@ -612,7 +942,7 @@
             width: 100%;
             max-width: 600px;
             margin-top: 16px;
-            
+
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 1.4s;
             opacity: 0;
@@ -644,31 +974,38 @@
             background: #27272A;
         }
 
-        /* АДАПТИВНОСТЬ */
         @media (max-width: 768px) {
             .talas-hero-v4 {
                 padding: 70px 16px 50px 16px;
             }
+
             .hero-v4-title {
                 font-size: 34px;
             }
+
             .hero-v4-desc {
                 font-size: 15px;
             }
+
             .hero-v4-cta-wrap {
                 flex-direction: column;
                 width: 100%;
             }
-            .hero-v4-btn-main, .hero-v4-btn-sec {
+
+            .hero-v4-btn-main,
+            .hero-v4-btn-sec {
                 width: 100%;
                 justify-content: center;
             }
+
             .hero-v4-stats {
                 gap: 16px;
             }
+
             .v4-stat-num {
                 font-size: 16px;
             }
+
             .v4-stat-lbl {
                 font-size: 10px;
             }
@@ -676,92 +1013,86 @@
     </style>
 
     <div class="hero-v4-container">
-        
+
+        <!-- Бейдж -->
         <div class="hero-v4-badge" data-key="v4Badge">
             Talas_profi <span>• Талас / Бишкек</span>
         </div>
 
+        <!-- Заголовок -->
         <h1 class="hero-v4-title" data-key="v4Title">
-            Профессиональные услуги<br>в <strong>один клик</strong>
+            Профессиональные услуги<br>
+            в <strong>один клик</strong>
         </h1>
 
+        <!-- Описание -->
         <p class="hero-v4-desc" data-key="v4Desc">
-            Электромонтаж, кондиционеры, сантехника и клининг. Направляем проверенных мастеров с профильным инструментом и гарантией качества.
+            Электромонтаж, кондиционеры, сантехника и клининг.
+            Направляем проверенных мастеров с профильным инструментом
+            и гарантией качества.
         </p>
 
+        <!-- Кнопки -->
         <div class="hero-v4-cta-wrap">
-            <a href="https://wa.me/996755000228" class="hero-v4-btn-main" data-key="v4BtnMain" target="_blank">
+
+            <a
+                href="https://wa.me/996755000228"
+                class="hero-v4-btn-main"
+                data-key="v4BtnMain"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 💬 Написать в WhatsApp
             </a>
-            <a href="tel:+996755000228" class="hero-v4-btn-sec" data-key="v4BtnSec">
+
+            <a
+                href="tel:+996755000228"
+                class="hero-v4-btn-sec"
+                data-key="v4BtnSec"
+            >
                 📞 +996 755 000 228
             </a>
+
         </div>
 
+        <!-- Статистика -->
         <div class="hero-v4-stats">
+
             <div class="v4-stat">
                 <span class="v4-stat-num">100%</span>
-                <span class="v4-stat-lbl" data-key="v4St1">Качество</span>
+                <span class="v4-stat-lbl" data-key="v4St1">
+                    Качество
+                </span>
             </div>
+
             <div class="v4-divider"></div>
+
             <div class="v4-stat">
-                <span class="v4-stat-num" data-key="v4St2Val">Свои</span>
-                <span class="v4-stat-lbl" data-key="v4St2">Инструменты</span>
+                <span class="v4-stat-num" data-key="v4St2Val">
+                    Свои
+                </span>
+
+                <span class="v4-stat-lbl" data-key="v4St2">
+                    Инструменты
+                </span>
             </div>
+
             <div class="v4-divider"></div>
+
             <div class="v4-stat">
                 <span class="v4-stat-num">24/7</span>
-                <span class="v4-stat-lbl" data-key="v4St3">Диспетчер</span>
+
+                <span class="v4-stat-lbl" data-key="v4St3">
+                    Диспетчер
+                </span>
             </div>
+
         </div>
 
     </div>
 
-    <script>
-        const v4Translations = {
-            ru: {
-                v4Badge: "Talas_profi <span>• Талас / Бишкек</span>",
-                v4Title: "Профессиональные услуги<br>в <strong>один клик</strong>",
-                v4Desc: "Электромонтаж, кондиционеры, сантехника и клининг. Направляем проверенных мастеров с профильным инструментом и гарантией качества.",
-                v4BtnMain: "💬 Написать в WhatsApp",
-                v4BtnSec: "📞 +996 755 000 228",
-                v4St1: "Качество",
-                v4St2Val: "Свои",
-                v4St2: "Инструменты",
-                v4St3: "Диспетчер"
-            },
-            kg: {
-                v4Badge: "Talas_profi <span>• Талас / Бишкек</span>",
-                v4Title: "Профессионалдуу кызматтар<br><strong>бир чыкылдатуу менен</strong>",
-                v4Desc: "Электромонтаж, кондиционерлер, сантехника жана клининг. Өз шаймандары бар ишенимдүү адистерди жөнөтөбүз.",
-                v4BtnMain: "💬 WhatsApp аркылуу жазуу",
-                v4BtnSec: "📞 +996 755 000 228",
-                v4St1: "Сапат",
-                v4St2Val: "Өз",
-                v4St2: "Шаймандары",
-                v4St3: "Диспетчер"
-            }
-        };
-
-        const prevLangFnV4 = window.changeLanguage;
-        window.changeLanguage = function(lang) {
-            if (typeof prevLangFnV4 === 'function') prevLangFnV4(lang);
-
-            if (v4Translations[lang]) {
-                document.querySelectorAll('.talas-hero-v4 [data-key]').forEach(el => {
-                    const key = el.getAttribute('data-key');
-                    if (v4Translations[lang][key]) {
-                        if (key === 'v4Title' || key === 'v4Badge') {
-                            el.innerHTML = v4Translations[lang][key];
-                        } else {
-                            el.textContent = v4Translations[lang][key];
-                        }
-                    }
-                });
-            }
-        };
-    </script>
 </section>
+
 
 
 
