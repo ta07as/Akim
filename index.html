@@ -1114,6 +1114,319 @@
 
 
 
+<!-- ================================================================= -->
+<!-- БЛОК "КАК МЫ РАБОТАЕМ" — SOFT INDUSTRIAL & HIGH READABILITY (TALAS)-->
+<!-- ================================================================= -->
+<section id="how-we-work-clean" class="work-clean-section">
+
+    <style>
+        #how-we-work-clean * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .work-clean-section {
+            background-color: #060608;
+            color: #FFFFFF;
+            padding: 60px 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid #1F1F23;
+            position: relative;
+        }
+
+        .clean-container {
+            max-width: 1080px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* ШАПКА С ЧИСТОЙ ТИПОГРАФИКОЙ */
+        .clean-header {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: all 0.6s ease-out;
+        }
+
+        .work-clean-section.is-clean-active .clean-header {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .clean-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            color: #FFFFFF;
+            margin-bottom: 6px;
+        }
+
+        .clean-title span {
+            color: #FBBF24;
+        }
+
+        .clean-subtitle {
+            font-size: 14px;
+            color: #A1A1AA;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* СЕТКА С КАРТОЧКАМИ */
+        .clean-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .clean-card {
+            background: #0E0E11;
+            border: 1px solid #27272A;
+            border-radius: 12px;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s ease-out, 
+                        transform 0.5s ease-out, 
+                        border-color 0.25s ease, 
+                        background-color 0.25s ease,
+                        box-shadow 0.25s ease;
+        }
+
+        /* ПЛАВНОЕ ПОЯВЛЕНИЕ ПО ОЧЕРЕДИ */
+        .work-clean-section.is-clean-active .clean-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.05s; }
+        .work-clean-section.is-clean-active .clean-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
+        .work-clean-section.is-clean-active .clean-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
+        .work-clean-section.is-clean-active .clean-card:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
+
+        /* ПРИЯТНЫЙ МЯГКИЙ HOVER-ЭФФЕКТ */
+        .clean-card:hover {
+            border-color: #FBBF24;
+            background-color: #131317;
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(251, 191, 36, 0.08);
+        }
+
+        .clean-card-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clean-num {
+            font-size: 12px;
+            font-weight: 800;
+            color: #FBBF24;
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.25);
+            padding: 3px 9px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .clean-icon {
+            font-size: 18px;
+            opacity: 0.7;
+            transition: opacity 0.25s ease;
+        }
+
+        .clean-card:hover .clean-icon {
+            opacity: 1;
+        }
+
+        .clean-card-body {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .clean-card-body h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #F4F4F5;
+            letter-spacing: -0.2px;
+            transition: color 0.25s ease;
+        }
+
+        .clean-card:hover h4 {
+            color: #FBBF24;
+        }
+
+        /* МАКСИМАЛЬНО ЧИТАЕМЫЙ ТЕКСТ */
+        .clean-card-body p {
+            font-size: 13px;
+            color: #A1A1AA;
+            line-height: 1.55;
+            font-weight: 400;
+        }
+
+        /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
+        @media (max-width: 900px) {
+            .clean-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 520px) {
+            .clean-grid {
+                grid-template-columns: 1fr;
+            }
+            .work-clean-section {
+                padding: 40px 16px;
+            }
+        }
+    </style>
+
+    <div class="clean-container">
+        
+        <div class="clean-header">
+            <h2 class="clean-title" id="hwc-title-el">Как мы <span>работаем</span></h2>
+            <p class="clean-subtitle" data-key="hwc_sub">Понятный и прозрачный процесс от вашей заявки до сдачи работы.</p>
+        </div>
+
+        <div class="clean-grid">
+            
+            <div class="clean-card">
+                <div class="clean-card-head">
+                    <span class="clean-num">01</span>
+                    <span class="clean-icon">📞</span>
+                </div>
+                <div class="clean-card-body">
+                    <h4 data-key="hwc_s1_t">Заявка</h4>
+                    <p data-key="hwc_s1_d">Звоните нам или оставляете сообщение в WhatsApp.</p>
+                </div>
+            </div>
+
+            <div class="clean-card">
+                <div class="clean-card-head">
+                    <span class="clean-num">02</span>
+                    <span class="clean-icon">📝</span>
+                </div>
+                <div class="clean-card-body">
+                    <h4 data-key="hwc_s2_t">Согласование</h4>
+                    <p data-key="hwc_s2_d">Уточняем задачи, объем работы и фиксируем стоимость.</p>
+                </div>
+            </div>
+
+            <div class="clean-card">
+                <div class="clean-card-head">
+                    <span class="clean-num">03</span>
+                    <span class="clean-icon">🛠️</span>
+                </div>
+                <div class="clean-card-body">
+                    <h4 data-key="hwc_s3_t">Выезд и работа</h4>
+                    <p data-key="hwc_s3_d">Мастер приезжает в договоренное время и выполняет работу.</p>
+                </div>
+            </div>
+
+            <div class="clean-card">
+                <div class="clean-card-head">
+                    <span class="clean-num">04</span>
+                    <span class="clean-icon">✅</span>
+                </div>
+                <div class="clean-card-body">
+                    <h4 data-key="hwc_s4_t">Проверка и оплата</h4>
+                    <p data-key="hwc_s4_d">Вы проверяете готовый результат и производите расчет.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- СКРИПТ ПОЯВЛЕНИЯ И ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sectionClean = document.getElementById("how-we-work-clean");
+            
+            const observerClean = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        sectionClean.classList.add("is-clean-active");
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            if (sectionClean) observerClean.observe(sectionClean);
+        });
+
+        const cleanTranslations = {
+            ru: {
+                hwc_title_html: "Как мы <span>работаем</span>",
+                hwc_sub: "Понятный и прозрачный процесс от вашей заявки до сдачи работы.",
+                hwc_s1_t: "Заявка",
+                hwc_s1_d: "Звоните нам или оставляете сообщение в WhatsApp.",
+                hwc_s2_t: "Согласование",
+                hwc_s2_d: "Уточняем задачи, объем работы и фиксируем стоимость.",
+                hwc_s3_t: "Выезд и работа",
+                hwc_s3_d: "Мастер приезжает в договоренное время и выполняет работу.",
+                hwc_s4_t: "Проверка и оплата",
+                hwc_s4_d: "Вы проверяете готовый результат и производите расчет."
+            },
+            kg: {
+                hwc_title_html: "Биз кантип <span>иштейбиз</span>",
+                hwc_sub: "Өтүнмө калтыруудан баштап ишти тапшырганга чейинки түшүнүктүү процесс.",
+                hwc_s1_t: "Өтүнмө",
+                hwc_s1_d: "Бизге чалыңыз же WhatsApp аркылуу жазыңыз.",
+                hwc_s2_t: "Макулдашуу",
+                hwc_s2_d: "Тапшырманы, иштин көлөмүн тактап, бааны бекитебиз.",
+                hwc_s3_t: "Баруу жана жумуш",
+                hwc_s3_d: "Уста макулдашылган убакта келип, ишти аткарат.",
+                hwc_s4_t: "Текшерүү жана төлөө",
+                hwc_s4_d: "Сиз даяр натыйжаны текшерип, андан соң эсептешесиз."
+            }
+        };
+
+        const prevLangFnClean = window.changeLanguage;
+        window.changeLanguage = function(lang) {
+            if (typeof prevLangFnClean === 'function') prevLangFnClean(lang);
+
+            if (cleanTranslations[lang]) {
+                const titleEl = document.getElementById('hwc-title-el');
+                if (titleEl && cleanTranslations[lang].hwc_title_html) {
+                    titleEl.innerHTML = cleanTranslations[lang].hwc_title_html;
+                }
+
+                document.querySelectorAll('#how-we-work-clean [data-key]').forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if (cleanTranslations[lang][key]) {
+                        el.textContent = cleanTranslations[lang][key];
+                    }
+                });
+            }
+        };
+    </script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
 
 
 
