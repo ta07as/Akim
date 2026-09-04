@@ -1856,126 +1856,124 @@ Object.assign(window.siteTranslations.ru, {
 
     <div class="order-v7-card">
         <div class="order-v7-header">
-            <h2 class="order-v7-title" id="v7-title-el">Оформить <span>заявку</span></h2>
+            <h2 class="order-v7-title" data-i18n="v7_title">Оформить <span>заявку</span></h2>
         </div>
 
         <form id="telegram-v7-form" class="form-v7-grid">
             
             <div class="field-v7">
-                <label><span data-key="lbl_name">Имя</span> <span class="req">*</span></label>
-                <input type="text" id="v7-name" class="input-v7" data-key-ph="ph_name" placeholder="Введите ваше имя" required>
+                <label><span data-i18n="v7_lbl_name">Имя</span> <span class="req">*</span></label>
+                <input type="text" id="v7-name" class="input-v7" data-i18n="v7_ph_name" placeholder="Введите ваше имя" required>
             </div>
 
             <div class="field-v7">
-                <label><span data-key="lbl_phone">Телефон / WhatsApp</span> <span class="req">*</span></label>
-                <input type="tel" id="v7-phone" class="input-v7" data-key-ph="ph_phone" placeholder="+996 (755) 000-228" required>
+                <label><span data-i18n="v7_lbl_phone">Телефон / WhatsApp</span> <span class="req">*</span></label>
+                <input type="tel" id="v7-phone" class="input-v7" data-i18n="v7_ph_phone" placeholder="+996 (755) 000-228" required>
             </div>
 
             <div class="field-v7">
-                <label><span data-key="lbl_address">Адрес</span> <span class="req">*</span></label>
-                <input type="text" id="v7-address" class="input-v7" data-key-ph="ph_address" placeholder="Улица, дом, квартира" required>
+                <label><span data-i18n="v7_lbl_address">Адрес</span> <span class="req">*</span></label>
+                <input type="text" id="v7-address" class="input-v7" data-i18n="v7_ph_address" placeholder="Улица, дом, квартира" required>
             </div>
 
             <div class="field-v7">
-                <label><span data-key="lbl_service">Услуга</span> <span class="req">*</span></label>
-                <input type="text" id="v7-service" class="input-v7" data-key-ph="ph_service" placeholder="Электромонтаж, кондиционеры, видеонаблюдение" required>
+                <label><span data-i18n="v7_lbl_service">Услуга</span> <span class="req">*</span></label>
+                <input type="text" id="v7-service" class="input-v7" data-i18n="v7_ph_service" placeholder="Электромонтаж, кондиционеры, видеонаблюдение" required>
             </div>
 
             <div class="field-v7 full-v7">
-                <label data-key="lbl_comment">Детали заказа</label>
-                <textarea id="v7-comment" class="input-v7 textarea-v7" data-key-ph="ph_comment" placeholder="Опишите задачу подробнее..."></textarea>
+                <label data-i18n="v7_lbl_comment">Детали заказа</label>
+                <textarea id="v7-comment" class="input-v7 textarea-v7" data-i18n="v7_ph_comment" placeholder="Опишите задачу подробнее..."></textarea>
             </div>
 
             <div class="field-v7 full-v7">
-                <label data-key="lbl_budget">Планируемый бюджет (сом)</label>
-                <input type="text" id="v7-budget" class="input-v7" data-key-ph="ph_budget" placeholder="Сумма или договорная">
+                <label data-i18n="v7_lbl_budget">Планируемый бюджет (сом)</label>
+                <input type="text" id="v7-budget" class="input-v7" data-i18n="v7_ph_budget" placeholder="Сумма или договорная">
             </div>
 
-            <button type="submit" class="btn-v7" id="v7-btn" data-key="btn_submit">Отправить заявку</button>
+            <button type="submit" class="btn-v7" id="v7-btn" data-i18n="v7_btn_submit">Отправить заявку</button>
             <div id="v7-status" class="status-v7"></div>
 
         </form>
     </div>
 
     <script>
+        window.siteTranslations = window.siteTranslations || {};
+        window.siteTranslations.ky = window.siteTranslations.ky || {};
+        window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+        Object.assign(window.siteTranslations.ky, {
+            v7_title: "Өтүнмө <span>калтыруу</span>",
+            v7_lbl_name: "Атыңыз",
+            v7_ph_name: "Атыңызды киргизиңиз",
+            v7_lbl_phone: "Телефон / WhatsApp",
+            v7_ph_phone: "+996 (755) 000-228",
+            v7_lbl_address: "Дарек",
+            v7_ph_address: "Көчө, үй, батир",
+            v7_lbl_service: "Кызмат",
+            v7_ph_service: "Электр монтаж, кондиционер, видеобайкоо",
+            v7_lbl_comment: "Заказдын деталдары",
+            v7_ph_comment: "Тапшырманы кененирээк жазыңыз...",
+            v7_lbl_budget: "Божомолдонгон бюджет (сом)",
+            v7_ph_budget: "Сумма же келишим баада",
+            v7_btn_submit: "Өтүнмөнү жөнөтүү",
+            v7_btn_sending: "Жөнөтүлүүдө...",
+            v7_msg_success: "Өтүнмө ийгиликтүү жөнөтүлдү!",
+            v7_msg_error: "Жөнөтүүдө ката кетти."
+        });
+
+        Object.assign(window.siteTranslations.ru, {
+            v7_title: "Оформить <span>заявку</span>",
+            v7_lbl_name: "Имя",
+            v7_ph_name: "Введите ваше имя",
+            v7_lbl_phone: "Телефон / WhatsApp",
+            v7_ph_phone: "+996 (755) 000-228",
+            v7_lbl_address: "Адрес",
+            v7_ph_address: "Улица, дом, квартира",
+            v7_lbl_service: "Услуга",
+            v7_ph_service: "Электромонтаж, кондиционеры, видеонаблюдение",
+            v7_lbl_comment: "Детали заказа",
+            v7_ph_comment: "Опишите задачу подробнее...",
+            v7_lbl_budget: "Планируемый бюджет (сом)",
+            v7_ph_budget: "Сумма или договорная",
+            v7_btn_submit: "Отправить заявку",
+            v7_btn_sending: "Отправка...",
+            v7_msg_success: "Заявка успешно отправлена!",
+            v7_msg_error: "Ошибка отправки."
+        });
+
+        /* Расширяем главную функцию setLanguage для работы с placeholder и HTML внутри заголовочных тегов */
+        const originalSetLanguage = window.setLanguage;
+        window.setLanguage = function(language) {
+            if (typeof originalSetLanguage === "function") {
+                originalSetLanguage(language);
+            }
+            if (!window.siteTranslations[language]) return;
+
+            document.querySelectorAll("#zayavka [data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                const translation = window.siteTranslations[language][key];
+                if (translation !== undefined) {
+                    if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+                        el.setAttribute("placeholder", translation);
+                    } else if (key === "v7_title") {
+                        el.innerHTML = translation;
+                    } else {
+                        el.textContent = translation;
+                    }
+                }
+            });
+        };
+
         const TELEGRAM_CONFIG_V7 = {
             botToken: "8972886999:AAHJwlr9G_OqADHSwojwe9V4fAD1a2XIw2c",
             chatId: "8809945956"
         };
 
-        const translationsV7 = {
-            ru: {
-                title_html: "Оформить <span>заявку</span>",
-                lbl_name: "Имя",
-                ph_name: "Введите ваше имя",
-                lbl_phone: "Телефон / WhatsApp",
-                ph_phone: "+996 (755) 000-228",
-                lbl_address: "Адрес",
-                ph_address: "Улица, дом, квартира",
-                lbl_service: "Услуга",
-                ph_service: "Электромонтаж, кондиционеры, видеонаблюдение",
-                lbl_comment: "Детали заказа",
-                ph_comment: "Опишите задачу подробнее...",
-                lbl_budget: "Планируемый бюджет (сом)",
-                ph_budget: "Сумма или договорная",
-                btn_submit: "Отправить заявку",
-                btn_sending: "Отправка...",
-                msg_success: "Заявка успешно отправлена!",
-                msg_error: "Ошибка отправки."
-            },
-            kg: {
-                title_html: "Өтүнмө <span>калтыруу</span>",
-                lbl_name: "Атыңыз",
-                ph_name: "Атыңызды киргизиңиз",
-                lbl_phone: "Телефон / WhatsApp",
-                ph_phone: "+996 (755) 000-228",
-                lbl_address: "Дарек",
-                ph_address: "Көчө, үй, батир",
-                lbl_service: "Кызмат",
-                ph_service: "Электр монтаж, кондиционер, видеобайкоо",
-                lbl_comment: "Заказдын деталдары",
-                ph_comment: "Тапшырманы кененирээк жазыңыз...",
-                lbl_budget: "Божомолдонгон бюджет (сом)",
-                ph_budget: "Сумма же келишим баада",
-                btn_submit: "Өтүнмөнү жөнөтүү",
-                btn_sending: "Жөнөтүлүүдө...",
-                msg_success: "Өтүнмө ийгиликтүү жөнөтүлдү!",
-                msg_error: "Жөнөтүүдө ката кетти."
-            }
-        };
-
-        let currentLangV7 = 'ru';
-
-        window.updateZayavkaLang = function(lang) {
-            if (!translationsV7[lang]) return;
-            currentLangV7 = lang;
-
-            const titleEl = document.getElementById('v7-title-el');
-            if (titleEl) titleEl.innerHTML = translationsV7[lang].title_html;
-
-            document.querySelectorAll('#zayavka [data-key]').forEach(el => {
-                const k = el.getAttribute('data-key');
-                if (translationsV7[lang][k]) {
-                    el.textContent = translationsV7[lang][k];
-                }
-            });
-
-            document.querySelectorAll('#zayavka [data-key-ph]').forEach(el => {
-                const k = el.getAttribute('data-key-ph');
-                if (translationsV7[lang][k]) el.setAttribute('placeholder', translationsV7[lang][k]);
-            });
-        };
-
-        // Слушаем глобальное событие смены языка от шапки/навигации
-        window.addEventListener('languageChanged', (e) => {
-            if (e.detail && e.detail.lang) {
-                window.updateZayavkaLang(e.detail.lang);
-            }
-        });
-
         document.getElementById('telegram-v7-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
+            const currentLang = document.documentElement.lang === "ru" ? "ru" : "ky";
             const name = document.getElementById('v7-name').value.trim();
             const phone = document.getElementById('v7-phone').value.trim();
             const address = document.getElementById('v7-address').value.trim();
@@ -1985,7 +1983,7 @@ Object.assign(window.siteTranslations.ru, {
             const btn = document.getElementById('v7-btn');
             const status = document.getElementById('v7-status');
 
-            btn.textContent = translationsV7[currentLangV7].btn_sending;
+            btn.textContent = window.siteTranslations[currentLang].v7_btn_sending;
             btn.disabled = true;
 
             const msg = `<b>⚡ НОВАЯ ЗАЯВКА [Talas_profi]</b>\n\n<b>👤 Имя:</b> ${name}\n<b>📞 Тел:</b> ${phone}\n<b>📍 Адрес:</b> ${address}\n<b>🛠 Услуга:</b> ${service}\n<b>💬 Детали:</b> ${comment}\n<b>💰 Бюджет:</b> ${budget}`;
@@ -1998,18 +1996,18 @@ Object.assign(window.siteTranslations.ru, {
                 });
                 const data = await res.json();
                 if (data.ok) {
-                    status.textContent = translationsV7[currentLangV7].msg_success;
+                    status.textContent = window.siteTranslations[currentLang].v7_msg_success;
                     status.className = "status-v7 success";
                     this.reset();
                 } else {
-                    status.textContent = translationsV7[currentLangV7].msg_error;
+                    status.textContent = window.siteTranslations[currentLang].v7_msg_error;
                     status.className = "status-v7 error";
                 }
             } catch (err) {
-                status.textContent = translationsV7[currentLangV7].msg_error;
+                status.textContent = window.siteTranslations[currentLang].v7_msg_error;
                 status.className = "status-v7 error";
             } finally {
-                btn.textContent = translationsV7[currentLangV7].btn_submit;
+                btn.textContent = window.siteTranslations[currentLang].v7_btn_submit;
                 btn.disabled = false;
                 setTimeout(() => { status.style.display = 'none'; }, 5000);
             }
@@ -2022,7 +2020,6 @@ Object.assign(window.siteTranslations.ru, {
 
 
 
-
     
 
 
@@ -2046,7 +2043,6 @@ Object.assign(window.siteTranslations.ru, {
 
 
     
-
 <!-- ================================================================= -->
 <!-- БЛОК "О НАС" — PRO INDUSTRIAL CARD FOCUS (ТАЛАС / БИШКЕК)          -->
 <!-- ================================================================= -->
@@ -2201,8 +2197,8 @@ Object.assign(window.siteTranslations.ru, {
     <div class="card-container">
         
         <div class="card-header">
-            <h2 class="card-title" id="cd-title-el">Сервис <span>Talas_profi</span></h2>
-            <p class="card-intro" data-key="cd_desc">
+            <h2 class="card-title" data-i18n="cd_title">Сервис <span>Talas_profi</span></h2>
+            <p class="card-intro" data-i18n="cd_desc">
                 Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.
             </p>
         </div>
@@ -2211,33 +2207,32 @@ Object.assign(window.siteTranslations.ru, {
             
             <div class="card-item">
                 <span class="card-badge">01</span>
-                <h4 data-key="cd_f1_t">Оперативный выезд</h4>
-                <p data-key="cd_f1_d">Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.</p>
+                <h4 data-i18n="cd_f1_t">Оперативный выезд</h4>
+                <p data-i18n="cd_f1_d">Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">02</span>
-                <h4 data-key="cd_f2_t">Проф-оснащение</h4>
-                <p data-key="cd_f2_d">Работаем собственным специализированным инструментом и профессиональным оборудованием.</p>
+                <h4 data-i18n="cd_f2_t">Проф-оснащение</h4>
+                <p data-i18n="cd_f2_d">Работаем собственным специализированным инструментом и профессиональным оборудованием.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">03</span>
-                <h4 data-key="cd_f3_t">Фиксированный расчет</h4>
-                <p data-key="cd_f3_d">Точная оценка стоимости до начала работ без скрытых наценок и переплат.</p>
+                <h4 data-i18n="cd_f3_t">Фиксированный расчет</h4>
+                <p data-i18n="cd_f3_d">Точная оценка стоимости до начала работ без скрытых наценок и переплат.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">04</span>
-                <h4 data-key="cd_f4_t">Контроль качества</h4>
-                <p data-key="cd_f4_d">Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта.</p>
+                <h4 data-i18n="cd_f4_t">Контроль качества</h4>
+                <p data-i18n="cd_f4_d">Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта.</p>
             </div>
 
         </div>
 
     </div>
 
-    <!-- СКРИПТ ПОЯВЛЕНИЯ И ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const sectionCard = document.getElementById("about-card");
@@ -2253,55 +2248,56 @@ Object.assign(window.siteTranslations.ru, {
             if (sectionCard) observerCard.observe(sectionCard);
         });
 
-        const cardTranslations = {
-            ru: {
-                cd_title_html: "Сервис <span>Talas_profi</span>",
-                cd_desc: "Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.",
-                cd_f1_t: "Оперативный выезд",
-                cd_f1_d: "Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.",
-                cd_f2_t: "Проф-оснащение",
-                cd_f2_d: "Работаем собственным специализированным инструментом и профессиональным оборудованием.",
-                cd_f3_t: "Фиксированный расчет",
-                cd_f3_d: "Точная оценка стоимости до начала работ без скрытых наценок и переплат.",
-                cd_f4_t: "Контроль качества",
-                cd_f4_d: "Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта."
-            },
-            kg: {
-                cd_title_html: "<span>Talas_profi</span> Сервиси",
-                cd_desc: "Талас жана Бишкек шаарларындагы бирдиктүү сервис кызматы. Биз сиздин тапшырмаңызга ылайык квалификациялуу адистерди тандайбыз, бекитилген бааны макулдашабыз жана ар бир этапта сапатка кепилдик беребиз.",
-                cd_f1_t: "Ыкчам баруу",
-                cd_f1_d: "Адис же атайын бригада өтүнмө ырасталгандан кийин дароо объектиге чыгат.",
-                cd_f2_t: "Кесипкөй жабдуу",
-                cd_f2_d: "Өзүбүздүн атайын шаймандар жана кесипкөй жабдуулар менен иштейбиз.",
-                cd_f3_t: "Так эсептөө",
-                cd_f3_d: "Иш башталганга чейин жашыруун кошумча төлөмсүз так бааны бекитебиз.",
-                cd_f4_t: "Сапатты көзөмөлдөө",
-                cd_f4_d: "Бардык стандарттардын сакталышын жеке өзүбүз текшерип, жыйынтыкка жооп беребиз."
+        window.siteTranslations = window.siteTranslations || {};
+        window.siteTranslations.ky = window.siteTranslations.ky || {};
+        window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+        Object.assign(window.siteTranslations.ky, {
+            cd_title: "<span>Talas_profi</span> Сервиси",
+            cd_desc: "Талас жана Бишкек шаарларындагы бирдиктүү сервис кызматы. Биз сиздин тапшырмаңызга ылайык квалификациялуу адистерди тандайбыз, бекитилген бааны макулдашабыз жана ар бир этапта сапатка кепилдик беребиз.",
+            cd_f1_t: "Ыкчам баруу",
+            cd_f1_d: "Адис же атайын бригада өтүнмө ырасталгандан кийин дароо объектиге чыгат.",
+            cd_f2_t: "Кесипкөй жабдуу",
+            cd_f2_d: "Өзүбүздүн атайын шаймандар жана кесипкөй жабдуулар менен иштейбиз.",
+            cd_f3_t: "Так эсептөө",
+            cd_f3_d: "Иш башталганга чейин жашыруун кошумча төлөмсүз так бааны бекитебиз.",
+            cd_f4_t: "Сапатты көзөмөлдөө",
+            cd_f4_d: "Бардык стандарттардын сакталышын жеке өзүбүз текшерип, жыйынтыкка жооп беребиз."
+        });
+
+        Object.assign(window.siteTranslations.ru, {
+            cd_title: "Сервис <span>Talas_profi</span>",
+            cd_desc: "Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.",
+            cd_f1_t: "Оперативный выезд",
+            cd_f1_d: "Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.",
+            cd_f2_t: "Проф-оснащение",
+            cd_f2_d: "Работаем собственным специализированным инструментом и профессиональным оборудованием.",
+            cd_f3_t: "Фиксированный расчет",
+            cd_f3_d: "Точная оценка стоимости до начала работ без скрытых наценок и переплат.",
+            cd_f4_t: "Контроль качества",
+            cd_f4_d: "Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта."
+        });
+
+        /* Расширение базовой функции setLanguage для обработки тегов с HTML */
+        const baseSetLanguage = window.setLanguage;
+        window.setLanguage = function(lang) {
+            if (typeof baseSetLanguage === "function") {
+                baseSetLanguage(lang);
             }
-        };
+            if (!window.siteTranslations[lang]) return;
 
-        window.updateAboutCardLang = function(lang) {
-            if (!cardTranslations[lang]) return;
-
-            const titleEl = document.getElementById('cd-title-el');
-            if (titleEl && cardTranslations[lang].cd_title_html) {
-                titleEl.innerHTML = cardTranslations[lang].cd_title_html;
-            }
-
-            document.querySelectorAll('#about-card [data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (cardTranslations[lang][key]) {
-                    el.textContent = cardTranslations[lang][key];
+            document.querySelectorAll("#about-card [data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                const translation = window.siteTranslations[lang][key];
+                if (translation !== undefined) {
+                    if (key === "cd_title") {
+                        el.innerHTML = translation;
+                    } else {
+                        el.textContent = translation;
+                    }
                 }
             });
         };
-
-        // Слушаем глобальное событие переключения языка из навигации
-        window.addEventListener('languageChanged', (e) => {
-            if (e.detail && e.detail.lang) {
-                window.updateAboutCardLang(e.detail.lang);
-            }
-        });
     </script>
 </section>
 
@@ -2310,7 +2306,6 @@ Object.assign(window.siteTranslations.ru, {
 
 
 
-
     
     
 
@@ -2322,7 +2317,6 @@ Object.assign(window.siteTranslations.ru, {
 
 
     
-
 
 
 
@@ -2491,8 +2485,8 @@ Object.assign(window.siteTranslations.ru, {
     <div class="card-container">
         
         <div class="card-header">
-            <h2 class="card-title" id="cd-title-el">Сервис <span>Talas_profi</span></h2>
-            <p class="card-intro" data-key="cd_desc">
+            <h2 class="card-title" data-i18n="cd_title">Сервис <span>Talas_profi</span></h2>
+            <p class="card-intro" data-i18n="cd_desc">
                 Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.
             </p>
         </div>
@@ -2501,26 +2495,26 @@ Object.assign(window.siteTranslations.ru, {
             
             <div class="card-item">
                 <span class="card-badge">01</span>
-                <h4 data-key="cd_f1_t">Оперативный выезд</h4>
-                <p data-key="cd_f1_d">Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.</p>
+                <h4 data-i18n="cd_f1_t">Оперативный выезд</h4>
+                <p data-i18n="cd_f1_d">Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">02</span>
-                <h4 data-key="cd_f2_t">Проф-оснащение</h4>
-                <p data-key="cd_f2_d">Работаем собственным специализированным инструментом и профессиональным оборудованием.</p>
+                <h4 data-i18n="cd_f2_t">Проф-оснащение</h4>
+                <p data-i18n="cd_f2_d">Работаем собственным специализированным инструментом и профессиональным оборудованием.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">03</span>
-                <h4 data-key="cd_f3_t">Фиксированный расчет</h4>
-                <p data-key="cd_f3_d">Точная оценка стоимости до начала работ без скрытых наценок и переплат.</p>
+                <h4 data-i18n="cd_f3_t">Фиксированный расчет</h4>
+                <p data-i18n="cd_f3_d">Точная оценка стоимости до начала работ без скрытых наценок и переплат.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">04</span>
-                <h4 data-key="cd_f4_t">Контроль качества</h4>
-                <p data-key="cd_f4_d">Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта.</p>
+                <h4 data-i18n="cd_f4_t">Контроль качества</h4>
+                <p data-i18n="cd_f4_d">Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта.</p>
             </div>
 
         </div>
@@ -2543,67 +2537,57 @@ Object.assign(window.siteTranslations.ru, {
             if (sectionCard) observerCard.observe(sectionCard);
         });
 
-        const cardTranslations = {
-            ru: {
-                cd_title_html: "Сервис <span>Talas_profi</span>",
-                cd_desc: "Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.",
-                cd_f1_t: "Оперативный выезд",
-                cd_f1_d: "Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.",
-                cd_f2_t: "Проф-оснащение",
-                cd_f2_d: "Работаем собственным специализированным инструментом и профессиональным оборудованием.",
-                cd_f3_t: "Фиксированный расчет",
-                cd_f3_d: "Точная оценка стоимости до начала работ без скрытых наценок и переплат.",
-                cd_f4_t: "Контроль качества",
-                cd_f4_d: "Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта."
-            },
-            kg: {
-                cd_title_html: "<span>Talas_profi</span> Сервиси",
-                cd_desc: "Талас жана Бишкек шаарларындагы бирдиктүү сервис кызматы. Биз сиздин тапшырмаңызга ылайык квалификациялуу адистерди тандайбыз, бекитилген бааны макулдашабыз жана ар бир этапта сапатка кепилдик беребиз.",
-                cd_f1_t: "Ыкчам баруу",
-                cd_f1_d: "Адис же атайын бригада өтүнмө ырасталгандан кийин дароо объектиге чыгат.",
-                cd_f2_t: "Кесипкөй жабдуу",
-                cd_f2_d: "Өзүбүздүн атайын шаймандар жана кесипкөй жабдуулар менен иштейбиз.",
-                cd_f3_t: "Так эсептөө",
-                cd_f3_d: "Иш башталганга чейин жашыруун кошумча төлөмсүз так бааны бекитебиз.",
-                cd_f4_t: "Сапатты көзөмөлдөө",
-                cd_f4_d: "Бардык стандарттардын сакталышын жеке өзүбүз текшерип, жыйынтыкка жооп беребиз."
+        // Интеграция в единый глобальный объект переводов
+        window.siteTranslations = window.siteTranslations || {};
+        window.siteTranslations.ky = window.siteTranslations.ky || {};
+        window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+        Object.assign(window.siteTranslations.ky, {
+            cd_title: "<span>Talas_profi</span> Сервиси",
+            cd_desc: "Талас жана Бишкек шаарларындагы бирдиктүү сервис кызматы. Биз сиздин тапшырмаңызга ылайык квалификациялуу адистерди тандайбыз, бекитилген бааны макулдашабыз жана ар бир этапта сапатка кепилдик беребиз.",
+            cd_f1_t: "Ыкчам баруу",
+            cd_f1_d: "Адис же атайын бригада өтүнмө ырасталгандан кийин дароо объектиге чыгат.",
+            cd_f2_t: "Кесипкөй жабдуу",
+            cd_f2_d: "Өзүбүздүн атайын шаймандар жана кесипкөй жабдуулар менен иштейбиз.",
+            cd_f3_t: "Так эсептөө",
+            cd_f3_d: "Иш башталганга чейин жашыруун кошумча төлөмсүз так бааны бекитебиз.",
+            cd_f4_t: "Сапатты көзөмөлдөө",
+            cd_f4_d: "Бардык стандарттардын сакталышын жеке өзүбүз текшерип, жыйынтыкка жооп беребиз."
+        });
+
+        Object.assign(window.siteTranslations.ru, {
+            cd_title: "Сервис <span>Talas_profi</span>",
+            cd_desc: "Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.",
+            cd_f1_t: "Оперативный выезд",
+            cd_f1_d: "Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.",
+            cd_f2_t: "Проф-оснащение",
+            cd_f2_d: "Работаем собственным специализированным инструментом и профессиональным оборудованием.",
+            cd_f3_t: "Фиксированный расчет",
+            cd_f3_d: "Точная оценка стоимости до начала работ без скрытых наценок и переплат.",
+            cd_f4_t: "Контроль качества",
+            cd_f4_d: "Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта."
+        });
+
+        // Расширяем общую функцию setLanguage
+        const previousSetLanguage = window.setLanguage;
+        window.setLanguage = function(lang) {
+            if (typeof previousSetLanguage === "function") {
+                previousSetLanguage(lang);
             }
-        };
+            if (!window.siteTranslations[lang]) return;
 
-        // Главная функция обновления языка блока
-        window.updateAboutCardLang = function(lang) {
-            if (!cardTranslations[lang]) return;
-
-            const titleEl = document.getElementById('cd-title-el');
-            if (titleEl && cardTranslations[lang].cd_title_html) {
-                titleEl.innerHTML = cardTranslations[lang].cd_title_html;
-            }
-
-            document.querySelectorAll('#about-card [data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (cardTranslations[lang][key]) {
-                    el.textContent = cardTranslations[lang][key];
+            document.querySelectorAll("#about-card [data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                const translation = window.siteTranslations[lang][key];
+                if (translation !== undefined) {
+                    if (key === "cd_title") {
+                        el.innerHTML = translation;
+                    } else {
+                        el.textContent = translation;
+                    }
                 }
             });
         };
-
-        // 1. Слушаем пользовательское событие от кнопок в навигации
-        window.addEventListener('languageChanged', (e) => {
-            if (e.detail && e.detail.lang) {
-                window.updateAboutCardLang(e.detail.lang);
-            }
-        });
-
-        // 2. Безопасный связующий мост, если навигация вызывает window.changeLanguage(lang)
-        (function() {
-            const originalChangeLang = window.changeLanguage;
-            window.changeLanguage = function(lang) {
-                if (typeof originalChangeLang === 'function') {
-                    originalChangeLang(lang);
-                }
-                window.updateAboutCardLang(lang);
-            };
-        })();
     </script>
 </section>
 
