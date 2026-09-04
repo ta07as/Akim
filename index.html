@@ -1,458 +1,269 @@
-<!DOCTYPE html> <html lang="ru"> <head> <!-- Мета-теги для кодировки и корректной работы на мобильных устройствах --> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Talas_profi</title>
-
-<style>
-    /* ========================================== */
-    /*  БАЗОВЫЕ СТИЛИ                              */
-    /* ========================================== */
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
-    body {
-        background-color: #000000;
-        font-family: 'Segoe UI', Arial, sans-serif;
-        color: #FFFFFF;
-
-        /* Место под фиксированное нижнее меню */
-        padding-bottom: 80px;
-
-        overflow-x: hidden;
-    }
-
-
-    /* ========================================== */
-    /*  НИЖНЕЕ МЕНЮ                                */
-    /* ========================================== */
-
-    .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-
-        width: 100%;
-        height: 65px;
-
-        background-color: #000000;
-        border-top: 2px solid #FBBF24;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-
-        z-index: 1000;
-
-        /* Защита от нижней системной панели телефона */
-        padding-bottom: env(safe-area-inset-bottom);
-    }
-
-
-    /* ========================================== */
-    /*  ОБЫЧНЫЕ КНОПКИ НИЖНЕГО МЕНЮ                */
-    /* ========================================== */
-
-    .nav-item {
-        position: relative;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        width: 25%;
-        height: 100%;
-
-        background: none;
-        border: none;
-
-        color: #FFFFFF;
-        text-decoration: none;
-
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-
-        cursor: pointer;
-
-        transition:
-            color 0.2s ease,
-            background-color 0.2s ease;
-    }
-
-
-    /* ========================================== */
-    /*  ИКОНКИ НИЖНЕГО МЕНЮ                        */
-    /* ========================================== */
-
-    .nav-item svg {
-        width: 22px;
-        height: 22px;
-
-        fill: none;
-        stroke: #FFFFFF;
-        stroke-width: 2;
-
-        stroke-linecap: round;
-        stroke-linejoin: round;
-
-        margin-bottom: 4px;
-
-        transition: stroke 0.2s ease;
-    }
-
-
-    /* Активная кнопка / наведение */
-
-    .nav-item:hover,
-    .nav-item.active {
-        color: #FBBF24;
-    }
-
-    .nav-item:hover svg,
-    .nav-item.active svg {
-        stroke: #FBBF24;
-    }
-
-
-    /* ========================================== */
-    /*  ЕДИНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА                 */
-    /* ========================================== */
-
-    /*
-        ВАЖНО:
-
-        Этот переключатель предназначен для ВСЕГО САЙТА.
-
-        В HTML мы позже добавим:
-
-        <div class="language-switcher">
-            <button data-language="ky">Кыргызча</button>
-            <button data-language="ru">Русский</button>
-        </div>
-
-        JavaScript будет менять язык всей страницы,
-        а не отдельного блока.
-    */
-
-    .language-switcher {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        width: 50%;
-
-        gap: 4px;
-
-        padding: 4px;
-
-        background-color: #111111;
-        border: 1px solid #333333;
-        border-radius: 8px;
-    }
-
-
-    /* Кнопки выбора языка */
-
-    .language-switcher button {
-        flex: 1;
-
-        min-width: 0;
-
-        padding: 7px 8px;
-
-        background: transparent;
-        border: none;
-        border-radius: 6px;
-
-        color: #FFFFFF;
-
-        font-family: inherit;
-        font-size: 10px;
-        font-weight: 700;
-
-        cursor: pointer;
-
-        transition:
-            color 0.2s ease,
-            background-color 0.2s ease;
-    }
-
-
-    /* Активный язык */
-
-    .language-switcher button.active {
-        background-color: #FBBF24;
-        color: #000000;
-    }
-
-
-    /* Наведение */
-
-    .language-switcher button:hover {
-        background-color: #FBBF24;
-        color: #000000;
-    }
-
-
-    /* ========================================== */
-    /*  ЗАТЕМНЕНИЕ ПРИ ОТКРЫТИИ БОКОВОГО МЕНЮ      */
-    /* ========================================== */
-
-    .menu-overlay {
-        position: fixed;
-
-        top: 0;
-        left: 0;
-
-        width: 100%;
-        height: 100%;
-
-        background-color: rgba(0, 0, 0, 0.7);
-
-        opacity: 0;
-        visibility: hidden;
-
-        transition:
-            opacity 0.3s ease,
-            visibility 0.3s ease;
-
-        z-index: 1001;
-    }
-
-
-    /* Активное затемнение */
-
-    .menu-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
-
-    /* ========================================== */
-    /*  БОКОВОЕ МЕНЮ                               */
-    /* ========================================== */
-
-    .sidebar-menu {
-        position: fixed;
-
-        top: 0;
-        right: -280px;
-
-        width: 280px;
-        max-width: 85vw;
-        height: 100%;
-
-        background-color: #000000;
-
-        border-left: 2px solid #FBBF24;
-
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.8);
-
-        display: flex;
-        flex-direction: column;
-
-        z-index: 1002;
-
-        transition: right 0.3s ease;
-    }
-
-
-    /* Открытое боковое меню */
-
-    .sidebar-menu.active {
-        right: 0;
-    }
-
-
-    /* ========================================== */
-    /*  ШАПКА БОКОВОГО МЕНЮ                        */
-    /* ========================================== */
-
-    .sidebar-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        padding: 20px;
-
-        border-bottom: 1px solid #222222;
-    }
-
-
-    /* Заголовок */
-
-    .sidebar-title {
-        color: #FBBF24;
-
-        font-size: 18px;
-        font-weight: 700;
-
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-
-    /* ========================================== */
-    /*  КНОПКА ЗАКРЫТИЯ                            */
-    /* ========================================== */
-
-    .close-btn {
-        width: 36px;
-        height: 36px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        background: none;
-        border: none;
-
-        color: #FFFFFF;
-
-        font-size: 28px;
-        line-height: 1;
-
-        cursor: pointer;
-
-        transition: color 0.2s ease;
-    }
-
-    .close-btn:hover {
-        color: #FBBF24;
-    }
-
-
-    /* ========================================== */
-    /*  НАВИГАЦИЯ В БОКОВОМ МЕНЮ                   */
-    /* ========================================== */
-
-    .sidebar-nav {
-        display: flex;
-        flex-direction: column;
-
-        padding: 10px 0;
-
-        overflow-y: auto;
-
-        -webkit-overflow-scrolling: touch;
-    }
-
-
-    /* Отдельная ссылка */
-
-    .sidebar-link {
-        display: flex;
-        align-items: center;
-
-        min-height: 55px;
-
-        padding: 15px 20px;
-
-        color: #FFFFFF;
-
-        text-decoration: none;
-
-        font-size: 15px;
-        font-weight: 500;
-
-        border-bottom: 1px solid #111111;
-
-        transition:
-            color 0.2s ease,
-            background-color 0.2s ease,
-            padding-left 0.2s ease;
-    }
-
-
-    /* Иконка ссылки */
-
-    .sidebar-link svg {
-        flex-shrink: 0;
-
-        width: 20px;
-        height: 20px;
-
-        margin-right: 15px;
-
-        stroke: #FBBF24;
-        stroke-width: 2;
-
-        fill: none;
-
-        stroke-linecap: round;
-        stroke-linejoin: round;
-    }
-
-
-    /* Наведение */
-
-    .sidebar-link:hover {
-        background-color: #111111;
-
-        color: #FBBF24;
-
-        padding-left: 25px;
-    }
-
-
-    /* ========================================== */
-    /*  МОБИЛЬНАЯ АДАПТАЦИЯ                         */
-    /* ========================================== */
-
-    @media (max-width: 480px) {
-
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Talas_profi — Профессиональные услуги в Таласе</title>
+
+    <style>
+        /* ========================================== */
+        /*  1. СБРОС И БАЗОВЫЕ СТИЛИ                 */
+        /* ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            background-color: #000000;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            color: #FFFFFF;
+            line-height: 1.5;
+            overflow-x: hidden;
+            /* Отступ снизу только для мобильных из-за bottom-nav */
+            padding-bottom: 75px;
+        }
+
+        @media (min-width: 993px) {
+            body {
+                padding-bottom: 0; /* На ПК нижнее меню скрыто */
+            }
+        }
+
+        /* ========================================== */
+        /*  2. НИЖНЯЯ МОБИЛЬНАЯ НАВИГАЦИЯ             */
+        /* ========================================== */
         .bottom-nav {
-            height: 62px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: #000000;
+            border-top: 2px solid #FBBF24;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 1000;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            box-shadow: 0 -4px 20px rgba(251, 191, 36, 0.15);
+        }
+
+        @media (min-width: 993px) {
+            .bottom-nav {
+                display: none; /* Скрываем нижнее меню на ПК */
+            }
         }
 
         .nav-item {
-            font-size: 9px;
-            letter-spacing: 0.2px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.1s ease;
+        }
+
+        .nav-item:active {
+            transform: scale(0.95);
         }
 
         .nav-item svg {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
+            fill: none;
+            stroke: #FFFFFF;
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 3px;
+            transition: stroke 0.2s ease;
         }
 
-        .language-switcher {
-            width: 48%;
-            gap: 2px;
+        .nav-item:hover,
+        .nav-item.active {
+            color: #FBBF24;
         }
 
-        .language-switcher button {
-            padding: 7px 4px;
-            font-size: 9px;
+        .nav-item:hover svg,
+        .nav-item.active svg {
+            stroke: #FBBF24;
+        }
+
+        /* ========================================== */
+        /*  3. ЕДИНАЯ КНОПКА ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА (1 CLICK) */
+        /* ========================================== */
+        .lang-btn-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #111111;
+            border: 1px solid #FBBF24;
+            color: #FFFFFF;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+        }
+
+        .lang-btn-toggle:hover {
+            background: #FBBF24;
+            color: #000000;
+        }
+
+        .lang-btn-toggle .lang-badge {
+            background: #FBBF24;
+            color: #000000;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        .lang-btn-toggle:hover .lang-badge {
+            background: #000000;
+            color: #FBBF24;
+        }
+
+        /* ========================================== */
+        /*  4. ОВЕРЛЕЙ И БОКОВОЕ МЕНЮ                 */
+        /* ========================================== */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
         .sidebar-menu {
-            width: 280px;
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            max-width: 85vw;
+            height: 100%;
+            background-color: #000000;
+            border-left: 2px solid #FBBF24;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            z-index: 1002;
+            transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-    }
 
+        .sidebar-menu.active {
+            right: 0;
+        }
 
-    /* ========================================== */
-    /*  ДОПОЛНИТЕЛЬНАЯ ЗАЩИТА ОТ СИСТЕМНОГО       */
-    /*  УВЕЛИЧЕНИЯ ШРИФТА НА МОБИЛЬНЫХ             */
-    /* ========================================== */
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid #222222;
+        }
 
-    @media (max-width: 768px) {
+        .sidebar-title {
+            color: #FBBF24;
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111111;
+            border: 1px solid #333333;
+            border-radius: 50%;
+            color: #FFFFFF;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-btn:hover {
+            border-color: #FBBF24;
+            color: #FBBF24;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 0;
+            overflow-y: auto;
+        }
 
         .sidebar-link {
+            display: flex;
+            align-items: center;
+            min-height: 56px;
+            padding: 15px 20px;
+            color: #FFFFFF;
+            text-decoration: none;
             font-size: 15px;
+            font-weight: 600;
+            border-bottom: 1px solid #111111;
+            transition: all 0.2s ease;
         }
-    }
 
-</style>
+        .sidebar-link svg {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            stroke: #FBBF24;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
+        .sidebar-link:hover {
+            background-color: #111111;
+            color: #FBBF24;
+            padding-left: 25px;
+        }
+    </style>
 </head>
 <body>
 
@@ -490,223 +301,287 @@
 
 
 
+<!-- ========================================== -->
+<!-- 1. ВЕРХНЯЯ ШАПКА ДЛЯ ПК (СКРЫТА НА ТЕЛЕФОНАХ) -->
+<!-- ========================================== -->
+<header class="pc-header">
+    <div class="pc-header-container">
+        <a href="#hero" class="pc-logo">Talas<span>_profi</span></a>
+        <nav class="pc-nav-links">
+            <a href="#about" data-i18n="sidebar_about">О компании</a>
+            <a href="#services" data-i18n="nav_services">Услуги</a>
+            <a href="#prices" data-i18n="sidebar_prices">Прайс-лист</a>
+            <a href="#portfolio" data-i18n="sidebar_portfolio">Наши работы</a>
+            <a href="#reviews" data-i18n="sidebar_reviews">Отзывы</a>
+            <a href="#contacts" data-i18n="sidebar_contacts">Контакты</a>
+        </nav>
+        <div class="pc-actions">
+            <!-- Переключатель языка для ПК -->
+            <button type="button" class="lang-btn-toggle" onclick="toggleLanguage()">
+                <span class="lang-badge" id="current-lang-badge">KY</span>
+                <span id="next-lang-text">Русский</span>
+            </button>
+            <a href="#zayavka" class="pc-cta-btn" data-i18n="nav_application">Заявка</a>
+        </div>
+    </div>
+</header>
 
-  <!-- ========================================== --> <!-- 1. НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ --> <!-- ========================================== --> <nav class="bottom-nav">
-<!-- Кнопка 1: Главная -->
-<a href="#hero" class="nav-item active">
-    <svg viewBox="0 0 24 24">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-    </svg>
-
-    <span data-i18n="nav_home">Главная</span>
-</a>
-
-
-<!-- Кнопка 2: Услуги -->
-<a href="#services" class="nav-item">
-    <svg viewBox="0 0 24 24">
-        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
-    </svg>
-
-    <span data-i18n="nav_services">Услуги</span>
-</a>
-
+<style>
+    /* Стили для ПК шапки */
+    .pc-header {
+        display: none;
+        background-color: #000000;
+        border-bottom: 2px solid #FBBF24;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        padding: 12px 0;
+    }
+    @media (min-width: 993px) {
+        .pc-header { display: block; }
+    }
+    .pc-header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .pc-logo {
+        font-size: 22px;
+        font-weight: 900;
+        color: #FFFFFF;
+        text-decoration: none;
+        letter-spacing: 1px;
+    }
+    .pc-logo span { color: #FBBF24; }
+    .pc-nav-links {
+        display: flex;
+        gap: 25px;
+    }
+    .pc-nav-links a {
+        color: #FFFFFF;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+    .pc-nav-links a:hover { color: #FBBF24; }
+    .pc-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .pc-cta-btn {
+        background: #FBBF24;
+        color: #000000;
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-weight: 800;
+        text-decoration: none;
+        font-size: 13px;
+        text-transform: uppercase;
+        transition: all 0.2s ease;
+    }
+    .pc-cta-btn:hover {
+        background: #FFFFFF;
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    }
+</style>
 
 <!-- ========================================== -->
-<!--  ЦЕНТРАЛЬНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА           -->
+<!-- 2. НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ (МОБИЛЬНАЯ) -->
 <!-- ========================================== -->
+<nav class="bottom-nav">
+    <!-- Кнопка 1: Главная -->
+    <a href="#hero" class="nav-item active" onclick="setActiveNav(this)">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span data-i18n="nav_home">Башкы бет</span>
+    </a>
 
-<div class="language-switcher" aria-label="Выбор языка">
+    <!-- Кнопка 2: Услуги -->
+    <a href="#services" class="nav-item" onclick="setActiveNav(this)">
+        <svg viewBox="0 0 24 24">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+        </svg>
+        <span data-i18n="nav_services">Кызматтар</span>
+    </a>
 
-    <button
-        type="button"
-        class="language-btn active"
-        data-language="ky"
-        onclick="setLanguage('ky')"
-    >
-        Кыргызча
+    <!-- ЦЕНТРАЛЬНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА (1 КЛИК) -->
+    <button type="button" class="lang-btn-toggle" onclick="toggleLanguage()" aria-label="Переключить язык">
+        <span class="lang-badge" id="mobile-lang-badge">KY</span>
     </button>
 
-    <button
-        type="button"
-        class="language-btn"
-        data-language="ru"
-        onclick="setLanguage('ru')"
-    >
-        Русский
+    <!-- Кнопка 4: Заявка -->
+    <a href="#zayavka" class="nav-item" onclick="setActiveNav(this)">
+        <svg viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+        <span data-i18n="nav_application">Арыз</span>
+    </a>
+
+    <!-- Кнопка 5: Бургер-меню -->
+    <button type="button" class="nav-item" id="burger-menu-btn" onclick="openMenu()">
+        <svg viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span data-i18n="nav_menu">Меню</span>
     </button>
-
-</div>
-
-
-<!-- Кнопка 4: Заявка -->
-<a href="#zayavka" class="nav-item">
-    <svg viewBox="0 0 24 24">
-        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-        <polyline points="14 2 14 8 20 8"></polyline>
-        <line x1="16" y1="13" x2="8" y2="13"></line>
-        <line x1="16" y1="17" x2="8" y2="17"></line>
-        <polyline points="10 9 9 9 8 9"></polyline>
-    </svg>
-
-    <span data-i18n="nav_application">Заявка</span>
-</a>
-
-
-<!-- Кнопка 5: Бургер-меню -->
-<button
-    type="button"
-    class="nav-item"
-    id="burger-menu-btn"
-    onclick="openMenu()"
->
-    <svg viewBox="0 0 24 24">
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-
-    <span data-i18n="nav_menu">Меню</span>
-</button>
-
-</nav> <!-- ========================================== --> <!-- 2. ВСПЛЫВАЮЩЕЕ БОКОВОЕ БУРГЕР-МЕНЮ --> <!-- ========================================== --> <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()" ></div> <div class="sidebar-menu" id="sidebarMenu">
-<!-- Шапка бокового меню -->
-<div class="sidebar-header">
-
-    <span
-        class="sidebar-title"
-        data-i18n="sidebar_navigation"
-    >
-        Навигация
-    </span>
-
-    <button
-        type="button"
-        class="close-btn"
-        onclick="closeMenu()"
-        aria-label="Закрыть"
-    >
-        &times;
-    </button>
-
-</div>
-
-
-<!-- ========================================== -->
-<!--  ССЫЛКИ БОКОВОГО МЕНЮ                       -->
-<!-- ========================================== -->
-
-<nav class="sidebar-nav">
-
-    <!-- О компании -->
-    <a
-        href="#about"
-        class="sidebar-link"
-        onclick="closeMenu()"
-    >
-        <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
-
-        <span data-i18n="sidebar_about">
-            О компании
-        </span>
-    </a>
-
-
-    <!-- Прайс-лист -->
-    <a
-        href="#prices"
-        class="sidebar-link"
-        onclick="closeMenu()"
-    >
-        <svg viewBox="0 0 24 24">
-            <line x1="12" y1="1" x2="12" y2="23"></line>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-        </svg>
-
-        <span data-i18n="sidebar_prices">
-            Прайс-лист
-        </span>
-    </a>
-
-
-    <!-- Наши работы -->
-    <a
-        href="#portfolio"
-        class="sidebar-link"
-        onclick="closeMenu()"
-    >
-        <svg viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-            <polyline points="21 15 16 10 5 21"></polyline>
-        </svg>
-
-        <span data-i18n="sidebar_portfolio">
-            Наши работы
-        </span>
-    </a>
-
-
-    <!-- Отзывы -->
-    <a
-        href="#reviews"
-        class="sidebar-link"
-        onclick="closeMenu()"
-    >
-        <svg viewBox="0 0 24 24">
-            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-        </svg>
-
-        <span data-i18n="sidebar_reviews">
-            Отзывы
-        </span>
-    </a>
-
-
-    <!-- Частые вопросы -->
-    <a
-        href="#faq"
-        class="sidebar-link"
-        onclick="closeMenu()"
-    >
-        <svg viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-
-        <span data-i18n="sidebar_faq">
-            Частые вопросы
-        </span>
-    </a>
-
-
-    <!-- Контакты -->
-    <a
-        href="#contacts"
-        class="sidebar-link"
-        onclick="closeMenu()"
-    >
-        <svg viewBox="0 0 24 24">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-        </svg>
-
-        <span data-i18n="sidebar_contacts">
-            Контакты
-        </span>
-    </a>
-
 </nav>
 
-</div> <!-- ========================================== --> <!-- 3. JAVASCRIPT --> <!-- ========================================== --> <script> /* ========================================== */ /* СЛОВАРЬ ПЕРЕВОДОВ ЭТОГО БЛОКА */ /* ========================================== */ window.siteTranslations = window.siteTranslations || {}; window.siteTranslations.ky = window.siteTranslations.ky || {}; window.siteTranslations.ru = window.siteTranslations.ru || {}; /* Кыргызский */ Object.assign(window.siteTranslations.ky, { nav_home: "Башкы бет", nav_services: "Кызматтар", nav_application: "Арыз", nav_menu: "Меню", sidebar_navigation: "Навигация", sidebar_about: "Компания жөнүндө", sidebar_prices: "Баалар", sidebar_portfolio: "Биздин иштер", sidebar_reviews: "Пикирлер", sidebar_faq: "Көп берилүүчү суроолор", sidebar_contacts: "Байланыштар" }); /* Русский */ Object.assign(window.siteTranslations.ru, { nav_home: "Главная", nav_services: "Услуги", nav_application: "Заявка", nav_menu: "Меню", sidebar_navigation: "Навигация", sidebar_about: "О компании", sidebar_prices: "Прайс-лист", sidebar_portfolio: "Наши работы", sidebar_reviews: "Отзывы", sidebar_faq: "Частые вопросы", sidebar_contacts: "Контакты" }); /* ========================================== */ /* ГЛОБАЛЬНАЯ ФУНКЦИЯ ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА */ /* ========================================== */ function setLanguage(language) { /* * Проверяем, существует ли выбранный язык. */ if (!window.siteTranslations[language]) { return; } /* * Получаем все элементы сайта, * у которых есть data-i18n. * * Поэтому следующие блоки мы тоже * будем подключать к этой системе. */ const elements = document.querySelectorAll("[data-i18n]"); elements.forEach(function(element) { const key = element.getAttribute("data-i18n"); const translation = window.siteTranslations[language][key]; if (translation !== undefined) { element.textContent = translation; } }); /* * Обновляем активную кнопку языка. */ document .querySelectorAll(".language-btn") .forEach(function(button) { button.classList.toggle( "active", button.getAttribute("data-language") === language ); }); /* * Меняем язык самого HTML-документа. */ document.documentElement.lang = language === "ky" ? "ky" : "ru"; /* * Запоминаем выбранный язык. * * После обновления страницы язык * можно будет восстановить. */ try { localStorage.setItem( "siteLanguage", language ); } catch (error) { console.warn( "Не удалось сохранить язык:", error ); } } /* ========================================== */ /* ОТКРЫТИЕ БОКОВОГО МЕНЮ */ /* ========================================== */ function openMenu() { document .getElementById("sidebarMenu") .classList.add("active"); document .getElementById("menuOverlay") .classList.add("active"); document.body.style.overflow = "hidden"; } /* ========================================== */ /* ЗАКРЫТИЕ БОКОВОГО МЕНЮ */ /* ========================================== */ function closeMenu() { document .getElementById("sidebarMenu") .classList.remove("active"); document .getElementById("menuOverlay") .classList.remove("active"); document.body.style.overflow = ""; } /* ========================================== */ /* ESC — ЗАКРЫТЬ МЕНЮ */ /* ========================================== */ document.addEventListener( "keydown", function(event) { if (event.key === "Escape") { closeMenu(); } } ); /* ========================================== */ /* ВОССТАНОВЛЕНИЕ ЯЗЫКА ПОСЛЕ ОБНОВЛЕНИЯ */ /* ========================================== */ document.addEventListener( "DOMContentLoaded", function() { let savedLanguage = "ky"; try { savedLanguage = localStorage.getItem("siteLanguage") || "ky"; } catch (error) { savedLanguage = "ky"; } setLanguage(savedLanguage); } ); </script>
+<!-- ========================================== -->
+<!-- 3. ВСПЛЫВАЮЩЕЕ БОКОВОЕ БУРГЕР-МЕНЮ          -->
+<!-- ========================================== -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
 
+<div class="sidebar-menu" id="sidebarMenu">
+    <div class="sidebar-header">
+        <span class="sidebar-title" data-i18n="sidebar_navigation">Навигация</span>
+        <button type="button" class="close-btn" onclick="closeMenu()" aria-label="Закрыть">&times;</button>
+    </div>
 
+    <nav class="sidebar-nav">
+        <a href="#about" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span data-i18n="sidebar_about">Компания жөнүндө</span>
+        </a>
+        <a href="#prices" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span data-i18n="sidebar_prices">Баалар</span>
+        </a>
+        <a href="#portfolio" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <span data-i18n="sidebar_portfolio">Биздин иштер</span>
+        </a>
+        <a href="#reviews" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-i18n="sidebar_reviews">Пикирлер</span>
+        </a>
+        <a href="#faq" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span data-i18n="sidebar_faq">Көп берилүүчү суроолор</span>
+        </a>
+        <a href="#contacts" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span data-i18n="sidebar_contacts">Байланыштар</span>
+        </a>
+    </nav>
+</div>
+
+<!-- ========================================== -->
+<!-- 4. ЕДИНЫЙ СКРИПТ УПРАВЛЕНИЯ НАВИГАЦИЕЙ И ЯЗЫКОМ -->
+<!-- ========================================== -->
+<script>
+window.siteTranslations = window.siteTranslations || {};
+window.siteTranslations.ky = window.siteTranslations.ky || {};
+window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+/* База переводов */
+Object.assign(window.siteTranslations.ky, {
+    nav_home: "Башкы бет",
+    nav_services: "Кызматтар",
+    nav_application: "Арыз",
+    nav_menu: "Меню",
+    sidebar_navigation: "Навигация",
+    sidebar_about: "Компания жөнүндө",
+    sidebar_prices: "Баалар",
+    sidebar_portfolio: "Биздин иштер",
+    sidebar_reviews: "Пикирлер",
+    sidebar_faq: "Көп берилүүчү суроолор",
+    sidebar_contacts: "Байланыштар"
+});
+
+Object.assign(window.siteTranslations.ru, {
+    nav_home: "Главная",
+    nav_services: "Услуги",
+    nav_application: "Заявка",
+    nav_menu: "Меню",
+    sidebar_navigation: "Навигация",
+    sidebar_about: "О компании",
+    sidebar_prices: "Прайс-лист",
+    sidebar_portfolio: "Наши работы",
+    sidebar_reviews: "Отзывы",
+    sidebar_faq: "Частые вопросы",
+    sidebar_contacts: "Контакты"
+});
+
+/* Переключение языков одной кнопкой */
+function toggleLanguage() {
+    const currentLang = document.documentElement.lang === "ru" ? "ru" : "ky";
+    const nextLang = currentLang === "ky" ? "ru" : "ky";
+    setLanguage(nextLang);
+}
+
+function setLanguage(language) {
+    if (!window.siteTranslations[language]) return;
+
+    /* Обновляем текст всех блоков с атрибутом data-i18n */
+    document.querySelectorAll("[data-i18n]").forEach(function(el) {
+        const key = el.getAttribute("data-i18n");
+        const translation = window.siteTranslations[language][key];
+        if (translation !== undefined) {
+            el.textContent = translation;
+        }
+    });
+
+    /* Обновляем вид кнопки переключения языка */
+    const mobileBadge = document.getElementById("mobile-lang-badge");
+    const pcBadge = document.getElementById("current-lang-badge");
+    const pcNextText = document.getElementById("next-lang-text");
+
+    if (mobileBadge) mobileBadge.textContent = language.toUpperCase();
+    if (pcBadge) pcBadge.textContent = language.toUpperCase();
+    if (pcNextText) pcNextText.textContent = language === "ky" ? "Русский" : "Кыргызча";
+
+    document.documentElement.lang = language;
+
+    try {
+        localStorage.setItem("siteLanguage", language);
+    } catch (e) {}
+}
+
+/* Активная кнопка в нижнем меню */
+function setActiveNav(element) {
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
+    element.classList.add('active');
+}
+
+/* Открытие и закрытие меню */
+function openMenu() {
+    document.getElementById("sidebarMenu").classList.add("active");
+    document.getElementById("menuOverlay").classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMenu() {
+    document.getElementById("sidebarMenu").classList.remove("active");
+    document.getElementById("menuOverlay").classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closeMenu();
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    let savedLanguage = "ky";
+    try {
+        savedLanguage = localStorage.setItem("siteLanguage") || "ky";
+    } catch (e) {
+        savedLanguage = "ky";
+    }
+    setLanguage(savedLanguage);
+});
+</script>
 
                 
 
@@ -736,6 +611,9 @@
 
 
 
+<!-- ========================================== -->
+<!-- 3. ГЛАВНЫЙ БАННЕР (HERO SECTION)           -->
+<!-- ========================================== -->
 <section id="hero" class="talas-hero-v4">
 
     <style>
@@ -779,13 +657,8 @@
         }
 
         @keyframes pulseGlow {
-            0%, 100% {
-                opacity: 0.5;
-            }
-
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         .hero-v4-container {
@@ -805,7 +678,6 @@
                 opacity: 0;
                 transform: translateY(35px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -826,15 +698,12 @@
             text-transform: uppercase;
             color: #FBBF24;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.2s;
             opacity: 0;
         }
 
-        .hero-v4-badge span {
-            color: #FFFFFF;
-        }
+        .hero-v4-badge span { color: #FFFFFF; }
 
         .hero-v4-title {
             font-size: 56px;
@@ -843,7 +712,6 @@
             letter-spacing: -1px;
             text-transform: uppercase;
             color: #FFFFFF;
-
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.5s;
             opacity: 0;
@@ -860,7 +728,6 @@
             max-width: 680px;
             line-height: 1.6;
             font-weight: 400;
-
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 0.8s;
             opacity: 0;
@@ -874,7 +741,6 @@
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 8px;
-
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 1.1s;
             opacity: 0;
@@ -890,10 +756,7 @@
             font-size: 15px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition:
-                transform 0.3s ease,
-                background-color 0.3s ease,
-                box-shadow 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 0 25px rgba(251, 191, 36, 0.25);
             display: inline-flex;
             align-items: center;
@@ -915,11 +778,7 @@
             font-weight: 700;
             text-decoration: none;
             font-size: 15px;
-            transition:
-                transform 0.3s ease,
-                border-color 0.3s ease,
-                color 0.3s ease,
-                background 0.3s ease;
+            transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -942,7 +801,6 @@
             width: 100%;
             max-width: 600px;
             margin-top: 16px;
-
             animation: fadeInUpSlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             animation-delay: 1.4s;
             opacity: 0;
@@ -975,123 +833,94 @@
         }
 
         @media (max-width: 768px) {
-            .talas-hero-v4 {
-                padding: 70px 16px 50px 16px;
-            }
-
-            .hero-v4-title {
-                font-size: 34px;
-            }
-
-            .hero-v4-desc {
-                font-size: 15px;
-            }
-
-            .hero-v4-cta-wrap {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .hero-v4-btn-main,
-            .hero-v4-btn-sec {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .hero-v4-stats {
-                gap: 16px;
-            }
-
-            .v4-stat-num {
-                font-size: 16px;
-            }
-
-            .v4-stat-lbl {
-                font-size: 10px;
-            }
+            .talas-hero-v4 { padding: 70px 16px 50px 16px; }
+            .hero-v4-title { font-size: 34px; }
+            .hero-v4-desc { font-size: 15px; }
+            .hero-v4-cta-wrap { flex-direction: column; width: 100%; }
+            .hero-v4-btn-main, .hero-v4-btn-sec { width: 100%; justify-content: center; }
+            .hero-v4-stats { gap: 16px; }
+            .v4-stat-num { font-size: 16px; }
+            .v4-stat-lbl { font-size: 10px; }
         }
     </style>
 
     <div class="hero-v4-container">
-
         <!-- Бейдж -->
-        <div class="hero-v4-badge" data-key="v4Badge">
+        <div class="hero-v4-badge">
             Talas_profi <span>• Талас / Бишкек</span>
         </div>
 
         <!-- Заголовок -->
-        <h1 class="hero-v4-title" data-key="v4Title">
-            Профессиональные услуги<br>
-            в <strong>один клик</strong>
+        <h1 class="hero-v4-title">
+            <span data-i18n="hero_title_1">Профессиональные услуги</span><br>
+            <span data-i18n="hero_title_2">в</span> <strong><span data-i18n="hero_title_3">один клик</span></strong>
         </h1>
 
         <!-- Описание -->
-        <p class="hero-v4-desc" data-key="v4Desc">
-            Электромонтаж, кондиционеры, сантехника и клининг.
-            Направляем проверенных мастеров с профильным инструментом
-            и гарантией качества.
+        <p class="hero-v4-desc" data-i18n="hero_desc">
+            Электромонтаж, кондиционеры, сантехника и клининг. Направляём проверенных мастеров с профильным инструментом и гарантией качества.
         </p>
 
         <!-- Кнопки -->
         <div class="hero-v4-cta-wrap">
-
-            <a
-                href="https://wa.me/996755000228"
-                class="hero-v4-btn-main"
-                data-key="v4BtnMain"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                💬 Написать в WhatsApp
+            <a href="https://wa.me/996755000228" class="hero-v4-btn-main" target="_blank" rel="noopener noreferrer">
+                💬 <span data-i18n="hero_btn_wa">Написать в WhatsApp</span>
             </a>
-
-            <a
-                href="tel:+996755000228"
-                class="hero-v4-btn-sec"
-                data-key="v4BtnSec"
-            >
+            <a href="tel:+996755000228" class="hero-v4-btn-sec">
                 📞 +996 755 000 228
             </a>
-
         </div>
 
         <!-- Статистика -->
         <div class="hero-v4-stats">
-
             <div class="v4-stat">
                 <span class="v4-stat-num">100%</span>
-                <span class="v4-stat-lbl" data-key="v4St1">
-                    Качество
-                </span>
+                <span class="v4-stat-lbl" data-i18n="hero_stat_quality">Качество</span>
             </div>
-
             <div class="v4-divider"></div>
-
             <div class="v4-stat">
-                <span class="v4-stat-num" data-key="v4St2Val">
-                    Свои
-                </span>
-
-                <span class="v4-stat-lbl" data-key="v4St2">
-                    Инструменты
-                </span>
+                <span class="v4-stat-num" data-i18n="hero_stat_own">Свои</span>
+                <span class="v4-stat-lbl" data-i18n="hero_stat_tools">Инструменты</span>
             </div>
-
             <div class="v4-divider"></div>
-
             <div class="v4-stat">
                 <span class="v4-stat-num">24/7</span>
-
-                <span class="v4-stat-lbl" data-key="v4St3">
-                    Диспетчер
-                </span>
+                <span class="v4-stat-lbl" data-i18n="hero_stat_dispatcher">Диспетчер</span>
             </div>
-
         </div>
-
     </div>
-
 </section>
+
+<!-- Словарный скрипт для Hero-секции -->
+<script>
+window.siteTranslations = window.siteTranslations || {};
+window.siteTranslations.ky = window.siteTranslations.ky || {};
+window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+Object.assign(window.siteTranslations.ky, {
+    hero_title_1: " Кесипкөй кызматтар",
+    hero_title_2: "",
+    hero_title_3: "бир чыкылдатууда",
+    hero_desc: "Электр монтаждоо, кондиционерлер, сантехника жана клининг. Профессионалдуу шаймандары бар ишенимдүү чеберлерди кепилдиги менен жөнөтөбүз.",
+    hero_btn_wa: "WhatsApp аркылуу жазуу",
+    hero_stat_quality: "Сапат",
+    hero_stat_own: "Өзүбүздүн",
+    hero_stat_tools: "Шаймандар",
+    hero_stat_dispatcher: "Диспетчер"
+});
+
+Object.assign(window.siteTranslations.ru, {
+    hero_title_1: "Профессиональные услуги",
+    hero_title_2: "в",
+    hero_title_3: "один клик",
+    hero_desc: "Электромонтаж, кондиционеры, сантехника и клининг. Направляем проверенных мастеров с профильным инструментом и гарантией качества.",
+    hero_btn_wa: "Написать в WhatsApp",
+    hero_stat_quality: "Качество",
+    hero_stat_own: "Свои",
+    hero_stat_tools: "Инструменты",
+    hero_stat_dispatcher: "Диспетчер"
+});
+</script>
 
 
 
@@ -1112,6 +941,15 @@
 
 
 
+    
+
+
+
+
+
+
+
+
 
 
 <!-- ================================================================= -->
@@ -1124,17 +962,17 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         .work-clean-section {
-            background-color: #060608;
+            background-color: #000000;
             color: #FFFFFF;
-            padding: 60px 20px;
+            padding: 80px 20px;
             width: 100%;
             display: flex;
             justify-content: center;
-            border-bottom: 1px solid #1F1F23;
+            border-bottom: 1px solid #18181B;
             position: relative;
         }
 
@@ -1143,7 +981,7 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 36px;
         }
 
         /* ШАПКА С ЧИСТОЙ ТИПОГРАФИКОЙ */
@@ -1159,11 +997,12 @@
         }
 
         .clean-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 800;
             letter-spacing: 0.5px;
             color: #FFFFFF;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
         }
 
         .clean-title span {
@@ -1171,7 +1010,7 @@
         }
 
         .clean-subtitle {
-            font-size: 14px;
+            font-size: 15px;
             color: #A1A1AA;
             font-weight: 400;
             line-height: 1.5;
@@ -1185,7 +1024,7 @@
         }
 
         .clean-card {
-            background: #0E0E11;
+            background: #09090B;
             border: 1px solid #27272A;
             border-radius: 12px;
             padding: 24px 20px;
@@ -1208,12 +1047,12 @@
         .work-clean-section.is-clean-active .clean-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
         .work-clean-section.is-clean-active .clean-card:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.35s; }
 
-        /* ПРИЯТНЫЙ МЯГКИЙ HOVER-ЭФФЕКТ */
+        /* МЯГКИЙ HOVER-ЭФФЕКТ */
         .clean-card:hover {
             border-color: #FBBF24;
-            background-color: #131317;
-            transform: translateY(-3px) !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 12px rgba(251, 191, 36, 0.08);
+            background-color: #121215;
+            transform: translateY(-4px) !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(251, 191, 36, 0.12);
         }
 
         .clean-card-head {
@@ -1228,31 +1067,32 @@
             color: #FBBF24;
             background: rgba(251, 191, 36, 0.1);
             border: 1px solid rgba(251, 191, 36, 0.25);
-            padding: 3px 9px;
+            padding: 4px 10px;
             border-radius: 6px;
             letter-spacing: 0.5px;
         }
 
         .clean-icon {
-            font-size: 18px;
-            opacity: 0.7;
-            transition: opacity 0.25s ease;
+            font-size: 20px;
+            opacity: 0.85;
+            transition: opacity 0.25s ease, transform 0.25s ease;
         }
 
         .clean-card:hover .clean-icon {
             opacity: 1;
+            transform: scale(1.1);
         }
 
         .clean-card-body {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
 
         .clean-card-body h4 {
             font-size: 16px;
             font-weight: 700;
-            color: #F4F4F5;
+            color: #FFFFFF;
             letter-spacing: -0.2px;
             transition: color 0.25s ease;
         }
@@ -1261,7 +1101,6 @@
             color: #FBBF24;
         }
 
-        /* МАКСИМАЛЬНО ЧИТАЕМЫЙ ТЕКСТ */
         .clean-card-body p {
             font-size: 13px;
             color: #A1A1AA;
@@ -1269,7 +1108,7 @@
             font-weight: 400;
         }
 
-        /* АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ */
+        /* АДАПТИВНОСТЬ */
         @media (max-width: 900px) {
             .clean-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1281,7 +1120,10 @@
                 grid-template-columns: 1fr;
             }
             .work-clean-section {
-                padding: 40px 16px;
+                padding: 50px 16px;
+            }
+            .clean-title {
+                font-size: 22px;
             }
         }
     </style>
@@ -1289,8 +1131,10 @@
     <div class="clean-container">
         
         <div class="clean-header">
-            <h2 class="clean-title" id="hwc-title-el">Как мы <span>работаем</span></h2>
-            <p class="clean-subtitle" data-key="hwc_sub">Понятный и прозрачный процесс от вашей заявки до сдачи работы.</p>
+            <h2 class="clean-title">
+                <span data-i18n="hwc_title_1">Как мы</span> <span><span data-i18n="hwc_title_2">работаем</span></span>
+            </h2>
+            <p class="clean-subtitle" data-i18n="hwc_sub">Понятный и прозрачный процесс от вашей заявки до сдачи работы.</p>
         </div>
 
         <div class="clean-grid">
@@ -1301,8 +1145,8 @@
                     <span class="clean-icon">📞</span>
                 </div>
                 <div class="clean-card-body">
-                    <h4 data-key="hwc_s1_t">Заявка</h4>
-                    <p data-key="hwc_s1_d">Звоните нам или оставляете сообщение в WhatsApp.</p>
+                    <h4 data-i18n="hwc_s1_t">Заявка</h4>
+                    <p data-i18n="hwc_s1_d">Звоните нам или оставляете сообщение в WhatsApp.</p>
                 </div>
             </div>
 
@@ -1312,8 +1156,8 @@
                     <span class="clean-icon">📝</span>
                 </div>
                 <div class="clean-card-body">
-                    <h4 data-key="hwc_s2_t">Согласование</h4>
-                    <p data-key="hwc_s2_d">Уточняем задачи, объем работы и фиксируем стоимость.</p>
+                    <h4 data-i18n="hwc_s2_t">Согласование</h4>
+                    <p data-i18n="hwc_s2_d">Уточняем задачи, объем работы и фиксируем стоимость.</p>
                 </div>
             </div>
 
@@ -1323,8 +1167,8 @@
                     <span class="clean-icon">🛠️</span>
                 </div>
                 <div class="clean-card-body">
-                    <h4 data-key="hwc_s3_t">Выезд и работа</h4>
-                    <p data-key="hwc_s3_d">Мастер приезжает в договоренное время и выполняет работу.</p>
+                    <h4 data-i18n="hwc_s3_t">Выезд и работа</h4>
+                    <p data-i18n="hwc_s3_d">Мастер приезжает в договоренное время и выполняет работу.</p>
                 </div>
             </div>
 
@@ -1334,8 +1178,8 @@
                     <span class="clean-icon">✅</span>
                 </div>
                 <div class="clean-card-body">
-                    <h4 data-key="hwc_s4_t">Проверка и оплата</h4>
-                    <p data-key="hwc_s4_d">Вы проверяете готовый результат и производите расчет.</p>
+                    <h4 data-i18n="hwc_s4_t">Проверка и оплата</h4>
+                    <p data-i18n="hwc_s4_d">Вы проверяете готовый результат и производите расчет.</p>
                 </div>
             </div>
 
@@ -1343,7 +1187,7 @@
 
     </div>
 
-    <!-- СКРИПТ ПОЯВЛЕНИЯ И ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА -->
+    <!-- СКРИПТ ПОЯВЛЕНИЯ И ЛОКАЛИЗАЦИИ -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const sectionClean = document.getElementById("how-we-work-clean");
@@ -1359,54 +1203,40 @@
             if (sectionClean) observerClean.observe(sectionClean);
         });
 
-        const cleanTranslations = {
-            ru: {
-                hwc_title_html: "Как мы <span>работаем</span>",
-                hwc_sub: "Понятный и прозрачный процесс от вашей заявки до сдачи работы.",
-                hwc_s1_t: "Заявка",
-                hwc_s1_d: "Звоните нам или оставляете сообщение в WhatsApp.",
-                hwc_s2_t: "Согласование",
-                hwc_s2_d: "Уточняем задачи, объем работы и фиксируем стоимость.",
-                hwc_s3_t: "Выезд и работа",
-                hwc_s3_d: "Мастер приезжает в договоренное время и выполняет работу.",
-                hwc_s4_t: "Проверка и оплата",
-                hwc_s4_d: "Вы проверяете готовый результат и производите расчет."
-            },
-            kg: {
-                hwc_title_html: "Биз кантип <span>иштейбиз</span>",
-                hwc_sub: "Өтүнмө калтыруудан баштап ишти тапшырганга чейинки түшүнүктүү процесс.",
-                hwc_s1_t: "Өтүнмө",
-                hwc_s1_d: "Бизге чалыңыз же WhatsApp аркылуу жазыңыз.",
-                hwc_s2_t: "Макулдашуу",
-                hwc_s2_d: "Тапшырманы, иштин көлөмүн тактап, бааны бекитебиз.",
-                hwc_s3_t: "Баруу жана жумуш",
-                hwc_s3_d: "Уста макулдашылган убакта келип, ишти аткарат.",
-                hwc_s4_t: "Текшерүү жана төлөө",
-                hwc_s4_d: "Сиз даяр натыйжаны текшерип, андан соң эсептешесиз."
-            }
-        };
+        // Регистрация переводов в единый реестр
+        window.siteTranslations = window.siteTranslations || {};
+        window.siteTranslations.ky = window.siteTranslations.ky || {};
+        window.siteTranslations.ru = window.siteTranslations.ru || {};
 
-        const prevLangFnClean = window.changeLanguage;
-        window.changeLanguage = function(lang) {
-            if (typeof prevLangFnClean === 'function') prevLangFnClean(lang);
+        Object.assign(window.siteTranslations.ky, {
+            hwc_title_1: "Биз кантип",
+            hwc_title_2: "иштейбиз",
+            hwc_sub: "Өтүнмө калтыруудан баштап ишти тапшырганга чейинки түшүнүктүү процесс.",
+            hwc_s1_t: "Өтүнмө",
+            hwc_s1_d: "Бизге чалыңыз же WhatsApp аркылуу жазыңыз.",
+            hwc_s2_t: "Макулдашуу",
+            hwc_s2_d: "Тапшырманы, иштин көлөмүн тактап, бааны бекитебиз.",
+            hwc_s3_t: "Баруу жана жумуш",
+            hwc_s3_d: "Уста макулдашылган убакта келип, ишти аткарат.",
+            hwc_s4_t: "Текшерүү жана төлөө",
+            hwc_s4_d: "Сиз даяр натыйжаны текшерип, андан соң эсептешесиз."
+        });
 
-            if (cleanTranslations[lang]) {
-                const titleEl = document.getElementById('hwc-title-el');
-                if (titleEl && cleanTranslations[lang].hwc_title_html) {
-                    titleEl.innerHTML = cleanTranslations[lang].hwc_title_html;
-                }
-
-                document.querySelectorAll('#how-we-work-clean [data-key]').forEach(el => {
-                    const key = el.getAttribute('data-key');
-                    if (cleanTranslations[lang][key]) {
-                        el.textContent = cleanTranslations[lang][key];
-                    }
-                });
-            }
-        };
+        Object.assign(window.siteTranslations.ru, {
+            hwc_title_1: "Как мы",
+            hwc_title_2: "работаем",
+            hwc_sub: "Понятный и прозрачный процесс от вашей заявки до сдачи работы.",
+            hwc_s1_t: "Заявка",
+            hwc_s1_d: "Звоните нам или оставляете сообщение в WhatsApp.",
+            hwc_s2_t: "Согласование",
+            hwc_s2_d: "Уточняем задачи, объем работы и фиксируем стоимость.",
+            hwc_s3_t: "Выезд и работа",
+            hwc_s3_d: "Мастер приезжает в договоренное время и выполняет работу.",
+            hwc_s4_t: "Проверка и оплата",
+            hwc_s4_d: "Вы проверяете готовый результат и производите расчет."
+        });
     </script>
 </section>
-
 
 
 
@@ -1435,14 +1265,13 @@
 
 
 
-
 <!-- ================================================================= -->
-<!-- БЛОК «ВСЕ УСЛУГИ» — МАКСИМАЛЬНЫЙ ВОЗДУХ ПЕРЕД ДИСПЕТЧЕРОМ -->
+<!-- БЛОК "ВСЕ УСЛУГИ" — МАКСИМАЛЬНЫЙ ВОЗДУХ ПЕРЕД ДИСПЕТЧЕРОМ (TALAS) -->
 <!-- ================================================================= -->
 <section id="services" class="services-air-section">
 
     <style>
-        #services-air * {
+        .services-air-section * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -1584,7 +1413,7 @@
             transform: translateX(8px);
         }
 
-        /* БЛОК ДИСПЕТЧЕРА С ЖЕСТКИМ ОГРОМНЫМ ВОЗДУХОМ СВЕРХУ */
+        /* БЛОК ДИСПЕТЧЕРА */
         .sa-action-box {
             text-align: center;
             width: 100%;
@@ -1592,9 +1421,12 @@
             border: 1px dashed rgba(251, 191, 36, 0.25);
             border-radius: 24px;
             padding: 80px 40px;
-            
-            /* ЖЕСТКИЙ ВОЗДУХ МЕЖДУ СТИКЕРОМ И ДИСПЕТЧЕРОМ */
             margin-top: 50px !important;
+            transition: border-color 0.3s ease;
+        }
+
+        .sa-action-box:hover {
+            border-color: rgba(251, 191, 36, 0.5);
         }
 
         .sa-action-text {
@@ -1626,6 +1458,7 @@
 
         .sa-btn:hover {
             background: #FFFFFF;
+            color: #000000;
             transform: translateY(-4px);
             box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3);
         }
@@ -1636,7 +1469,7 @@
             .sa-item { padding: 22px 18px; }
             .sa-arrow-text { display: none; }
             .sa-action-box { 
-                margin-top: 90px !important; /* Адаптированный воздух для мобилок */
+                margin-top: 90px !important; 
                 padding: 50px 20px; 
             }
             .sa-action-text { margin-bottom: 30px; }
@@ -1647,8 +1480,10 @@
 
         <!-- ЗАГОЛОВОК -->
         <div class="sa-header">
-            <h2 class="sa-title" data-key="sa_title">Все услуги в <span>Talas_profi</span></h2>
-            <p class="sa-subtitle" data-key="sa_subtitle">У нас вы можете найти мастеров под любую задачу. Выберите необходимый сервис и оформите вызов прямо сейчас.</p>
+            <h2 class="sa-title">
+                <span data-i18n="sa_title_1">Все услуги в</span> <span><span data-i18n="sa_title_2">Talas_profi</span></span>
+            </h2>
+            <p class="sa-subtitle" data-i18n="sa_subtitle">У нас вы можете найти мастеров под любую задачу. Выберите необходимый сервис и оформите вызов прямо сейчас.</p>
         </div>
 
         <!-- СПИСОК УСЛУГ -->
@@ -1657,10 +1492,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20электрика" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">⚡</div>
-                    <span class="sa-name" data-key="sa_1">Электромонтажные работы</span>
+                    <span class="sa-name" data-i18n="sa_1">Электромонтажные работы</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1668,10 +1503,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20кондиционера" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">❄️</div>
-                    <span class="sa-name" data-key="sa_2">Кондиционирование и Климат</span>
+                    <span class="sa-name" data-i18n="sa_2">Кондиционирование и Климат</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1679,10 +1514,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20видеонаблюдения" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">📹</div>
-                    <span class="sa-name" data-key="sa_3">Видеонаблюдение и Домофоны</span>
+                    <span class="sa-name" data-i18n="sa_3">Видеонаблюдение и Домофоны</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1690,10 +1525,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20сантехника" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">🔧</div>
-                    <span class="sa-name" data-key="sa_4">Сантехнические услуги</span>
+                    <span class="sa-name" data-i18n="sa_4">Сантехнические услуги</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1701,10 +1536,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20клининга" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">🧹</div>
-                    <span class="sa-name" data-key="sa_5">Профессиональный Клининг</span>
+                    <span class="sa-name" data-i18n="sa_5">Профессиональный Клининг</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1712,10 +1547,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20кирпичной%20кладки" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">🧱</div>
-                    <span class="sa-name" data-key="sa_6">Укладка кирпича и Кладка</span>
+                    <span class="sa-name" data-i18n="sa_6">Укладка кирпича и Кладка</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1723,10 +1558,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20поклейки%20обоев" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">🎨</div>
-                    <span class="sa-name" data-key="sa_7">Поклейка обоев и Отделка</span>
+                    <span class="sa-name" data-i18n="sa_7">Поклейка обоев и Отделка</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1734,10 +1569,10 @@
             <a href="https://wa.me/996755000228?text=Заказ%20другой%20услуги" target="_blank" class="sa-item">
                 <div class="sa-item-left">
                     <div class="sa-icon">🛠️</div>
-                    <span class="sa-name" data-key="sa_8">Другие строительные работы</span>
+                    <span class="sa-name" data-i18n="sa_8">Другие строительные работы</span>
                 </div>
                 <div class="sa-arrow-box">
-                    <span class="sa-arrow-text" data-key="sa_call">Вызвать</span>
+                    <span class="sa-arrow-text" data-i18n="sa_call">Вызвать</span>
                     <span class="sa-arrow">➔</span>
                 </div>
             </a>
@@ -1746,68 +1581,53 @@
 
         <!-- БЛОК ДИСПЕТЧЕРА -->
         <div class="sa-action-box">
-            <p class="sa-action-text" data-key="sa_action">Нужно решение индивидуальной задачи? Напишите нам — мы подберем специалиста под любой запрос.</p>
-            <a href="https://wa.me/996755000228" target="_blank" class="sa-btn" data-key="sa_btn">Написать диспетчеру</a>
+            <p class="sa-action-text" data-i18n="sa_action">Нужно решение индивидуальной задачи? Напишите нам — мы подберем специалиста под любой запрос.</p>
+            <a href="https://wa.me/996755000228" target="_blank" class="sa-btn" data-i18n="sa_btn">Написать диспетчеру</a>
         </div>
 
     </div>
 
     <!-- МУЛЬТИЯЗЫЧНОСТЬ -->
     <script>
-        const saTranslations = {
-            ru: {
-                sa_title: "Все услуги в <span>Talas_profi</span>",
-                sa_subtitle: "У нас вы можете найти мастеров под любую задачу. Выберите необходимый сервис и оформите вызов прямо сейчас.",
-                sa_1: "Электромонтажные работы",
-                sa_2: "Кондиционирование и Климат",
-                sa_3: "Видеонаблюдение и Домофоны",
-                sa_4: "Сантехнические услуги",
-                sa_5: "Профессиональный Клининг",
-                sa_6: "Укладка кирпича и Кладка",
-                sa_7: "Поклейка обоев и Отделка",
-                sa_8: "Другие строительные работы",
-                sa_call: "Вызвать",
-                sa_action: "Нужно решение индивидуальной задачи? Напишите нам — мы подберем специалиста под любой запрос.",
-                sa_btn: "Написать диспетчеру"
-            },
-            kg: {
-                sa_title: "Бардык кызматтар <span>Talas_profi</span> де",
-                sa_subtitle: "Бизден каалаган тапшырмага адистерди таба аласыз. Керектүү кызматты тандап, азыр чакырыңыз.",
-                sa_1: "Электромонтаж иштери",
-                sa_2: "Кондиционерлер жана Климат",
-                sa_3: "Видеокөзөмөл жана Домофондор",
-                sa_4: "Сантехникалык кызматтар",
-                sa_5: "Профессионалдуу Клининг",
-                sa_6: "Кирпич тизүү иштери",
-                sa_7: "Обои чаптоо жана Жасалгалоо",
-                sa_8: "Башка курулуш жумуштары",
-                sa_call: "Чакыруу",
-                sa_action: "Жекече тапшырмага чечим керекпи? Бизге жазыңыз — каалаган суроо боюнча адис таап беребиз.",
-                sa_btn: "Диспетчерге жазуу"
-            }
-        };
+        window.siteTranslations = window.siteTranslations || {};
+        window.siteTranslations.ky = window.siteTranslations.ky || {};
+        window.siteTranslations.ru = window.siteTranslations.ru || {};
 
-        const prevLangFnSA = window.changeLanguage;
-        window.changeLanguage = function(lang) {
-            if (typeof prevLangFnSA === 'function') prevLangFnSA(lang);
+        Object.assign(window.siteTranslations.ky, {
+            sa_title_1: "Бардык кызматтар",
+            sa_title_2: "Talas_profi де",
+            sa_subtitle: "Бизден каалаган тапшырмага адистерди таба аласыз. Керектүү кызматты тандап, азыр чакырыңыз.",
+            sa_1: "Электромонтаж иштери",
+            sa_2: "Кондиционерлер жана Климат",
+            sa_3: "Видеокөзөмөл жана Домофондор",
+            sa_4: "Сантехникалык кызматтар",
+            sa_5: "Профессионалдуу Клининг",
+            sa_6: "Кирпич тизүү иштери",
+            sa_7: "Обои чаптоо жана Жасалгалоо",
+            sa_8: "Башка курулуш жумуштары",
+            sa_call: "Чакыруу",
+            sa_action: "Жекече тапшырмага чечим керекпи? Бизге жазыңыз — каалаган суроо боюнча адис таап беребиз.",
+            sa_btn: "Диспетчерге жазуу"
+        });
 
-            if (saTranslations[lang]) {
-                document.querySelectorAll('#services-air [data-key]').forEach(el => {
-                    const key = el.getAttribute('data-key');
-                    if (saTranslations[lang][key]) {
-                        if (key === 'sa_title') {
-                            el.innerHTML = saTranslations[lang][key];
-                        } else {
-                            el.textContent = saTranslations[lang][key];
-                        }
-                    }
-                });
-            }
-        };
+        Object.assign(window.siteTranslations.ru, {
+            sa_title_1: "Все услуги в",
+            sa_title_2: "Talas_profi",
+            sa_subtitle: "У нас вы можете найти мастеров под любую задачу. Выберите необходимый сервис и оформите вызов прямо сейчас.",
+            sa_1: "Электромонтажные работы",
+            sa_2: "Кондиционирование и Климат",
+            sa_3: "Видеонаблюдение и Домофоны",
+            sa_4: "Сантехнические услуги",
+            sa_5: "Профессиональный Клининг",
+            sa_6: "Укладка кирпича и Кладка",
+            sa_7: "Поклейка обоев и Отделка",
+            sa_8: "Другие строительные работы",
+            sa_call: "Вызвать",
+            sa_action: "Нужно решение индивидуальной задачи? Напишите нам — мы подберем специалиста под любой запрос.",
+            sa_btn: "Написать диспетчеру"
+        });
     </script>
 </section>
-
-
 
 
 
@@ -1847,14 +1667,13 @@
 
 
 
-
 <!-- ================================================================= -->
-<!-- СЕКЦИЯ "ОФОРМИТЬ ЗАЯВКУ" (ВАРИАНТ 7: ANIMATED NEON FOCUS)         -->
+<!-- СЕКЦИЯ "ОФОРМИТЬ ЗАЯВКУ" (PRO INDUSTRIAL NEON FOCUS)              -->
 <!-- ================================================================= -->
 <section id="zayavka" class="order-v7-section">
 
     <style>
-        #order-v7 * {
+        #zayavka * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -1862,8 +1681,8 @@
         }
 
         .order-v7-section {
-            background-color: #050505;
-            padding: 70px 20px;
+            background-color: #000000;
+            padding: 80px 20px;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -1872,17 +1691,17 @@
         .order-v7-card {
             max-width: 820px;
             width: 100%;
-            background: #0D0D0F;
+            background: #000000;
             border: 2px solid #FBBF24;
             border-radius: 20px;
             padding: 40px;
-            box-shadow: 0 0 30px rgba(251, 191, 36, 0.1);
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.15);
             animation: fadeInV7 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            transition: box-shadow 0.3s ease;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
 
         .order-v7-card:hover {
-            box-shadow: 0 0 50px rgba(251, 191, 36, 0.2);
+            box-shadow: 0 0 45px rgba(251, 191, 36, 0.25);
         }
 
         @keyframes fadeInV7 {
@@ -1915,7 +1734,7 @@
         .lang-v7 {
             display: flex;
             gap: 4px;
-            background: #000000;
+            background: #0D0D0F;
             padding: 4px;
             border-radius: 8px;
             border: 1px solid #27272A;
@@ -1960,7 +1779,6 @@
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: color 0.3s ease;
         }
 
         .field-v7 label span.req {
@@ -1982,7 +1800,7 @@
 
         .textarea-v7 {
             resize: vertical;
-            min-height: 100px;
+            min-height: 110px;
         }
 
         .input-v7::placeholder {
@@ -1995,11 +1813,11 @@
             border-color: #FFFFFF;
             background: #FFFFFF;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.35);
+            box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
         }
 
         .input-v7:focus::placeholder {
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .btn-v7 {
@@ -2018,33 +1836,38 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
         }
 
-        .btn-v7:hover {
+        .btn-v7:hover:not(:disabled) {
             background: #FFFFFF;
             color: #000000;
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.4);
         }
 
-        .btn-v7:active {
+        .btn-v7:active:not(:disabled) {
             transform: translateY(-1px);
+        }
+
+        .btn-v7:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .status-v7 {
             grid-column: span 2;
-            padding: 14px;
+            padding: 16px;
             font-size: 14px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 10px;
             display: none;
             font-weight: 800;
             animation: statusPopV7 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         @keyframes statusPopV7 {
-            from { opacity: 0; transform: scale(0.9); }
+            from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
 
@@ -2086,7 +1909,7 @@
 
             <div class="field-v7">
                 <label><span data-key="lbl_service">Услуга</span> <span class="req">*</span></label>
-                <input type="text" id="v7-service" class="input-v7" data-key-ph="ph_service" placeholder="Клининг, сантехника, кирпич, обои" required>
+                <input type="text" id="v7-service" class="input-v7" data-key-ph="ph_service" placeholder="Электромонтаж, кондиционеры, видеонаблюдение" required>
             </div>
 
             <div class="field-v7 full-v7">
@@ -2121,7 +1944,7 @@
                 lbl_address: "Адрес",
                 ph_address: "Улица, дом, квартира",
                 lbl_service: "Услуга",
-                ph_service: "Клининг, сантехника, кирпич, обои",
+                ph_service: "Электромонтаж, кондиционеры, видеонаблюдение",
                 lbl_comment: "Детали заказа",
                 ph_comment: "Опишите задачу подробнее...",
                 lbl_budget: "Планируемый бюджет (сом)",
@@ -2140,7 +1963,7 @@
                 lbl_address: "Дарек",
                 ph_address: "Көчө, үй, батир",
                 lbl_service: "Кызмат",
-                ph_service: "Клининг, сантехника, кыш коюу, обои",
+                ph_service: "Электр монтаж, кондиционер, видеобайкоо",
                 lbl_comment: "Заказдын деталдары",
                 ph_comment: "Тапшырманы кененирээк жазыңыз...",
                 lbl_budget: "Божомолдонгон бюджет (сом)",
@@ -2163,14 +1986,14 @@
 
             document.getElementById('v7-title-el').innerHTML = translationsV7[lang].title_html;
 
-            document.querySelectorAll('#order-v7 [data-key]').forEach(el => {
+            document.querySelectorAll('#zayavka [data-key]').forEach(el => {
                 const k = el.getAttribute('data-key');
                 if (translationsV7[lang][k]) {
                     el.textContent = translationsV7[lang][k];
                 }
             });
 
-            document.querySelectorAll('#order-v7 [data-key-ph]').forEach(el => {
+            document.querySelectorAll('#zayavka [data-key-ph]').forEach(el => {
                 const k = el.getAttribute('data-key-ph');
                 if (translationsV7[lang][k]) el.setAttribute('placeholder', translationsV7[lang][k]);
             });
@@ -2228,6 +2051,15 @@
 
 
 
+    
+
+
+
+
+
+
+
+
 
 
 
@@ -2245,7 +2077,7 @@
 
 
 <!-- ================================================================= -->
-<!-- БЛОК "О НАС" — MINIMAL CARD FOCUS (ГОРОД ТАЛАС)                   -->
+<!-- БЛОК "О НАС" — PRO INDUSTRIAL CARD FOCUS (ТАЛАС / БИШКЕК)          -->
 <!-- ================================================================= -->
 <section id="about-card" class="about-card-section">
 
@@ -2264,7 +2096,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            border-bottom: 2px solid #27272A;
+            border-bottom: 2px solid #1E1E24;
             position: relative;
             overflow: hidden;
         }
@@ -2278,7 +2110,7 @@
             width: 100%;
             height: 2px;
             background: linear-gradient(90deg, transparent, #FBBF24, transparent);
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         .card-container {
@@ -2296,12 +2128,12 @@
             opacity: 0;
             transform: translateY(40px);
             filter: blur(10px);
-            transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        filter 1.8s cubic-bezier(0.16, 1, 0.3, 1),
-                        border-color 0.4s ease,
-                        box-shadow 0.4s ease,
-                        background-color 0.4s ease;
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease,
+                        background-color 0.3s ease;
         }
 
         /* АКТИВАЦИЯ ПРИ СКРОЛЛЕ */
@@ -2311,10 +2143,10 @@
             filter: blur(0);
         }
 
-        .about-card-section.is-card-active .card-item:nth-child(1) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.2s; }
-        .about-card-section.is-card-active .card-item:nth-child(2) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.35s; }
-        .about-card-section.is-card-active .card-item:nth-child(3) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.5s; }
-        .about-card-section.is-card-active .card-item:nth-child(4) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.65s; }
+        .about-card-section.is-card-active .card-item:nth-child(1) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.15s; }
+        .about-card-section.is-card-active .card-item:nth-child(2) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.25s; }
+        .about-card-section.is-card-active .card-item:nth-child(3) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.35s; }
+        .about-card-section.is-card-active .card-item:nth-child(4) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.45s; }
 
         /* ТЕКСТ И ШРИФТЫ */
         .card-title {
@@ -2323,19 +2155,20 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #FFFFFF;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .card-title span {
             color: #FBBF24;
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+            text-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
         }
 
         .card-intro {
             font-size: 16px;
-            color: #D4D4D8;
+            color: #FFFFFF;
             line-height: 1.6;
             max-width: 850px;
+            font-weight: 500;
         }
 
         /* СЕТКА КАРТОЧЕК */
@@ -2346,10 +2179,10 @@
         }
 
         .card-item {
-            background: #09090B;
-            border: 1px solid #27272A;
-            padding: 26px 20px;
-            border-radius: 12px;
+            background: #000000;
+            border: 2px solid #1E1E24;
+            padding: 28px 22px;
+            border-radius: 14px;
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -2357,35 +2190,40 @@
         }
 
         .about-card-section.is-card-active .card-item:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             border-color: #FBBF24;
-            box-shadow: 0 15px 35px rgba(251, 191, 36, 0.15);
-            background: #121215;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+            background: #000000;
             transition-delay: 0s;
         }
 
         .card-badge {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 900;
             color: #FBBF24;
-            opacity: 0.9;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
         }
 
         .card-item h4 {
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 800;
             color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .card-item p {
             font-size: 14px;
-            color: #A1A1AA;
-            line-height: 1.4;
+            color: #FFFFFF;
+            opacity: 0.85;
+            line-height: 1.5;
+            font-weight: 500;
         }
 
         @media (max-width: 600px) {
             .card-title { font-size: 24px; }
             .card-intro { font-size: 14px; }
+            .about-card-section { padding: 60px 16px; }
         }
     </style>
 
@@ -2394,7 +2232,7 @@
         <div class="card-header">
             <h2 class="card-title" id="cd-title-el">Сервис <span>Talas_profi</span></h2>
             <p class="card-intro" data-key="cd_desc">
-                Простой способ вызвать проверенного мастера в Таласе. Мы находим нужного специалиста, заранее согласовываем стоимость и контролируем работу от начала до конца.
+                Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.
             </p>
         </div>
 
@@ -2402,26 +2240,26 @@
             
             <div class="card-item">
                 <span class="card-badge">01</span>
-                <h4 data-key="cd_f1_t">Быстрый выезд</h4>
-                <p data-key="cd_f1_d">Мастер оперативно выезжает сразу после вашего звонка.</p>
+                <h4 data-key="cd_f1_t">Оперативный выезд</h4>
+                <p data-key="cd_f1_d">Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">02</span>
-                <h4 data-key="cd_f2_t">Проф-инструмент</h4>
-                <p data-key="cd_f2_d">Привозим весь необходимый специализированный инвентарь.</p>
+                <h4 data-key="cd_f2_t">Проф-оснащение</h4>
+                <p data-key="cd_f2_d">Работаем собственным специализированным инструментом и профессиональным оборудованием.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">03</span>
-                <h4 data-key="cd_f3_t">Точный расчет</h4>
-                <p data-key="cd_f3_d">Фиксируем цену до старта и не меняем ее в процессе.</p>
+                <h4 data-key="cd_f3_t">Фиксированный расчет</h4>
+                <p data-key="cd_f3_d">Точная оценка стоимости до начала работ без скрытых наценок и переплат.</p>
             </div>
 
             <div class="card-item">
                 <span class="card-badge">04</span>
                 <h4 data-key="cd_f4_t">Контроль качества</h4>
-                <p data-key="cd_f4_d">Лично отвечаем за аккуратный и надежный результат.</p>
+                <p data-key="cd_f4_d">Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта.</p>
             </div>
 
         </div>
@@ -2447,27 +2285,27 @@
         const cardTranslations = {
             ru: {
                 cd_title_html: "Сервис <span>Talas_profi</span>",
-                cd_desc: "Простой способ вызвать проверенного мастера в Таласе. Мы находим нужного специалиста, заранее согласовываем стоимость и контролируем работу от начала до конца.",
-                cd_f1_t: "Быстрый выезд",
-                cd_f1_d: "Мастер оперативно выезжает сразу после вашего звонка.",
-                cd_f2_t: "Проф-инструмент",
-                cd_f2_d: "Привозим весь необходимый специализированный инвентарь.",
-                cd_f3_t: "Точный расчет",
-                cd_f3_d: "Фиксируем цену до старта и не меняем ее в процессе.",
+                cd_desc: "Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.",
+                cd_f1_t: "Оперативный выезд",
+                cd_f1_d: "Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.",
+                cd_f2_t: "Проф-оснащение",
+                cd_f2_d: "Работаем собственным специализированным инструментом и профессиональным оборудованием.",
+                cd_f3_t: "Фиксированный расчет",
+                cd_f3_d: "Точная оценка стоимости до начала работ без скрытых наценок и переплат.",
                 cd_f4_t: "Контроль качества",
-                cd_f4_d: "Лично отвечаем за аккуратный и надежный результат."
+                cd_f4_d: "Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта."
             },
             kg: {
                 cd_title_html: "<span>Talas_profi</span> Сервиси",
-                cd_desc: "Таласта ишенимдүү устаны чакыруунун жөнөкөй жолу. Биз керектүү адисти табабыз, бааны алдын ала макулдашабыз жана ишти башынан аягына чейин көзөмөлдөйбүз.",
-                cd_f1_t: "Тез баруу",
-                cd_f1_d: "Уста сиздин чалууңуздан кийин дароо жолго чыгат.",
-                cd_f2_t: "Кесипкөй шаймандар",
-                cd_f2_d: "Бардык керектүү атайын инвентарды алып келебиз.",
+                cd_desc: "Талас жана Бишкек шаарларындагы бирдиктүү сервис кызматы. Биз сиздин тапшырмаңызга ылайык квалификациялуу адистерди тандайбыз, бекитилген бааны макулдашабыз жана ар бир этапта сапатка кепилдик беребиз.",
+                cd_f1_t: "Ыкчам баруу",
+                cd_f1_d: "Адис же атайын бригада өтүнмө ырасталгандан кийин дароо объектиге чыгат.",
+                cd_f2_t: "Кесипкөй жабдуу",
+                cd_f2_d: "Өзүбүздүн атайын шаймандар жана кесипкөй жабдуулар менен иштейбиз.",
                 cd_f3_t: "Так эсептөө",
-                cd_f3_d: "Бааны башталганга чейин бекитебиз жана өзгөртпөйбүз.",
+                cd_f3_d: "Иш башталганга чейин жашыруун кошумча төлөмсүз так бааны бекитебиз.",
                 cd_f4_t: "Сапатты көзөмөлдөө",
-                cd_f4_d: "Тыкан жана ишенимдүү натыйжа үчүн жеке жооп беребиз."
+                cd_f4_d: "Бардык стандарттардын сакталышын жеке өзүбүз текшерип, жыйынтыкка жооп беребиз."
             }
         };
 
@@ -2493,6 +2331,15 @@
 </section>
 
 
+
+
+
+
+
+
+
+
+    
     
 
 
@@ -2519,9 +2366,8 @@
 
 
 
-
-    <!-- ================================================================= -->
-<!-- ПОДВАЛ САЙТА (FOOTER) — УВЕЛИЧЕННЫЕ МЕЖСТРОЧНЫЕ ЗАЗОРЫ            -->
+<!-- ================================================================= -->
+<!-- ULTIMATE FOOTER — PRO INDUSTRIAL DESIGN SYSTEM                   -->
 <!-- ================================================================= -->
 <footer id="footer" class="footer-section">
 
@@ -2530,51 +2376,84 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         .footer-section {
             background-color: #000000;
+            background-image: radial-gradient(rgba(251, 191, 36, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
             color: #FFFFFF;
-            padding: 70px 32px 40px 32px;
+            padding: 80px 24px 40px 24px;
             border-top: 3px solid #FBBF24;
             width: 100%;
             display: flex;
             justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #FBBF24, transparent);
+            box-shadow: 0 0 15px #FBBF24;
         }
 
         .footer-container {
-            max-width: 1300px;
+            max-width: 1280px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
         }
 
-        /* ОСНОВНАЯ СЕТКА КОЛОНОК */
+        /* СЕТКА КОЛОНОК */
         .footer-grid {
             display: grid;
-            grid-template-columns: 1.8fr 1fr 1.2fr 1fr 1.2fr;
-            gap: 40px 35px;
+            grid-template-columns: 2fr 1fr 1.2fr 1fr 1.3fr;
+            gap: 48px 32px;
             align-items: start;
         }
 
-        /* 1. БРЕНД */
+        /* 1. БРЕНД И СТАТУС */
         .footer-brand {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 22px;
         }
 
         .footer-logo {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
             color: #FFFFFF;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-logo-icon {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: #FBBF24;
+            color: #000000;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 900;
+            box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
         }
 
         .footer-logo span {
@@ -2584,52 +2463,58 @@
         .footer-brand-desc {
             color: #A1A1AA;
             font-size: 14px;
-            line-height: 1.8; /* Увеличен межстрочный интервал текста */
+            line-height: 1.8;
+            font-weight: 400;
+            max-width: 340px;
         }
 
-        .footer-badge-item {
+        .footer-status-pill {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid #FBBF24;
-            padding: 10px 16px;
-            border-radius: 6px;
+            gap: 10px;
+            background: rgba(251, 191, 36, 0.05);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            padding: 8px 14px;
+            border-radius: 20px;
             font-size: 12px;
             color: #FBBF24;
-            font-weight: 700;
+            font-weight: 600;
             width: fit-content;
+            letter-spacing: 0.5px;
         }
 
-        .status-dot {
+        .pulse-dot {
             width: 8px;
             height: 8px;
             background-color: #10B981;
             border-radius: 50%;
-            box-shadow: 0 0 8px #10B981;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 2s infinite;
         }
 
-        /* 2. ЗАГОЛОВКИ КОЛОНОК */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* ЗАГОЛОВКИ */
         .footer-col-title {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 800;
             color: #FBBF24;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 28px; /* Увеличен отступ под заголовком */
+            margin-bottom: 24px;
             display: block;
         }
 
-        /* 3. СПИСКИ ССЫЛОКС УВЕЛИЧЕННЫМ ЗАЗОРОМ */
+        /* СПИСКИ И ССЫЛКИ */
         .footer-links {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 20px; /* УВЕЛИЧЕН ЗАЗОР МЕЖДУ СТРОКАМИ ССЫЛОК */
-        }
-
-        .footer-links li {
-            display: block;
+            gap: 16px;
         }
 
         .footer-links a {
@@ -2637,42 +2522,46 @@
             text-decoration: none;
             font-size: 14px;
             display: inline-block;
-            padding: 8px 0; /* Увеличен кликабельный отступ сверху и снизу */
-            line-height: 1.5;
-            transition: color 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            font-weight: 500;
         }
 
         .footer-links a:hover {
             color: #FBBF24;
+            transform: translateX(6px);
         }
 
-        /* 4. ЗОНА ОБСЛУЖИВАНИЯ */
+        /* ЗОНА ОБСЛУЖИВАНИЯ */
         .coverage-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 18px; /* Увеличен зазор между пунктами зоны выезда */
+            gap: 14px;
         }
 
         .coverage-list li {
-            color: #A1A1AA;
-            font-size: 13px;
-            line-height: 1.5;
+            color: #D4D4D8;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-weight: 500;
         }
 
         .coverage-list li::before {
-            content: '•';
-            color: #FBBF24;
+            content: '';
+            width: 5px;
+            height: 5px;
+            background-color: #FBBF24;
+            border-radius: 50%;
+            display: inline-block;
         }
 
-        /* 5. КОНТАКТЫ */
+        /* КОНТАКТНЫЙ БЛОК */
         .contacts-list {
             display: flex;
             flex-direction: column;
-            gap: 22px; /* Увеличен зазор между контактными блоками */
+            gap: 20px;
         }
 
         .contact-item {
@@ -2682,22 +2571,31 @@
         }
 
         .contact-icon {
-            font-size: 18px;
+            font-size: 16px;
             color: #FBBF24;
-            margin-top: 2px;
+            background: rgba(251, 191, 36, 0.1);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            flex-shrink: 0;
         }
 
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: 6px; /* Отступ между подписью и номером/адресом */
+            gap: 2px;
         }
 
         .contact-label {
             font-size: 11px;
-            color: #71717A;
+            color: #A1A1AA;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            font-weight: 700;
         }
 
         .contact-value {
@@ -2705,31 +2603,45 @@
             font-size: 14px;
             font-weight: 700;
             text-decoration: none;
+            transition: color 0.2s ease;
         }
 
-        /* ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ */
+        .contact-value:hover {
+            color: #FBBF24;
+        }
+
+        /* ПЕРЕКЛЮЧЕНИЕ ЯЗЫКОВ */
         .lang-switch {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 10px;
+            background: #09090B;
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid #27272A;
+            width: fit-content;
         }
 
         .lang-btn {
-            background: #18181B;
-            border: 1px solid #3F3F46;
+            background: transparent;
+            border: none;
             color: #A1A1AA;
-            padding: 10px 16px;
+            padding: 6px 16px;
             border-radius: 6px;
             font-size: 12px;
-            font-weight: 700;
+            font-weight: 800;
             cursor: pointer;
-            flex: 1;
+            transition: all 0.2s ease;
         }
 
         .lang-btn.active {
             background: #FBBF24;
             color: #000000;
-            border-color: #FBBF24;
+            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+        }
+
+        .lang-btn:hover:not(.active) {
+            color: #FFFFFF;
         }
 
         /* ПРЕИМУЩЕСТВА */
@@ -2737,7 +2649,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            padding: 30px 0;
+            padding: 32px 0;
             border-top: 1px solid #27272A;
             border-bottom: 1px solid #27272A;
         }
@@ -2745,41 +2657,52 @@
         .feature-card {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
             background: #09090B;
             border: 1px solid #27272A;
-            padding: 16px 18px;
-            border-radius: 8px;
+            padding: 18px 20px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #FBBF24;
+            transform: translateY(-2px);
+            background: #121215;
         }
 
         .feature-icon {
-            font-size: 24px;
+            font-size: 22px;
             color: #FBBF24;
         }
 
         .feature-text h5 {
             color: #FFFFFF;
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 700;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .feature-text p {
-            color: #71717A;
-            font-size: 11px;
+            color: #A1A1AA;
+            font-size: 12px;
             line-height: 1.4;
         }
 
-        /* НИЖНЯЯ СТРОКА */
+        /* КОПИРАЙТ */
         .footer-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            padding-top: 10px;
-            font-size: 12px;
+            font-size: 13px;
             color: #71717A;
+        }
+
+        .footer-bottom strong {
+            color: #FBBF24;
+            font-weight: 700;
         }
 
         .legal-links {
@@ -2790,26 +2713,33 @@
         .legal-links a {
             color: #71717A;
             text-decoration: none;
+            transition: color 0.2s ease;
         }
 
         .legal-links a:hover {
             color: #FBBF24;
         }
 
-        /* АДАПТИВ */
+        /* АДАПТИВНОСТЬ */
         @media (max-width: 1024px) {
             .footer-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .footer-brand {
+                grid-column: span 3;
             }
             .footer-features {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
             .footer-grid {
                 grid-template-columns: 1fr;
-                gap: 36px;
+                gap: 40px;
+            }
+            .footer-brand {
+                grid-column: span 1;
             }
             .footer-features {
                 grid-template-columns: 1fr;
@@ -2825,21 +2755,22 @@
         
         <div class="footer-grid">
             
-            <!-- 1. БРЕНД -->
+            <!-- БРЕНД -->
             <div class="footer-brand">
                 <div class="footer-logo">
-                    <span>⚡</span> TALAS_PROFI
+                    <div class="footer-logo-icon">⚡</div>
+                    TALAS<span>_PROFI</span>
                 </div>
                 <p class="footer-brand-desc" data-key="ft_desc">
-                    Единый диспетчерский центр подбора профессиональных мастеров. Оперативный выезд специалистов по ремонту и монтажу.
+                    Единая диспетчерская служба профессионального сервиса. Быстрый подбор проверенных мастеров и контроль качества работ.
                 </p>
-                <div class="footer-badge-item">
-                    <span class="status-dot"></span>
-                    <span data-key="ft_status">Диспетчер 24/7</span>
+                <div class="footer-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span data-key="ft_status">Диспетчер на связи 24/7</span>
                 </div>
             </div>
 
-            <!-- 2. НАВИГАЦИЯ -->
+            <!-- НАВИГАЦИЯ -->
             <div>
                 <span class="footer-col-title" data-key="ft_col1">Навигация</span>
                 <ul class="footer-links">
@@ -2851,7 +2782,7 @@
                 </ul>
             </div>
 
-            <!-- 3. УСЛУГИ -->
+            <!-- УСЛУГИ -->
             <div>
                 <span class="footer-col-title" data-key="ft_col2">Услуги</span>
                 <ul class="footer-links">
@@ -2859,13 +2790,13 @@
                     <li><a href="#services" data-key="ft_s2">Установка кондиционеров</a></li>
                     <li><a href="#services" data-key="ft_s3">Видеонаблюдение</a></li>
                     <li><a href="#services" data-key="ft_s4">Сантехника</a></li>
-                    <li><a href="#services" data-key="ft_s5">Клининг и уборка</a></li>
+                    <li><a href="#services" data-key="ft_s5">Уборка и клининг</a></li>
                 </ul>
             </div>
 
-            <!-- 4. ОХВАТ -->
+            <!-- ЗОНА ВЫЕЗДА -->
             <div>
-                <span class="footer-col-title" data-key="ft_col4">Зона выезда</span>
+                <span class="footer-col-title" data-key="ft_col4">География</span>
                 <ul class="coverage-list">
                     <li data-key="ft_cov_1">г. Талас</li>
                     <li data-key="ft_cov_2">Бакай-Ата</li>
@@ -2875,185 +2806,182 @@
                 </ul>
             </div>
 
-            <!-- 5. КОНТАКТЫ -->
+            <!-- КОНТАКТЫ И ЯЗЫК -->
             <div>
-                <span class="footer-col-title" data-key="ft_col3">Контакты</span>
+                <span class="footer-col-title" data-key="ft_col3">Связь</span>
                 <div class="contacts-list">
                     <div class="contact-item">
-                        <span class="contact-icon">📞</span>
+                        <div class="contact-icon">📞</div>
                         <div class="contact-info">
-                            <span class="contact-label" data-key="ft_lbl_phone">Диспетчер</span>
+                            <span class="contact-label" data-key="ft_lbl_phone">Звонок</span>
                             <a href="tel:+996755000228" class="contact-value">+996 755 000 228</a>
                         </div>
                     </div>
 
                     <div class="contact-item">
-                        <span class="contact-icon">💬</span>
+                        <div class="contact-icon">💬</div>
                         <div class="contact-info">
                             <span class="contact-label">WhatsApp</span>
-                            <a href="https://wa.me/996755000228" target="_blank" class="contact-value">+996 755 000 228</a>
+                            <a href="https://wa.me/996755000228" target="_blank" rel="noopener" class="contact-value">+996 755 000 228</a>
                         </div>
                     </div>
 
                     <div class="contact-item">
-                        <span class="contact-icon">📍</span>
+                        <div class="contact-icon">📍</div>
                         <div class="contact-info">
                             <span class="contact-label" data-key="ft_lbl_loc">Локация</span>
-                            <span class="contact-value" data-key="ft_loc_val">г. Талас</span>
+                            <span class="contact-value" data-key="ft_loc_val">г. Талас / Бишкек</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="lang-switch">
-                    <button type="button" class="lang-btn active" onclick="changeLanguage('ru')">RU</button>
-                    <button type="button" class="lang-btn" onclick="changeLanguage('kg')">KG</button>
+                <div class="lang-switch" id="footerLangSwitch">
+                    <button type="button" class="lang-btn active" data-lang="ru" onclick="switchFooterLang('ru')">RU</button>
+                    <button type="button" class="lang-btn" data-lang="kg" onclick="switchFooterLang('kg')">KG</button>
                 </div>
             </div>
 
         </div>
 
-        <!-- ИНФО-КАРТОЧКИ -->
+        <!-- КАРТОЧКИ ПРЕИМУЩЕСТВ -->
         <div class="footer-features">
             <div class="feature-card">
                 <div class="feature-icon">⚡</div>
                 <div class="feature-text">
                     <h5 data-key="ft_f1_t">Быстрый выезд</h5>
-                    <p data-key="ft_f1_d">Мастер отправляется сразу после заявки</p>
+                    <p data-key="ft_f1_d">Оперативно направляем мастера</p>
                 </div>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">👨‍🔧</div>
+                <div class="feature-icon">🛠️</div>
                 <div class="feature-text">
-                    <h5 data-key="ft_f2_t">Опытные мастера</h5>
-                    <p data-key="ft_f2_d">Проверенные специалисты с инструментом</p>
+                    <h5 data-key="ft_f2_t">Профи-мастера</h5>
+                    <p data-key="ft_f2_d">Проверенные специалисты</p>
                 </div>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">📜</div>
+                <div class="feature-icon">📋</div>
                 <div class="feature-text">
-                    <h5 data-key="ft_f3_t">Прозрачные цены</h5>
-                    <p data-key="ft_f3_d">Согласование сметы до начала работ</p>
+                    <h5 data-key="ft_f3_t">Фиксированный прайс</h5>
+                    <p data-key="ft_f3_d">Без скрытых переплат</p>
                 </div>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🤝</div>
+                <div class="feature-icon">🛡️</div>
                 <div class="feature-text">
-                    <h5 data-key="ft_f4_t">Контроль качества</h5>
-                    <p data-key="ft_f4_d">Гарантия на выполненные работы</p>
+                    <h5 data-key="ft_f4_t">Гарантия</h5>
+                    <p data-key="ft_f4_d">Контроль качества работ</p>
                 </div>
             </div>
         </div>
 
-        <!-- КОПИРАЙТ -->
+        <!-- КОПИРАЙТ И ЮР. ИНФО -->
         <div class="footer-bottom">
-            <div>© 2026 <strong>Talas_profi</strong>. <span data-key="ft_copy">Все права защищены. Диспетчерская служба.</span></div>
+            <div>© 2026 <strong>TALAS_PROFI</strong>. <span data-key="ft_copy">Все права защищены. Сервис заказа мастеров.</span></div>
             <div class="legal-links">
-                <a href="#" data-key="ft_privacy">Конфиденциальность</a>
-                <a href="#" data-key="ft_terms">Условия</a>
+                <a href="#" data-key="ft_privacy">Политика конфиденциальности</a>
+                <a href="#" data-key="ft_terms">Пользовательское соглашение</a>
             </div>
         </div>
 
     </div>
 
     <script>
-        const footerTranslations = {
-            ru: {
-                ft_desc: "Единый диспетчерский центр подбора профессиональных мастеров. Оперативный выезд специалистов по ремонту и монтажу.",
-                ft_status: "Диспетчер 24/7",
-                ft_col1: "Навигация",
-                ft_l1: "Все услуги",
-                ft_l2: "О компании",
-                ft_l3: "Схема работы",
-                ft_l4: "Отзывы клиентов",
-                ft_l5: "Контакты",
-                ft_col2: "Услуги",
-                ft_s1: "Электромонтаж",
-                ft_s2: "Установка кондиционеров",
-                ft_s3: "Видеонаблюдение",
-                ft_s4: "Сантехника",
-                ft_s5: "Клининг и уборка",
-                ft_col4: "Зона выезда",
-                ft_cov_1: "г. Талас",
-                ft_cov_2: "Бакай-Ата",
-                ft_cov_3: "Кара-Буура",
-                ft_cov_4: "Манас",
-                ft_cov_5: "г. Бишкек",
-                ft_col3: "Контакты",
-                ft_lbl_phone: "Диспетчер",
-                ft_lbl_loc: "Локация",
-                ft_loc_val: "г. Талас",
-                ft_f1_t: "Быстрый выезд",
-                ft_f1_d: "Мастер отправляется сразу после заявки",
-                ft_f2_t: "Опытные мастера",
-                ft_f2_d: "Проверенные специалисты с инструментом",
-                ft_f3_t: "Прозрачные цены",
-                ft_f3_d: "Согласование сметы до начала работ",
-                ft_f4_t: "Контроль качества",
-                ft_f4_d: "Гарантия на выполненные работы",
-                ft_copy: "Все права защищены. Диспетчерская служба.",
-                ft_privacy: "Конфиденциальность",
-                ft_terms: "Условия"
-            },
-            kg: {
-                ft_desc: "Кесипкөй усталарды тандоо боюнча бирдиктүү диспетчердик борбор. Оңдоо жана монтаждоо боюнча адистердин ыкчам чыгуусу.",
-                ft_status: "Диспетчер 24/7",
-                ft_col1: "Навигация",
-                ft_l1: "Бардык кызматтар",
-                ft_l2: "Компания жөнүндө",
-                ft_l3: "Иштөө тартиби",
-                ft_l4: "Пикирлер",
-                ft_l5: "Байланыш",
-                ft_col2: "Кызматтар",
-                ft_s1: "Электромонтаж",
-                ft_s2: "Кондиционер орнотуу",
-                ft_s3: "Видеокөзөмөл",
-                ft_s4: "Сантехника",
-                ft_s5: "Тазалоо (клининг)",
-                ft_col4: "Тейлөө аймагы",
-                ft_cov_1: "Талас ш.",
-                ft_cov_2: "Бакай-Ата",
-                ft_cov_3: "Кара-Буура",
-                ft_cov_4: "Манас",
-                ft_cov_5: "Бишкек ш.",
-                ft_col3: "Байланыш",
-                ft_lbl_phone: "Диспетчер",
-                ft_lbl_loc: "Аймак",
-                ft_loc_val: "Талас ш.",
-                ft_f1_t: "Ыкчам баруу",
-                ft_f1_d: "Уста буйрутмадан кийин дароо жолго чыгат",
-                ft_f2_t: "Тажрыйбалуу усталар",
-                ft_f2_d: "Шаймандары бар ишенимдүү адистер",
-                ft_f3_t: "Ачык баалар",
-                ft_f3_d: "Иш башталганга чейин бааны макулдашуу",
-                ft_f4_t: "Сапатты көзөмөлдөө",
-                ft_f4_d: "Аткарылган иштерге кепилдик",
-                ft_copy: "Бардык укуктар корголгон. Диспетчердик кызмат.",
-                ft_privacy: "Купуялуулук",
-                ft_terms: "Шарттар"
-            }
-        };
+        (function() {
+            const footerI18n = {
+                ru: {
+                    ft_desc: "Единая диспетчерская служба профессионального сервиса. Быстрый подбор проверенных мастеров и контроль качества работ.",
+                    ft_status: "Диспетчер на связи 24/7",
+                    ft_col1: "Навигация",
+                    ft_l1: "Все услуги",
+                    ft_l2: "О компании",
+                    ft_l3: "Схема работы",
+                    ft_l4: "Отзывы клиентов",
+                    ft_l5: "Контакты",
+                    ft_col2: "Услуги",
+                    ft_s1: "Электромонтаж",
+                    ft_s2: "Установка кондиционеров",
+                    ft_s3: "Видеонаблюдение",
+                    ft_s4: "Сантехника",
+                    ft_s5: "Уборка и клининг",
+                    ft_col4: "География",
+                    ft_cov_1: "г. Талас",
+                    ft_cov_2: "Бакай-Ата",
+                    ft_cov_3: "Кара-Буура",
+                    ft_cov_4: "Манас",
+                    ft_cov_5: "г. Бишкек",
+                    ft_col3: "Связь",
+                    ft_lbl_phone: "Звонок",
+                    ft_lbl_loc: "Локация",
+                    ft_loc_val: "г. Талас / Бишкек",
+                    ft_f1_t: "Быстрый выезд",
+                    ft_f1_d: "Оперативно направляем мастера",
+                    ft_f2_t: "Профи-мастера",
+                    ft_f2_d: "Проверенные специалисты",
+                    ft_f3_t: "Фиксированный прайс",
+                    ft_f3_d: "Без скрытых переплат",
+                    ft_f4_t: "Гарантия",
+                    ft_f4_d: "Контроль качества работ",
+                    ft_copy: "Все права защищены. Сервис заказа мастеров.",
+                    ft_privacy: "Политика конфиденциальности",
+                    ft_terms: "Пользовательское соглашение"
+                },
+                kg: {
+                    ft_desc: "Кесипкөй кызматтардын бирдиктүү диспетчердик кызматы. Ишенимдүү усталарды тез тандоо жана сапатты көзөмөлдөө.",
+                    ft_status: "Диспетчер байланышта 24/7",
+                    ft_col1: "Навигация",
+                    ft_l1: "Бардык кызматтар",
+                    ft_l2: "Компания жөнүндө",
+                    ft_l3: "Иштөө тартиби",
+                    ft_l4: "Кардарлардын пикири",
+                    ft_l5: "Байланыш",
+                    ft_col2: "Кызматтар",
+                    ft_s1: "Электромонтаж",
+                    ft_s2: "Кондиционер орнотуу",
+                    ft_s3: "Видеокөзөмөл",
+                    ft_s4: "Сантехника",
+                    ft_s5: "Тазалоо жана клининг",
+                    ft_col4: "География",
+                    ft_cov_1: "Талас ш.",
+                    ft_cov_2: "Бакай-Ата",
+                    ft_cov_3: "Кара-Буура",
+                    ft_cov_4: "Манас",
+                    ft_cov_5: "Бишкек ш.",
+                    ft_col3: "Байланыш",
+                    ft_lbl_phone: "Чалуу",
+                    ft_lbl_loc: "Аймак",
+                    ft_loc_val: "Талас ш. / Бишкек",
+                    ft_f1_t: "Ыкчам баруу",
+                    ft_f1_d: "Устаны дароо багыттайбыз",
+                    ft_f2_t: "Уста-адистер",
+                    ft_f2_d: "Текшерилген адистер",
+                    ft_f3_t: "Так баалар",
+                    ft_f3_d: "Жашыруун төлөмдөрсүз",
+                    ft_f4_t: "Кепилдик",
+                    ft_f4_d: "Иштин сапатын көзөмөлдөө",
+                    ft_copy: "Бардык укуктар корголгон. Усталарды чакыруу кызматы.",
+                    ft_privacy: "Купуялуулук саясаты",
+                    ft_terms: "Колдонуучу келишими"
+                }
+            };
 
-        const globalLangFn = window.changeLanguage;
-        window.changeLanguage = function(lang) {
-            if (typeof globalLangFn === 'function') globalLangFn(lang);
-            
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
-            });
-
-            if (footerTranslations[lang]) {
-                document.querySelectorAll('#footer [data-key]').forEach(el => {
-                    const key = el.getAttribute('data-key');
-                    if (footerTranslations[lang][key]) {
-                        el.textContent = footerTranslations[lang][key];
-                    }
+            window.switchFooterLang = function(lang) {
+                document.querySelectorAll('#footerLangSwitch .lang-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
                 });
-            }
-        };
+
+                if (footerI18n[lang]) {
+                    document.querySelectorAll('#footer [data-key]').forEach(el => {
+                        const key = el.getAttribute('data-key');
+                        if (footerI18n[lang][key]) {
+                            el.textContent = footerI18n[lang][key];
+                        }
+                    });
+                }
+            };
+        })();
     </script>
 </footer>
-
-
 
 
 
