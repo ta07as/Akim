@@ -2886,8 +2886,28 @@ Object.assign(window.siteTranslations.ru, {
 
     </div>
 
-    <script>
+  <script>
         (function() {
+            // 1. АВТОПЕРЕХОД НА ПЕРВЫЙ БЛОК ПРИ ЗАГРУЗКЕ / ПЕРЕЗАГРУЗКЕ
+            window.addEventListener('DOMContentLoaded', () => {
+                // Очищаем хэш в URL, чтобы браузер не прыгал к футеру или контактам
+                if (window.location.hash) {
+                    history.replaceState(null, null, window.location.pathname);
+                }
+
+                // Ищем первый блок (hero, главный экран или начало страницы)
+                const firstBlock = document.querySelector('header') || 
+                                   document.querySelector('#hero') || 
+                                   document.querySelector('section') || 
+                                   document.body;
+
+                // Плавно прокручиваем наверх
+                setTimeout(() => {
+                    firstBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            });
+
+            // 2. ДВУЯЗЫЧНОСТЬ (RU / KG)
             const footerI18n = {
                 ru: {
                     ft_desc: "Единая диспетчерская служба профессионального сервиса. Быстрый подбор проверенных мастеров и контроль качества работ.",
