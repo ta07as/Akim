@@ -2603,6 +2603,277 @@ Object.assign(window.siteTranslations.ru, {
 
 
 
+
+
+
+
+
+
+    <!-- ================================================================= -->
+<!-- БЛОК "ФУТЕР" — PRO INDUSTRIAL FOOTER (ТАЛАС 24/7)                -->
+<!-- ================================================================= -->
+<footer id="main-footer" class="industrial-footer">
+
+    <style>
+        #main-footer * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .industrial-footer {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 60px 20px 30px 20px;
+            width: 100%;
+            border-top: 2px solid #1E1E24;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* НЕОНОВАЯ ПОЛОСА ВВЕРХУ */
+        .industrial-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FBBF24, transparent);
+            opacity: 0.9;
+        }
+
+        .footer-container {
+            max-width: 1050px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FFFFFF;
+        }
+
+        .footer-logo span {
+            color: #FBBF24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+        }
+
+        .footer-desc {
+            font-size: 14px;
+            color: #FFFFFF;
+            opacity: 0.75;
+            line-height: 1.6;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #FBBF24;
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-list li a, 
+        .footer-list li span {
+            color: #FFFFFF;
+            opacity: 0.85;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .footer-list li a:hover {
+            color: #FBBF24;
+            opacity: 1;
+        }
+
+        .footer-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #FBBF24;
+            color: #000000;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 8px;
+            width: fit-content;
+        }
+
+        .footer-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+
+        .footer-bottom {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding-top: 25px;
+            border-top: 1px solid #1E1E24;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 13px;
+            color: #FFFFFF;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 600px) {
+            .footer-container { grid-template-columns: 1fr; gap: 30px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+
+    <div class="footer-container">
+        
+        <!-- БРЕНД -->
+        <div class="footer-brand">
+            <div class="footer-logo">Talas_<span>profi</span></div>
+            <p class="footer-desc" data-i18n="ft_desc">
+                Полный спектр бытовых, ремонтных и монтажных услуг в городе Талас.
+            </p>
+        </div>
+
+        <!-- УСЛУГИ -->
+        <div>
+            <h4 class="footer-title" data-i18n="ft_services_t">Услуги</h4>
+            <ul class="footer-list">
+                <li><span data-i18n="ft_s1">Электромонтаж и сантехника</span></li>
+                <li><span data-i18n="ft_s2">Установка кондиционеров</span></li>
+                <li><span data-i18n="ft_s3">Видеонаблюдение и ремонт</span></li>
+                <li><span data-i18n="ft_s4">Все виды профильных работ</span></li>
+            </ul>
+        </div>
+
+        <!-- ЛОКАЦИЯ -->
+        <div>
+            <h4 class="footer-title" data-i18n="ft_region_t">География</h4>
+            <ul class="footer-list">
+                <li><span data-i18n="ft_r1">Только город Талас</span></li>
+                <li><span data-i18n="ft_r2">Оперативный выезд по городу</span></li>
+                <li><span data-i18n="ft_r3">Обслуживание любых объектов</span></li>
+            </ul>
+        </div>
+
+        <!-- КОНТАКТЫ -->
+        <div>
+            <h4 class="footer-title" data-i18n="ft_contacts_t">Контакты</h4>
+            <ul class="footer-list">
+                <li><a href="https://wa.me/996755000228" target="_blank">+996 755 000 228 (WhatsApp)</a></li>
+                <li><span data-i18n="ft_work_time" style="color: #FBBF24; font-weight: 700;">Работаем 24/7 (Круглосуточно)</span></li>
+            </ul>
+            <a href="https://wa.me/996755000228" target="_blank" class="footer-cta-btn" data-i18n="ft_btn">Написать в WhatsApp</a>
+        </div>
+
+    </div>
+
+    <!-- НИЖНЯЯ ЧАСТЬ -->
+    <div class="footer-bottom">
+        <span data-i18n="ft_copy">&copy; 2026 Talas_profi. Все права защищены.</span>
+        <span data-i18n="ft_tag">Качество. Надежность. Круглосуточно.</span>
+    </div>
+
+    <!-- СКРИПТ ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА -->
+    <script>
+        window.siteTranslations = window.siteTranslations || {};
+        window.siteTranslations.ky = window.siteTranslations.ky || {};
+        window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+        Object.assign(window.siteTranslations.ky, {
+            ft_desc: "Талас шаарындагы турмуш-ризиктик, оңдоо жана куроо кызматтарынын толук топтому.",
+            ft_services_t: "Кызматтар",
+            ft_s1: "Электр кураштыруу жана сантехника",
+            ft_s2: "Кондиционерлерди орнотуу",
+            ft_s3: "Видеокөзөмөл жана оңдоо иштери",
+            ft_s4: "Бардык түрдөгү кызматтар",
+            ft_region_t: "Аймак",
+            ft_r1: "Талас шаары гана",
+            ft_r2: "Шаар ичинде ыкчам баруу",
+            ft_r3: "Каалаган объекттерди тейлөө",
+            ft_contacts_t: "Байланыш",
+            ft_work_time: "24/7 иштейбиз (Үзгүлтүксүз)",
+            ft_btn: "WhatsApp'ка жазуу",
+            ft_copy: "&copy; 2026 Talas_profi. Бардык укуктар корголгон.",
+            ft_tag: "Сапат. Ишенимдүүлүк. 24/7."
+        });
+
+        Object.assign(window.siteTranslations.ru, {
+            ft_desc: "Полный спектр бытовых, ремонтных и монтажных услуг в городе Талас.",
+            ft_services_t: "Услуги",
+            ft_s1: "Электромонтаж и сантехника",
+            ft_s2: "Установка кондиционеров",
+            ft_s3: "Видеонаблюдение и ремонт",
+            ft_s4: "Все виды профильных работ",
+            ft_region_t: "География",
+            ft_r1: "Только город Талас",
+            ft_r2: "Оперативный выезд по городу",
+            ft_r3: "Обслуживание любых объектов",
+            ft_contacts_t: "Контакты",
+            ft_work_time: "Работаем 24/7 (Круглосуточно)",
+            ft_btn: "Написать в WhatsApp",
+            ft_copy: "&copy; 2026 Talas_profi. Все права защищены.",
+            ft_tag: "Качество. Надежность. Круглосуточно."
+        });
+
+        /* Расширение базовой функции setLanguage */
+        const ftSetLanguage = window.setLanguage;
+        window.setLanguage = function(lang) {
+            if (typeof ftSetLanguage === "function") {
+                ftSetLanguage(lang);
+            }
+            if (!window.siteTranslations[lang]) return;
+
+            document.querySelectorAll("#main-footer [data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                const translation = window.siteTranslations[lang][key];
+                if (translation !== undefined) {
+                    el.innerHTML = translation;
+                }
+            });
+        };
+    </script>
+</footer>
+
+
+
+
+
+
+
+
+
+
+
     
 
 </body>
