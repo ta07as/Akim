@@ -86,13 +86,1297 @@
         <a href="index.html" class="back-btn">← На главную</a>
     </header>
 
-    <div class="container">
-        <!-- О КОМПАНИИ -->
-        <section id="about">
-            <h2>О компании</h2>
-            <p>Talas_profi — это единая сервисная служба в Таласе и Бишкеке. Мы предоставляем квалифицированных мастеров для выполнения строительных, монтажных и бытовых работ любого уровня сложности.</p>
-        </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================================== -->
+<!-- 1. ВЕРХНЯЯ ШАПКА ДЛЯ ПК (СКРЫТА НА ТЕЛЕФОНАХ) -->
+<!-- ========================================== -->
+<header class="pc-header">
+    <div class="pc-header-container">
+        <a href="#hero" class="pc-logo">Talas<span>_profi</span></a>
+        <nav class="pc-nav-links">
+            <a href="#about" data-i18n="sidebar_about">О компании</a>
+            <a href="#services" data-i18n="nav_services">Услуги</a>
+            <a href="#prices" data-i18n="sidebar_prices">Прайс-лист</a>
+            <a href="#portfolio" data-i18n="sidebar_portfolio">Наши работы</a>
+            <a href="#reviews" data-i18n="sidebar_reviews">Отзывы</a>
+            <a href="#contacts" data-i18n="sidebar_contacts">Контакты</a>
+        </nav>
+        <div class="pc-actions">
+            <!-- Переключатель языка для ПК -->
+            <button type="button" class="lang-btn-toggle" onclick="toggleLanguage()">
+                <span class="lang-badge" id="current-lang-badge">KY</span>
+                <span id="next-lang-text">Русский</span>
+            </button>
+            <a href="#zayavka" class="pc-cta-btn" data-i18n="nav_application">Заявка</a>
+        </div>
+    </div>
+</header>
+
+<style>
+    /* Стили для ПК шапки */
+    .pc-header {
+        display: none;
+        background-color: #000000;
+        border-bottom: 2px solid #FBBF24;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        padding: 12px 0;
+    }
+    @media (min-width: 993px) {
+        .pc-header { display: block; }
+    }
+    .pc-header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .pc-logo {
+        font-size: 22px;
+        font-weight: 900;
+        color: #FFFFFF;
+        text-decoration: none;
+        letter-spacing: 1px;
+    }
+    .pc-logo span { color: #FBBF24; }
+    .pc-nav-links {
+        display: flex;
+        gap: 25px;
+    }
+    .pc-nav-links a {
+        color: #FFFFFF;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: color 0.2s ease;
+    }
+    .pc-nav-links a:hover { color: #FBBF24; }
+    .pc-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .pc-cta-btn {
+        background: #FBBF24;
+        color: #000000;
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-weight: 800;
+        text-decoration: none;
+        font-size: 13px;
+        text-transform: uppercase;
+        transition: all 0.2s ease;
+    }
+    .pc-cta-btn:hover {
+        background: #FFFFFF;
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    }
+</style>
+
+<!-- ========================================== -->
+<!-- 2. НИЖНЯЯ НАВИГАЦИОННАЯ ПАНЕЛЬ (МОБИЛЬНАЯ) -->
+<!-- ========================================== -->
+<nav class="bottom-nav">
+    <!-- Кнопка 1: Главная -->
+    <a href="#hero" class="nav-item active" onclick="setActiveNav(this)">
+        <svg viewBox="0 0 24 24">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span data-i18n="nav_home">Башкы бет</span>
+    </a>
+
+    <!-- Кнопка 2: Услуги -->
+    <a href="#services" class="nav-item" onclick="setActiveNav(this)">
+        <svg viewBox="0 0 24 24">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+        </svg>
+        <span data-i18n="nav_services">Кызматтар</span>
+    </a>
+
+    <!-- ЦЕНТРАЛЬНЫЙ ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКА (1 КЛИК) -->
+    <button type="button" class="lang-btn-toggle" onclick="toggleLanguage()" aria-label="Переключить язык">
+        <span class="lang-badge" id="mobile-lang-badge">KY</span>
+    </button>
+
+    <!-- Кнопка 4: Заявка -->
+    <a href="#zayavka" class="nav-item" onclick="setActiveNav(this)">
+        <svg viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+        <span data-i18n="nav_application">Арыз</span>
+    </a>
+
+    <!-- Кнопка 5: Бургер-меню -->
+    <button type="button" class="nav-item" id="burger-menu-btn" onclick="openMenu()">
+        <svg viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span data-i18n="nav_menu">Меню</span>
+    </button>
+</nav>
+
+<!-- ========================================== -->
+<!-- 3. ВСПЛЫВАЮЩЕЕ БОКОВОЕ БУРГЕР-МЕНЮ          -->
+<!-- ========================================== -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+
+<div class="sidebar-menu" id="sidebarMenu">
+    <div class="sidebar-header">
+        <span class="sidebar-title" data-i18n="sidebar_navigation">Навигация</span>
+        <button type="button" class="close-btn" onclick="closeMenu()" aria-label="Закрыть">&times;</button>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="#about" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <span data-i18n="sidebar_about">Компания жөнүндө</span>
+        </a>
+        <a href="#prices" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <span data-i18n="sidebar_prices">Баалар</span>
+        </a>
+        <a href="#portfolio" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <span data-i18n="sidebar_portfolio">Биздин иштер</span>
+        </a>
+        <a href="#reviews" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <span data-i18n="sidebar_reviews">Пикирлер</span>
+        </a>
+        <a href="#faq" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span data-i18n="sidebar_faq">Көп берилүүчү суроолор</span>
+        </a>
+        <a href="#contacts" class="sidebar-link" onclick="closeMenu()">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            <span data-i18n="sidebar_contacts">Байланыштар</span>
+        </a>
+    </nav>
+</div>
+
+<!-- ========================================== -->
+<!-- 4. ЕДИНЫЙ СКРИПТ УПРАВЛЕНИЯ НАВИГАЦИЕЙ И ЯЗЫКОМ -->
+<!-- ========================================== -->
+<script>
+window.siteTranslations = window.siteTranslations || {};
+window.siteTranslations.ky = window.siteTranslations.ky || {};
+window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+/* База переводов */
+Object.assign(window.siteTranslations.ky, {
+    nav_home: "Башкы бет",
+    nav_services: "Кызматтар",
+    nav_application: "Арыз",
+    nav_menu: "Меню",
+    sidebar_navigation: "Навигация",
+    sidebar_about: "Компания жөнүндө",
+    sidebar_prices: "Баалар",
+    sidebar_portfolio: "Биздин иштер",
+    sidebar_reviews: "Пикирлер",
+    sidebar_faq: "Көп берилүүчү суроолор",
+    sidebar_contacts: "Байланыштар"
+});
+
+Object.assign(window.siteTranslations.ru, {
+    nav_home: "Главная",
+    nav_services: "Услуги",
+    nav_application: "Заявка",
+    nav_menu: "Меню",
+    sidebar_navigation: "Навигация",
+    sidebar_about: "О компании",
+    sidebar_prices: "Прайс-лист",
+    sidebar_portfolio: "Наши работы",
+    sidebar_reviews: "Отзывы",
+    sidebar_faq: "Частые вопросы",
+    sidebar_contacts: "Контакты"
+});
+
+/* Переключение языков одной кнопкой */
+function toggleLanguage() {
+    const currentLang = document.documentElement.lang === "ru" ? "ru" : "ky";
+    const nextLang = currentLang === "ky" ? "ru" : "ky";
+    setLanguage(nextLang);
+}
+
+function setLanguage(language) {
+    if (!window.siteTranslations[language]) return;
+
+    /* Обновляем текст всех блоков с атрибутом data-i18n */
+    document.querySelectorAll("[data-i18n]").forEach(function(el) {
+        const key = el.getAttribute("data-i18n");
+        const translation = window.siteTranslations[language][key];
+        if (translation !== undefined) {
+            el.textContent = translation;
+        }
+    });
+
+    /* Обновляем вид кнопки переключения языка */
+    const mobileBadge = document.getElementById("mobile-lang-badge");
+    const pcBadge = document.getElementById("current-lang-badge");
+    const pcNextText = document.getElementById("next-lang-text");
+
+    if (mobileBadge) mobileBadge.textContent = language.toUpperCase();
+    if (pcBadge) pcBadge.textContent = language.toUpperCase();
+    if (pcNextText) pcNextText.textContent = language === "ky" ? "Русский" : "Кыргызча";
+
+    document.documentElement.lang = language;
+
+    try {
+        localStorage.setItem("siteLanguage", language);
+    } catch (e) {}
+}
+
+/* Активная кнопка в нижнем меню */
+function setActiveNav(element) {
+    document.querySelectorAll('.bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
+    element.classList.add('active');
+}
+
+/* Открытие и закрытие меню */
+function openMenu() {
+    document.getElementById("sidebarMenu").classList.add("active");
+    document.getElementById("menuOverlay").classList.add("active");
+    document.body.style.overflow = "hidden";
+}
+
+function closeMenu() {
+    document.getElementById("sidebarMenu").classList.remove("active");
+    document.getElementById("menuOverlay").classList.remove("active");
+    document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") closeMenu();
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    let savedLanguage = "ky";
+    try {
+        savedLanguage = localStorage.setItem("siteLanguage") || "ky";
+    } catch (e) {
+        savedLanguage = "ky";
+    }
+    setLanguage(savedLanguage);
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    <div class="container">
+<!-- ========================================== -->
+<!-- РАСШИРЕННАЯ СЕКЦИЯ: О КОМПАНИИ            -->
+<!-- ========================================== -->
+<section id="about" class="about-section">
+    <div class="about-container">
+        
+        <!-- 1. Главный заголовок и позиционирование -->
+        <div class="about-header">
+            <span class="about-badge" data-i18n="about_badge">Профессиональный сервис мастеров</span>
+            <h2 class="about-title" data-i18n="about_title">Надежный партнер в ремонте и обслуживании</h2>
+            <p class="about-subtitle" data-i18n="about_subtitle">
+                Talas_profi — это организованная служба мастеров. Мы объединили лучших квалифицированных специалистов Таласа и Бишкека, чтобы вы получали гарантированное качество без лишних затрат времени и нервов.
+            </p>
+        </div>
+
+        <!-- 2. Сетка ключевых преимуществ (6 карточек) -->
+        <div class="about-grid">
+            
+            <div class="about-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3 data-i18n="about_f1_title">Официальная гарантия</h3>
+                <p data-i18n="about_f1_desc">Несем полную материальную ответственность за выполненную работу. В случае неисправности мастер выезжает и устраняет ее бесплатно.</p>
+            </div>
+
+            <div class="about-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <h3 data-i18n="about_f2_title">Фиксированная смета</h3>
+                <p data-i18n="about_f2_desc">Стоимость озвучивается и утверждается до начала работ по прайс-листу. Никаких скрытых платежей, надбавок или «непредвиденных» расходов.</p>
+            </div>
+
+            <div class="about-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h3 data-i18n="about_f3_title">Выезд в день обращения</h3>
+                <p data-i18n="about_f3_desc">Мастер выезжает на объект от 30 минут со всеми необходимыми профессиональными инструментами и измерительными приборами.</p>
+            </div>
+
+            <div class="about-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+                </div>
+                <h3 data-i18n="about_f4_title">Проверенные специалисты</h3>
+                <p data-i18n="about_f4_desc">Все мастера проходят строгий отбор, подтверждение квалификации и проверку службы безопасности. У нас работают только профи.</p>
+            </div>
+
+            <div class="about-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+                </div>
+                <h3 data-i18n="about_f5_title">Помощь с закупкой</h3>
+                <p data-i18n="about_f5_desc">Подбираем качественные материалы и комплектующие, помогаем купить по лучшим ценам с доставкой прямо на ваш объект.</p>
+            </div>
+
+            <div class="about-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <h3 data-i18n="about_f6_title">Широкий спектр услуг</h3>
+                <p data-i18n="about_f6_desc">От электрики, сантехники и кондиционирования до клининга и видеонаблюдения — решаем любые задачи под ключ.</p>
+            </div>
+
+        </div>
+
+        <!-- 3. Пошаговый процесс работы -->
+        <div class="about-process">
+            <h3 class="process-title" data-i18n="about_process_title">Как мы работаем</h3>
+            <div class="process-steps">
+                <div class="step-item">
+                    <div class="step-num">01</div>
+                    <h4 data-i18n="about_step1_title">Заявка</h4>
+                    <p data-i18n="about_step1_desc">Оставляете заявку на сайте или в WhatsApp. Описываете задачу.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">02</div>
+                    <h4 data-i18n="about_step2_title">Расчет и выезд</h4>
+                    <p data-i18n="about_step2_desc">Согласовываем время выезда и предварительную смету.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">03</div>
+                    <h4 data-i18n="about_step3_title">Выполнение</h4>
+                    <p data-i18n="about_step3_desc">Мастер приезжает, выполняет работу строго по стандартам.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">04</div>
+                    <h4 data-i18n="about_step4_title">Сдача и гарантия</h4>
+                    <p data-i18n="about_step4_desc">Проверяете работу, оплачиваете удобным способом, получаете гарантию.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Цифры и ключевая статистика -->
+        <div class="about-stats">
+            <div class="stat-item">
+                <span class="stat-number">2</span>
+                <span class="stat-label" data-i18n="about_stat_cities">Региона: Талас и Бишкек</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label" data-i18n="about_stat_guarantee">Контроль качества</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label" data-i18n="about_stat_support">Прием заявок без выходных</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">0 сом</span>
+                <span class="stat-label" data-i18n="about_stat_consult">Бесплатная консультация</span>
+            </div>
+        </div>
+
+        <!-- 5. Блок призыва к действию (CTA) -->
+        <div class="about-cta">
+            <div class="about-cta-content">
+                <h3 data-i18n="about_cta_head">Есть вопрос или нужна консультация?</h3>
+                <p data-i18n="about_cta_sub">Свяжитесь с нами прямо сейчас — рассчитаем примерную стоимость и подберем лучшего мастера под вашу задачу.</p>
+            </div>
+            <a href="#zayavka" class="about-cta-btn" data-i18n="about_cta_btn">Оставить заявку</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ========================================== -->
+<!-- СТИЛИ ДЛЯ РАСШИРЕННОГО БЛОКА "О КОМПАНИИ"    -->
+<!-- ========================================== -->
+<style>
+    .about-section {
+        background-color: #000000;
+        color: #FFFFFF;
+        padding: 70px 20px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .about-header {
+        text-align: center;
+        max-width: 850px;
+        margin: 0 auto 55px auto;
+    }
+
+    .about-badge {
+        display: inline-block;
+        background-color: rgba(251, 191, 36, 0.12);
+        color: #FBBF24;
+        border: 1px solid #FBBF24;
+        padding: 6px 18px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 15px;
+    }
+
+    .about-title {
+        font-size: 34px;
+        font-weight: 900;
+        color: #FFFFFF;
+        margin: 0 0 20px 0;
+        line-height: 1.25;
+    }
+
+    .about-subtitle {
+        font-size: 16px;
+        line-height: 1.65;
+        color: #BBBBBB;
+        margin: 0;
+    }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin-bottom: 60px;
+    }
+
+    .about-card {
+        background-color: #0A0A0A;
+        border: 1px solid #222222;
+        border-radius: 12px;
+        padding: 30px 25px;
+        transition: all 0.3s ease;
+    }
+
+    .about-card:hover {
+        border-color: #FBBF24;
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(251, 191, 36, 0.12);
+    }
+
+    .card-icon {
+        width: 48px;
+        height: 48px;
+        background-color: #FBBF24;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .card-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke: #000000;
+        stroke-width: 2.2;
+        fill: none;
+    }
+
+    .about-card h3 {
+        font-size: 19px;
+        font-weight: 800;
+        color: #FFFFFF;
+        margin: 0 0 10px 0;
+    }
+
+    .about-card p {
+        font-size: 14px;
+        line-height: 1.55;
+        color: #999999;
+        margin: 0;
+    }
+
+    /* Секция процесса работы */
+    .about-process {
+        background-color: #0D0D0D;
+        border: 1px solid #222222;
+        border-radius: 16px;
+        padding: 40px 30px;
+        margin-bottom: 60px;
+    }
+
+    .process-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 900;
+        color: #FFFFFF;
+        margin: 0 0 35px 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .process-steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 25px;
+    }
+
+    .step-item {
+        position: relative;
+    }
+
+    .step-num {
+        font-size: 28px;
+        font-weight: 900;
+        color: #FBBF24;
+        margin-bottom: 10px;
+        font-family: monospace;
+    }
+
+    .step-item h4 {
+        font-size: 16px;
+        font-weight: 800;
+        color: #FFFFFF;
+        margin: 0 0 8px 0;
+    }
+
+    .step-item p {
+        font-size: 13px;
+        color: #888888;
+        line-height: 1.45;
+        margin: 0;
+    }
+
+    /* Статистика */
+    .about-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        background-color: #111111;
+        border-top: 3px solid #FBBF24;
+        padding: 35px 25px;
+        border-radius: 12px;
+        margin-bottom: 60px;
+        text-align: center;
+    }
+
+    .stat-number {
+        display: block;
+        font-size: 38px;
+        font-weight: 900;
+        color: #FBBF24;
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+
+    .stat-label {
+        font-size: 13px;
+        color: #CCCCCC;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Блок CTA */
+    .about-cta {
+        background: linear-gradient(135deg, #181818 0%, #050505 100%);
+        border: 1px solid #333333;
+        border-radius: 16px;
+        padding: 35px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 25px;
+    }
+
+    .about-cta-content {
+        max-width: 650px;
+    }
+
+    .about-cta-content h3 {
+        font-size: 22px;
+        font-weight: 900;
+        color: #FFFFFF;
+        margin: 0 0 8px 0;
+    }
+
+    .about-cta-content p {
+        font-size: 14px;
+        color: #AAAAAA;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .about-cta-btn {
+        background-color: #FBBF24;
+        color: #000000;
+        padding: 14px 32px;
+        border-radius: 30px;
+        font-weight: 900;
+        text-decoration: none;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .about-cta-btn:hover {
+        background-color: #FFFFFF;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.35);
+    }
+
+    /* Адаптивность для мобильных */
+    @media (max-width: 768px) {
+        .about-section { padding: 45px 15px; }
+        .about-title { font-size: 26px; }
+        .about-subtitle { font-size: 14px; }
+        .about-grid { grid-template-columns: 1fr; }
+        .about-process { padding: 25px 20px; }
+        .process-steps { grid-template-columns: 1fr; gap: 20px; }
+        .about-stats { grid-template-columns: 1fr 1fr; gap: 25px; }
+        .about-cta { flex-direction: column; text-align: center; padding: 25px 20px; }
+        .about-cta-btn { width: 100%; text-align: center; box-sizing: border-box; }
+    }
+</style>
+
+<!-- ========================================== -->
+<!-- ОБНОВЛЕНИЕ БАЗЫ ПЕРЕВОДОВ (I18N)           -->
+<!-- ========================================== -->
+<script>
+window.siteTranslations = window.siteTranslations || {};
+window.siteTranslations.ky = window.siteTranslations.ky || {};
+window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+/* Кыргызча котормолор */
+Object.assign(window.siteTranslations.ky, {
+    about_badge: "Кесипкөй усталар кызматы",
+    about_title: "Оңдоо жана тейлөөдөгү ишенимдүү өнөктөшүңүз",
+    about_subtitle: "Talas_profi — бул уюшулган усталар кызматы. Биз Талас жана Бишкек шаарларынын эң мыкты адистерин бириктирдик, сиз убактыңызды жана нервиңизди коротпостон кепилденген сапатка ээ болушуңуз үчүн.",
+    about_f1_title: "Расмий кепилдик",
+    about_f1_desc: "Аткарылган жумуш үчүн толук материалдык жоопкерчиликти алабыз. Мүчүлүштүк болсо, уста акысыз келип оңдоп берет.",
+    about_f2_title: "Убадаланган баа",
+    about_f2_desc: "Иш башталаардан мурда баасы прайс-лист боюнча макулдашылат. Жашыруун төлөмдөр же күтүлбөгөн чыгымдар болбойт.",
+    about_f3_title: "Чакыруу күнү баруу",
+    about_f3_desc: "Уста 30 мүнөттөн баштап бардык керектүү профессионалдык шаймандары менен сиздин дарегиңизге жөнөп кетет.",
+    about_f4_title: "Текшерилген адистер",
+    about_f4_desc: "Бардык усталар катуу тандоодон жана квалификациялык текшерүүдөн өтүшөт. Бизде өз ишин билген гана профессионалдар иштейт.",
+    about_f5_title: "Материалдарды алууга жардам",
+    about_f5_desc: "Сапаттуу материалдарды тандап, эңңңңң жакшы баада сатып алууга жана дарегиңизге жеткирүүгө жардам беребиз.",
+    about_f6_title: "Кызматтардын кенен түрү",
+    about_f6_desc: "Электрика, сантехника жана кондиционерлерден баштап, клининг жана видеокөзөмөлгө чейин — каалаган маселени чечебиз.",
+    about_process_title: "Биз кантип иштейбиз",
+    about_step1_title: "Арыз калтыруу",
+    about_step1_desc: "Сайттан же WhatsApp аркылуу кайрыласыз. Тапшырманы сүрөттөп бересиз.",
+    about_step2_title: "Эсептөө жана баруу",
+    about_step2_desc: "Устанын келүү убактысын жана болжолдуу бааны макулдашабыз.",
+    about_step3_title: "Ишти аткаруу",
+    about_step3_desc: "Уста келип, бардык стандарттарга ылайык ишти сапаттуу аткарат.",
+    about_step4_title: "Кабыл алуу жана кепилдик",
+    about_step4_desc: "Ишти текшерип, сизге ңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңңВот максимально расширенная, солидная и подробная версия блока **«О компании»**, сделанная в формате крупного промо-раздела. 
+
+Здесь учтены все вопросы клиента: от схемы работы и гарантий до городов присутствия и видов услуг. Дизайн выполнен в вашем стиле (**Профессиональный Индустриальный**: глубокий чёрный `#000000`, золотисто-жёлтый `#FBBF24`, чистый белый `#FFFFFF`). Полностью интегрирован с вашей системой переключения языков (`data-i18n`).
+
+```html
+<!-- ========================================== -->
+<!-- СЕКЦИЯ: О КОМПАНИИ (МАКСИМАЛЬНАЯ ВЕРСИЯ)   -->
+<!-- ========================================== -->
+<section id="about" class="about-mega-section">
+    <div class="about-container">
+        
+        <!-- Главный заголовок -->
+        <div class="about-top-header">
+            <span class="about-tag" data-i18n="about_tag">Единый сервис мастеров</span>
+            <h2 class="about-main-title" data-i18n="about_m_title">Надежная служба профильных услуг в Таласе и Бишкеке</h2>
+            <p class="about-lead-text" data-i18n="about_lead">
+                <strong>Talas_profi</strong> — это единая сервисная служба и диспетчерский центр. Мы объединили лучших проверенных мастеров по электрике, сантехнике, ремонту, клинингу и монтажным работам, чтобы вы могли решить любую задачу одним звонком без лишних рисков и переплат.
+            </p>
+        </div>
+
+        <!-- Большой блок с цифрами и доверием -->
+        <div class="about-metrics-bar">
+            <div class="metric-box">
+                <span class="metric-value">100%</span>
+                <span class="metric-label" data-i18n="m_guarantee">Гарантия на работу</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-box">
+                <span class="metric-value">2</span>
+                <span class="metric-label" data-i18n="m_cities">Города: Талас и Бишкек</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-box">
+                <span class="metric-value">24/7</span>
+                <span class="metric-label" data-i18n="m_support">Прием заявок без выходных</span>
+            </div>
+            <div class="metric-divider"></div>
+            <div class="metric-box">
+                <span class="metric-value">0 сом</span>
+                <span class="metric-label" data-i18n="m_consult">Бесплатная консультация</span>
+            </div>
+        </div>
+
+        <!-- Раздел: Ответы на главные опасения клиентов (6 ключевых преимуществ) -->
+        <div class="about-section-subtitle">
+            <h3 data-i18n="about_why_us_head">Почему клиенты выбирают Talas_profi?</h3>
+        </div>
+
+        <div class="about-features-grid">
+            
+            <!-- Преимущество 1 -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <div class="feature-content">
+                    <h4 data-i18n="f1_title">Проверенные специалисты</h4>
+                    <p data-i18n="f1_desc">Каждый мастер проходит строгий отбор, квалификационный тест и проверку навыков. У нас работают только опытные профессионалы со своим инструментом.</p>
+                </div>
+            </div>
+
+            <!-- Преимущество 2 -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+                <div class="feature-content">
+                    <h4 data-i18n="f2_title">Честные и точные цены</h4>
+                    <p data-i18n="f2_desc">Фиксированный прайс-лист. Мастер озвучивает полную смету до начала выполнения работ. Никаких скрытых комиссий и сюрпризов в конце.</p>
+                </div>
+            </div>
+
+            <!-- Преимущество 3 -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div class="feature-content">
+                    <h4 data-i18n="f3_title">Быстрый выезд на объект</h4>
+                    <p data-i18n="f3_desc">Оперативно отправляем свободного специалиста. Возможен выезд в день обращения в любой район Таласа или Бишкека.</p>
+                </div>
+            </div>
+
+            <!-- Преимущество 4 -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                </div>
+                <div class="feature-content">
+                    <h4 data-i18n="f4_title">Профессиональное оборудование</h4>
+                    <p data-i18n="f4_desc">Наши мастера приезжают полностью оснащенными современным профессиональным электроинструментом и измерительными приборами.</p>
+                </div>
+            </div>
+
+            <!-- Преимущество 5 -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                </div>
+                <div class="feature-content">
+                    <h4 data-i18n="f5_title">Гарантия на работы</h4>
+                    <p data-i18n="f5_desc">Мы отвечаем за результат. Если после завершения возникнут вопросы по качеству, мы оперативно устраним их за свой счет.</p>
+                </div>
+            </div>
+
+            <!-- Преимущество 6 -->
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </div>
+                <div class="feature-content">
+                    <h4 data-i18n="f6_title">Широкий спектр услуг</h4>
+                    <p data-i18n="f6_desc">Электромонтаж, кондиционирование, видеонаблюдение, сантехника, кирпичная кладка, поклейка обоев и профессиональный клининг.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Схема работы (Как мы работаем - пошагово) -->
+        <div class="about-steps-block">
+            <h3 class="steps-title" data-i18n="steps_head">Как заказать мастера за 4 простых шага?</h3>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-num">01</div>
+                    <h5 data-i18n="step1_t">Заявка</h5>
+                    <p data-i18n="step1_d">Оставляете заявку на сайте или звоните нам.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">02</div>
+                    <h5 data-i18n="step2_t">Согласование</h5>
+                    <p data-i18n="step2_d">Уточняем детали, объем работ и предварительную стоимость.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">03</div>
+                    <h5 data-i18n="step3_t">Выезд и работа</h5>
+                    <p data-i18n="step3_d">Мастер приезжает в назначенное время и делает работу.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">04</div>
+                    <h5 data-i18n="step4_t">Оплата</h5>
+                    <p data-i18n="step4_d">Вы проверяете качество и оплачиваете готовый результат.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Финальная баннер-акция / Вызов к действию -->
+        <div class="about-action-banner">
+            <div class="action-info">
+                <h3 data-i18n="banner_title">Нужен качественный ремонт или монтаж?</h3>
+                <p data-i18n="banner_desc">Оставьте заявку прямо сейчас и получите бесплатную консультацию специалиста!</p>
+            </div>
+            <a href="#zayavka" class="action-btn" data-i18n="banner_btn">Вызвать мастера</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ========================================== -->
+<!-- СТИЛИ ДЛЯ РАСШИРЕННОГО БЛОКА               -->
+<!-- ========================================== -->
+<style>
+    .about-mega-section {
+        background-color: #000000;
+        color: #FFFFFF;
+        padding: 80px 20px;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .about-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Шапка */
+    .about-top-header {
+        text-align: center;
+        max-width: 850px;
+        margin: 0 auto 50px auto;
+    }
+
+    .about-tag {
+        display: inline-block;
+        background-color: rgba(251, 191, 36, 0.15);
+        color: #FBBF24;
+        border: 1px solid #FBBF24;
+        padding: 6px 18px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    .about-main-title {
+        font-size: 36px;
+        font-weight: 900;
+        color: #FFFFFF;
+        margin: 0 0 20px 0;
+        line-height: 1.25;
+    }
+
+    .about-lead-text {
+        font-size: 17px;
+        line-height: 1.7;
+        color: #CCCCCC;
+        margin: 0;
+    }
+
+    .about-lead-text strong {
+        color: #FBBF24;
+    }
+
+    /* Плашка с показателями */
+    .about-metrics-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        background-color: #111111;
+        border: 1px solid #222222;
+        border-left: 5px solid #FBBF24;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 60px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .metric-box {
+        text-align: center;
+    }
+
+    .metric-value {
+        display: block;
+        font-size: 38px;
+        font-weight: 900;
+        color: #FBBF24;
+        line-height: 1;
+        margin-bottom: 8px;
+    }
+
+    .metric-label {
+        font-size: 14px;
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+
+    .metric-divider {
+        width: 1px;
+        height: 40px;
+        background-color: #333333;
+    }
+
+    /* Подзаголовок карточек */
+    .about-section-subtitle {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .about-section-subtitle h3 {
+        font-size: 26px;
+        font-weight: 800;
+        color: #FFFFFF;
+    }
+
+    /* Сетка карточек преимуществ */
+    .about-features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+        margin-bottom: 70px;
+    }
+
+    .feature-card {
+        background-color: #111111;
+        border: 1px solid #222222;
+        border-radius: 12px;
+        padding: 28px;
+        display: flex;
+        gap: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+        border-color: #FBBF24;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(251, 191, 36, 0.12);
+    }
+
+    .feature-icon-wrapper {
+        width: 52px;
+        height: 52px;
+        background-color: #FBBF24;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .feature-icon-wrapper svg {
+        width: 28px;
+        height: 28px;
+        stroke: #000000;
+        stroke-width: 2.2;
+        fill: none;
+    }
+
+    .feature-content h4 {
+        font-size: 18px;
+        font-weight: 800;
+        color: #FFFFFF;
+        margin: 0 0 10px 0;
+    }
+
+    .feature-content p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #A0A0A0;
+        margin: 0;
+    }
+
+    /* Блок шагов */
+    .about-steps-block {
+        background-color: #0A0A0A;
+        border: 1px solid #1F1F1F;
+        border-radius: 16px;
+        padding: 40px;
+        margin-bottom: 60px;
+    }
+
+    .steps-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 800;
+        color: #FFFFFF;
+        margin: 0 0 40px 0;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 25px;
+    }
+
+    .step-item {
+        position: relative;
+    }
+
+    .step-num {
+        font-size: 32px;
+        font-weight: 900;
+        color: #FBBF24;
+        opacity: 0.8;
+        margin-bottom: 10px;
+    }
+
+    .step-item h5 {
+        font-size: 16px;
+        font-weight: 800;
+        color: #FFFFFF;
+        margin: 0 0 8px 0;
+    }
+
+    .step-item p {
+        font-size: 13px;
+        color: #888888;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* Баннер призыва */
+    .about-action-banner {
+        background: linear-gradient(135deg, #1F1B0E 0%, #000000 100%);
+        border: 2px solid #FBBF24;
+        border-radius: 16px;
+        padding: 35px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 25px;
+        flex-wrap: wrap;
+    }
+
+    .action-info h3 {
+        font-size: 22px;
+        font-weight: 900;
+        color: #FFFFFF;
+        margin: 0 0 8px 0;
+    }
+
+    .action-info p {
+        font-size: 15px;
+        color: #DDDDDD;
+        margin: 0;
+    }
+
+    .action-btn {
+        background-color: #FBBF24;
+        color: #000000;
+        padding: 14px 32px;
+        border-radius: 30px;
+        font-weight: 900;
+        text-decoration: none;
+        font-size: 15px;
+        text-transform: uppercase;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .action-btn:hover {
+        background-color: #FFFFFF;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+
+    /* Адаптивность для мобильных */
+    @media (max-width: 768px) {
+        .about-mega-section { padding: 50px 15px; }
+        .about-main-title { font-size: 26px; }
+        .about-lead-text { font-size: 15px; }
+        .metric-divider { display: none; }
+        .about-metrics-bar { flex-direction: column; text-align: center; }
+        .feature-card { flex-direction: column; }
+        .about-action-banner { flex-direction: column; text-align: center; padding: 25px; }
+        .action-btn { width: 100%; text-align: center; box-sizing: border-box; }
+        .about-steps-block { padding: 25px; }
+    }
+</style>
+
+<!-- ========================================== -->
+<!-- ОБНОВЛЕНИЕ БАЗЫ ПЕРЕВОДОВ (I18N)           -->
+<!-- ========================================== -->
+<script>
+window.siteTranslations = window.siteTranslations || {};
+window.siteTranslations.ky = window.siteTranslations.ky || {};
+window.siteTranslations.ru = window.siteTranslations.ru || {};
+
+/* Кыргызча котормолор */
+Object.assign(window.siteTranslations.ky, {
+    about_tag: "Усталардын бирдиктүү кызматы",
+    about_m_title: "Талас жана Бишкек шаарларындагы ишенимдүү усталар кызматы",
+    about_lead: "Talas_profi — бул бирдиктүү тейлөө кызматы жана диспетчердик борбор. Биз электричество, сантехника, оңдоо, клининг жана монтаждоо боюнча эң мыкты усталарды бириктирдик. Бир чалуу менен бардык маселени чече аласыз.",
+    m_guarantee: "Иштерге кепилдик",
+    m_cities: "Талас жана Бишкек",
+    m_support: "Дем алышсыз кабыл алуу",
+    m_consult: "Акысыз кеңеш берүү",
+    about_why_us_head: "Эмне үчүн кардарлар Talas_profi кызматын тандашат?",
+    f1_title: "Текшерилген адистер",
+    f1_desc: "Ар бир уста катуу тандоодон жана чеберчилик сыноосунан өтөт. Бизде оз шаймандары бар тажрыйбалуу адистер гана иштейт.",
+    f2_title: "Калыс жана так баалар",
+    f2_desc: "Бекитилген прайс-лист. Уста жумуш башталганга чейин толук бааны айтат. Жашыруун кошумча төлөмдөр жок.",
+    f3_title: "Тез арада баруу",
+    f3_desc: "Бош устаны тез арада жөнөтөбүз. Талас же Бишкек шаарынын каалаган районуна чакырган күнү эле баруу мүмкүн.",
+    f4_title: "Кесиптик шаймандар",
+    f4_desc: "Биздин усталар заманбап электр шаймандары жана өлчөөчү аспаптар менен толук камсыздалган.",
+    f5_title: "Сапат кепилдиги",
+    f5_desc: "Биз аткарылган жумуштун жыйынтыгына жооп беребиз. Кандайдыр бир суроолор жаралса, өз эсебибизден оңдоп беребиз.",
+    f6_title: "Кызматтардын кеңири түрү",
+    f6_desc: "Электр монтаж, кондиционер, видеокөзөмөл, сантехника, кыш кынауу, обой чаптоо жана клининг кызматтары.",
+    steps_head: "Устаны кантип чакыруу керек? (4 жөнөкөй кадам)",
+    step1_t: "Арыз калтыруу",
+    step1_d: "Сайттан арыз калтырыңыз же бизге чалыңыз.",
+    step2_t: "Макулдашуу",
+    step2_d: "Жумуштун көлөмүн жана болжолдуу баасын сүйлөшөбүз.",
+    step3_t: "Аткаруу",
+    step3_d: "Уста макулдашылган убакта келип жумушту аткарат.",
+    step4_t: "Төлөө",
+    step4_d: "Сиз сапатын текшерип, андан соң төлөйсүз.",
+    banner_title: "Сапаттуу оңдоо же монтаж керекпи?",
+    banner_desc: "Азыр арыз калтырыңыз жана адистен акысыз кеңеш алыңыз!",
+    banner_btn: "Устаны чакыруу"
+});
+
+/* Русские переводы */
+Object.assign(window.siteTranslations.ru, {
+    about_tag: "Единый сервис мастеров",
+    about_m_title: "Надежная служба профильных услуг в Таласе и Бишкеке",
+    about_lead: "Talas_profi — это единая сервисная служба и диспетчерский центр. Мы объединили лучших проверенных мастеров по электрике, сантехнике, ремонту, клинингу и монтажным работам, чтобы вы могли решить любую задачу одним звонком без лишних рисков и переплат.",
+    m_guarantee: "Гарантия на работу",
+    m_cities: "Талас и Бишкек",
+    m_support: "Прием заявок без выходных",
+    m_consult: "Бесплатная консультация",
+    about_why_us_head: "Почему клиенты выбирают Talas_profi?",
+    f1_title: "Проверенные специалисты",
+    f1_desc: "Каждый мастер проходит строгий отбор, квалификационный тест и проверку навыков. У нас работают только опытные профессионалы со своим инструментом.",
+    f2_title: "Честные и точные цены",
+    f2_desc: "Фиксированный прайс-лист. Мастер озвучивает полную смету до начала выполнения работ. Никаких скрытых комиссий и сюрпризов в конце.",
+    f3_title: "Быстрый выезд на объект",
+    f3_desc: "Оперативно отправляем свободного специалиста. Возможен выезд в день обращения в любой район Таласа или Бишкека.",
+    f4_title: "Профессиональное оборудование",
+    f4_desc: "Наши мастера приезжают полностью оснащенными современным профессиональным электроинструментом и измерительными приборами.",
+    f5_title: "Гарантия на работы",
+    f5_desc: "Мы отвечаем за результат. Если после завершения возникнут вопросы по качеству, мы оперативно устраним их за свой счет.",
+    f6_title: "Широкий спектр услуг",
+    f6_desc: "Электромонтаж, кондиционирование, видеонаблюдение, сантехника, кирпичная кладка, поклейка обоев и профессиональный клининг.",
+    steps_head: "Как заказать мастера за 4 простых шага?",
+    step1_t: "Заявка",
+    step1_d: "Оставляете заявку на сайте или звоните нам.",
+    step2_t: "Согласование",
+    step2_d: "Уточняем детали, объем работ и предварительную стоимость.",
+    step3_t: "Выезд и работа",
+    step3_d: "Мастер приезжает в назначенное время и делает работу.",
+    step4_t: "Оплата",
+    step4_d: "Вы проверяете качество и оплачиваете готовый результат.",
+    banner_title: "Нужен качественный ремонт или монтаж?",
+    banner_desc: "Оставьте заявку прямо сейчас и получите бесплатную консультацию специалиста!",
+    banner_btn: "Вызвать мастера"
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         <!-- УСЛУГИ -->
         <section id="services">
             <h2>Услуги</h2>
