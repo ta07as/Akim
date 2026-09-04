@@ -2330,25 +2330,23 @@ Object.assign(window.siteTranslations.ru, {
 
 
 
-
-
 <!-- ================================================================= -->
-<!-- БЛОК "ФУТЕР" — PRO INDUSTRIAL FOOTER (ТАЛАС 24/7)                -->
+<!-- БЛОК "ФУТЕР" — PRO INDUSTRIAL FOOTER (ТАЛАС 24/7)                 -->
 <!-- ================================================================= -->
 <footer id="main-footer" class="industrial-footer">
 
     <style>
-        /* ЖЕСТКАЯ ПРИВЯЗКА К НИЗУ ЭКРАНА */
+        /* ОПТИМИЗИРОВАННОЕ ПОЗИЦИОНИРОВАНИЕ И ОФОРМЛЕНИЕ */
         .industrial-footer {
-            position: sticky !important;
-            top: 100vh !important;
+            position: relative !important;
+            width: 100%;
             background-color: #000000;
             color: #FFFFFF;
-            padding: 30px 20px 30px 20px;
-            width: 100%;
+            padding: 40px 20px 25px 20px;
             border-top: 2px solid #1E1E24;
             overflow: hidden;
             box-sizing: border-box;
+            margin-top: auto; /* Позволяет футеру прижиматься книзу в flex-контейнерах */
         }
 
         #main-footer * {
@@ -2376,7 +2374,7 @@ Object.assign(window.siteTranslations.ru, {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 40px;
-            margin-bottom: 50px;
+            margin-bottom: 35px;
         }
 
         .footer-brand {
@@ -2462,7 +2460,7 @@ Object.assign(window.siteTranslations.ru, {
         .footer-bottom {
             max-width: 1050px;
             margin: 0 auto;
-            padding-top: 25px;
+            padding-top: 20px;
             border-top: 1px solid #1E1E24;
             display: flex;
             justify-content: space-between;
@@ -2571,7 +2569,6 @@ Object.assign(window.siteTranslations.ru, {
             ft_tag: "Качество. Надежность. Круглосуточно."
         });
 
-        /* Расширение базовой функции setLanguage */
         const ftSetLanguage = window.setLanguage;
         window.setLanguage = function(lang) {
             if (typeof ftSetLanguage === "function") {
@@ -2589,8 +2586,6 @@ Object.assign(window.siteTranslations.ru, {
         };
     </script>
 </footer>
-
-
 
 
 
