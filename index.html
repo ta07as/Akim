@@ -1731,33 +1731,6 @@ Object.assign(window.siteTranslations.ru, {
             text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
         }
 
-        .lang-v7 {
-            display: flex;
-            gap: 4px;
-            background: #0D0D0F;
-            padding: 4px;
-            border-radius: 8px;
-            border: 1px solid #27272A;
-        }
-
-        .lang-btn-v7 {
-            background: transparent;
-            border: none;
-            color: #A1A1AA;
-            padding: 6px 14px;
-            font-size: 13px;
-            font-weight: 800;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .lang-btn-v7.active {
-            background: #FBBF24;
-            color: #000000;
-            box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
-        }
-
         .form-v7-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1884,10 +1857,6 @@ Object.assign(window.siteTranslations.ru, {
     <div class="order-v7-card">
         <div class="order-v7-header">
             <h2 class="order-v7-title" id="v7-title-el">Оформить <span>заявку</span></h2>
-            <div class="lang-v7">
-                <button type="button" class="lang-btn-v7 active" id="v7-ru" onclick="changeLanguageV7('ru')">RU</button>
-                <button type="button" class="lang-btn-v7" id="v7-kg" onclick="changeLanguageV7('kg')">KG</button>
-            </div>
         </div>
 
         <form id="telegram-v7-form" class="form-v7-grid">
@@ -1977,14 +1946,12 @@ Object.assign(window.siteTranslations.ru, {
 
         let currentLangV7 = 'ru';
 
-        function changeLanguageV7(lang) {
+        window.updateZayavkaLang = function(lang) {
             if (!translationsV7[lang]) return;
             currentLangV7 = lang;
 
-            document.getElementById('v7-ru').classList.toggle('active', lang === 'ru');
-            document.getElementById('v7-kg').classList.toggle('active', lang === 'kg');
-
-            document.getElementById('v7-title-el').innerHTML = translationsV7[lang].title_html;
+            const titleEl = document.getElementById('v7-title-el');
+            if (titleEl) titleEl.innerHTML = translationsV7[lang].title_html;
 
             document.querySelectorAll('#zayavka [data-key]').forEach(el => {
                 const k = el.getAttribute('data-key');
@@ -1997,7 +1964,14 @@ Object.assign(window.siteTranslations.ru, {
                 const k = el.getAttribute('data-key-ph');
                 if (translationsV7[lang][k]) el.setAttribute('placeholder', translationsV7[lang][k]);
             });
-        }
+        };
+
+        // Слушаем глобальное событие смены языка от шапки/навигации
+        window.addEventListener('languageChanged', (e) => {
+            if (e.detail && e.detail.lang) {
+                window.updateZayavkaLang(e.detail.lang);
+            }
+        });
 
         document.getElementById('telegram-v7-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -2049,8 +2023,6 @@ Object.assign(window.siteTranslations.ru, {
 
 
 
-
-
     
 
 
@@ -2074,6 +2046,295 @@ Object.assign(window.siteTranslations.ru, {
 
 
     
+
+<!-- ================================================================= -->
+<!-- БЛОК "О НАС" — PRO INDUSTRIAL CARD FOCUS (ТАЛАС / БИШКЕК)          -->
+<!-- ================================================================= -->
+<section id="about-card" class="about-card-section">
+
+    <style>
+        #about-card * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .about-card-section {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 85px 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            border-bottom: 2px solid #1E1E24;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* НЕОНОВАЯ ПОЛОСА ВВЕРХУ */
+        .about-card-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #FBBF24, transparent);
+            opacity: 0.9;
+        }
+
+        .card-container {
+            max-width: 1050px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+            z-index: 2;
+        }
+
+        /* --- ПЛАВНАЯ АНИМАЦИЯ ПОЯВЛЕНИЯ --- */
+        .card-header,
+        .card-item {
+            opacity: 0;
+            transform: translateY(40px);
+            filter: blur(10px);
+            transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease,
+                        background-color 0.3s ease;
+        }
+
+        /* АКТИВАЦИЯ ПРИ СКРОЛЛЕ */
+        .about-card-section.is-card-active .card-header { 
+            opacity: 1; 
+            transform: translateY(0); 
+            filter: blur(0);
+        }
+
+        .about-card-section.is-card-active .card-item:nth-child(1) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.15s; }
+        .about-card-section.is-card-active .card-item:nth-child(2) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.25s; }
+        .about-card-section.is-card-active .card-item:nth-child(3) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.35s; }
+        .about-card-section.is-card-active .card-item:nth-child(4) { opacity: 1; transform: translateY(0); filter: blur(0); transition-delay: 0.45s; }
+
+        /* ТЕКСТ И ШРИФТЫ */
+        .card-title {
+            font-size: 32px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .card-title span {
+            color: #FBBF24;
+            text-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+        }
+
+        .card-intro {
+            font-size: 16px;
+            color: #FFFFFF;
+            line-height: 1.6;
+            max-width: 850px;
+            font-weight: 500;
+        }
+
+        /* СЕТКА КАРТОЧЕК */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card-item {
+            background: #000000;
+            border: 2px solid #1E1E24;
+            padding: 28px 22px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+        }
+
+        .about-card-section.is-card-active .card-item:hover {
+            transform: translateY(-6px);
+            border-color: #FBBF24;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.2);
+            background: #000000;
+            transition-delay: 0s;
+        }
+
+        .card-badge {
+            font-size: 26px;
+            font-weight: 900;
+            color: #FBBF24;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
+        }
+
+        .card-item h4 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #FFFFFF;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .card-item p {
+            font-size: 14px;
+            color: #FFFFFF;
+            opacity: 0.85;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        @media (max-width: 600px) {
+            .card-title { font-size: 24px; }
+            .card-intro { font-size: 14px; }
+            .about-card-section { padding: 60px 16px; }
+        }
+    </style>
+
+    <div class="card-container">
+        
+        <div class="card-header">
+            <h2 class="card-title" id="cd-title-el">Сервис <span>Talas_profi</span></h2>
+            <p class="card-intro" data-key="cd_desc">
+                Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.
+            </p>
+        </div>
+
+        <div class="card-grid">
+            
+            <div class="card-item">
+                <span class="card-badge">01</span>
+                <h4 data-key="cd_f1_t">Оперативный выезд</h4>
+                <p data-key="cd_f1_d">Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.</p>
+            </div>
+
+            <div class="card-item">
+                <span class="card-badge">02</span>
+                <h4 data-key="cd_f2_t">Проф-оснащение</h4>
+                <p data-key="cd_f2_d">Работаем собственным специализированным инструментом и профессиональным оборудованием.</p>
+            </div>
+
+            <div class="card-item">
+                <span class="card-badge">03</span>
+                <h4 data-key="cd_f3_t">Фиксированный расчет</h4>
+                <p data-key="cd_f3_d">Точная оценка стоимости до начала работ без скрытых наценок и переплат.</p>
+            </div>
+
+            <div class="card-item">
+                <span class="card-badge">04</span>
+                <h4 data-key="cd_f4_t">Контроль качества</h4>
+                <p data-key="cd_f4_d">Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- СКРИПТ ПОЯВЛЕНИЯ И ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sectionCard = document.getElementById("about-card");
+            
+            const observerCard = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        sectionCard.classList.add("is-card-active");
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            if (sectionCard) observerCard.observe(sectionCard);
+        });
+
+        const cardTranslations = {
+            ru: {
+                cd_title_html: "Сервис <span>Talas_profi</span>",
+                cd_desc: "Единая сервисная служба в Таласе и Бишкеке. Мы подбираем квалифицированных мастеров под ваши задачи, согласовываем фиксированную смету и гарантируем качество на каждом этапе.",
+                cd_f1_t: "Оперативный выезд",
+                cd_f1_d: "Мастер или профильная бригада выезжает на объект сразу после подтверждения заявки.",
+                cd_f2_t: "Проф-оснащение",
+                cd_f2_d: "Работаем собственным специализированным инструментом и профессиональным оборудованием.",
+                cd_f3_t: "Фиксированный расчет",
+                cd_f3_d: "Точная оценка стоимости до начала работ без скрытых наценок и переплат.",
+                cd_f4_t: "Контроль качества",
+                cd_f4_d: "Лично проверяем соблюдение всех стандартов и отвечаем за сдачу объекта."
+            },
+            kg: {
+                cd_title_html: "<span>Talas_profi</span> Сервиси",
+                cd_desc: "Талас жана Бишкек шаарларындагы бирдиктүү сервис кызматы. Биз сиздин тапшырмаңызга ылайык квалификациялуу адистерди тандайбыз, бекитилген бааны макулдашабыз жана ар бир этапта сапатка кепилдик беребиз.",
+                cd_f1_t: "Ыкчам баруу",
+                cd_f1_d: "Адис же атайын бригада өтүнмө ырасталгандан кийин дароо объектиге чыгат.",
+                cd_f2_t: "Кесипкөй жабдуу",
+                cd_f2_d: "Өзүбүздүн атайын шаймандар жана кесипкөй жабдуулар менен иштейбиз.",
+                cd_f3_t: "Так эсептөө",
+                cd_f3_d: "Иш башталганга чейин жашыруун кошумча төлөмсүз так бааны бекитебиз.",
+                cd_f4_t: "Сапатты көзөмөлдөө",
+                cd_f4_d: "Бардык стандарттардын сакталышын жеке өзүбүз текшерип, жыйынтыкка жооп беребиз."
+            }
+        };
+
+        window.updateAboutCardLang = function(lang) {
+            if (!cardTranslations[lang]) return;
+
+            const titleEl = document.getElementById('cd-title-el');
+            if (titleEl && cardTranslations[lang].cd_title_html) {
+                titleEl.innerHTML = cardTranslations[lang].cd_title_html;
+            }
+
+            document.querySelectorAll('#about-card [data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (cardTranslations[lang][key]) {
+                    el.textContent = cardTranslations[lang][key];
+                }
+            });
+        };
+
+        // Слушаем глобальное событие переключения языка из навигации
+        window.addEventListener('languageChanged', (e) => {
+            if (e.detail && e.detail.lang) {
+                window.updateAboutCardLang(e.detail.lang);
+            }
+        });
+    </script>
+</section>
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- ================================================================= -->
@@ -2309,700 +2570,42 @@ Object.assign(window.siteTranslations.ru, {
             }
         };
 
-        const prevLangFnCard = window.changeLanguage;
-        window.changeLanguage = function(lang) {
-            if (typeof prevLangFnCard === 'function') prevLangFnCard(lang);
+        // Главная функция обновления языка блока
+        window.updateAboutCardLang = function(lang) {
+            if (!cardTranslations[lang]) return;
 
-            if (cardTranslations[lang]) {
-                const titleEl = document.getElementById('cd-title-el');
-                if (titleEl && cardTranslations[lang].cd_title_html) {
-                    titleEl.innerHTML = cardTranslations[lang].cd_title_html;
+            const titleEl = document.getElementById('cd-title-el');
+            if (titleEl && cardTranslations[lang].cd_title_html) {
+                titleEl.innerHTML = cardTranslations[lang].cd_title_html;
+            }
+
+            document.querySelectorAll('#about-card [data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (cardTranslations[lang][key]) {
+                    el.textContent = cardTranslations[lang][key];
                 }
-
-                document.querySelectorAll('#about-card [data-key]').forEach(el => {
-                    const key = el.getAttribute('data-key');
-                    if (cardTranslations[lang][key]) {
-                        el.textContent = cardTranslations[lang][key];
-                    }
-                });
-            }
-        };
-    </script>
-</section>
-
-
-
-
-
-
-
-
-
-
-    
-    
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ================================================================= -->
-<!-- ULTIMATE FOOTER — PRO INDUSTRIAL DESIGN SYSTEM                   -->
-<!-- ================================================================= -->
-<footer id="footer" class="footer-section">
-
-    <style>
-        #footer * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .footer-section {
-            background-color: #000000;
-            background-image: radial-gradient(rgba(251, 191, 36, 0.05) 1px, transparent 0);
-            background-size: 24px 24px;
-            color: #FFFFFF;
-            padding: 80px 24px 40px 24px;
-            border-top: 3px solid #FBBF24;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .footer-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #FBBF24, transparent);
-            box-shadow: 0 0 15px #FBBF24;
-        }
-
-        .footer-container {
-            max-width: 1280px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* СЕТКА КОЛОНОК */
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1.2fr 1fr 1.3fr;
-            gap: 48px 32px;
-            align-items: start;
-        }
-
-        /* 1. БРЕНД И СТАТУС */
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .footer-logo {
-            font-size: 24px;
-            font-weight: 900;
-            color: #FFFFFF;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .footer-logo-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: #FBBF24;
-            color: #000000;
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: 900;
-            box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
-        }
-
-        .footer-logo span {
-            color: #FBBF24;
-        }
-
-        .footer-brand-desc {
-            color: #A1A1AA;
-            font-size: 14px;
-            line-height: 1.8;
-            font-weight: 400;
-            max-width: 340px;
-        }
-
-        .footer-status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(251, 191, 36, 0.05);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #FBBF24;
-            font-weight: 600;
-            width: fit-content;
-            letter-spacing: 0.5px;
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #10B981;
-            border-radius: 50%;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        /* ЗАГОЛОВКИ */
-        .footer-col-title {
-            font-size: 13px;
-            font-weight: 800;
-            color: #FBBF24;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 24px;
-            display: block;
-        }
-
-        /* СПИСКИ И ССЫЛКИ */
-        .footer-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .footer-links a {
-            color: #D4D4D8;
-            text-decoration: none;
-            font-size: 14px;
-            display: inline-block;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            font-weight: 500;
-        }
-
-        .footer-links a:hover {
-            color: #FBBF24;
-            transform: translateX(6px);
-        }
-
-        /* ЗОНА ОБСЛУЖИВАНИЯ */
-        .coverage-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .coverage-list li {
-            color: #D4D4D8;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 500;
-        }
-
-        .coverage-list li::before {
-            content: '';
-            width: 5px;
-            height: 5px;
-            background-color: #FBBF24;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        /* КОНТАКТНЫЙ БЛОК */
-        .contacts-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .contact-icon {
-            font-size: 16px;
-            color: #FBBF24;
-            background: rgba(251, 191, 36, 0.1);
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            border: 1px solid rgba(251, 191, 36, 0.2);
-            flex-shrink: 0;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .contact-label {
-            font-size: 11px;
-            color: #A1A1AA;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-weight: 700;
-        }
-
-        .contact-value {
-            color: #FFFFFF;
-            font-size: 14px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .contact-value:hover {
-            color: #FBBF24;
-        }
-
-        /* ПЕРЕКЛЮЧЕНИЕ ЯЗЫКОВ */
-        .lang-switch {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-            background: #09090B;
-            padding: 4px;
-            border-radius: 8px;
-            border: 1px solid #27272A;
-            width: fit-content;
-        }
-
-        .lang-btn {
-            background: transparent;
-            border: none;
-            color: #A1A1AA;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .lang-btn.active {
-            background: #FBBF24;
-            color: #000000;
-            box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
-        }
-
-        .lang-btn:hover:not(.active) {
-            color: #FFFFFF;
-        }
-
-        /* ПРЕИМУЩЕСТВА */
-        .footer-features {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 32px 0;
-            border-top: 1px solid #27272A;
-            border-bottom: 1px solid #27272A;
-        }
-
-        .feature-card {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: #09090B;
-            border: 1px solid #27272A;
-            padding: 18px 20px;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-        }
-
-        .feature-card:hover {
-            border-color: #FBBF24;
-            transform: translateY(-2px);
-            background: #121215;
-        }
-
-        .feature-icon {
-            font-size: 22px;
-            color: #FBBF24;
-        }
-
-        .feature-text h5 {
-            color: #FFFFFF;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .feature-text p {
-            color: #A1A1AA;
-            font-size: 12px;
-            line-height: 1.4;
-        }
-
-        /* КОПИРАЙТ */
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            font-size: 13px;
-            color: #71717A;
-        }
-
-        .footer-bottom strong {
-            color: #FBBF24;
-            font-weight: 700;
-        }
-
-        .legal-links {
-            display: flex;
-            gap: 24px;
-        }
-
-        .legal-links a {
-            color: #71717A;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .legal-links a:hover {
-            color: #FBBF24;
-        }
-
-        /* АДАПТИВНОСТЬ */
-        @media (max-width: 1024px) {
-            .footer-grid {
-                grid-template-columns: 1fr 1fr 1fr;
-            }
-            .footer-brand {
-                grid-column: span 3;
-            }
-            .footer-features {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .footer-brand {
-                grid-column: span 1;
-            }
-            .footer-features {
-                grid-template-columns: 1fr;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-    </style>
-
-    <div class="footer-container">
-        
-        <div class="footer-grid">
-            
-            <!-- БРЕНД -->
-            <div class="footer-brand">
-                <div class="footer-logo">
-                    <div class="footer-logo-icon">⚡</div>
-                    TALAS<span>_PROFI</span>
-                </div>
-                <p class="footer-brand-desc" data-key="ft_desc">
-                    Единая диспетчерская служба профессионального сервиса. Быстрый подбор проверенных мастеров и контроль качества работ.
-                </p>
-                <div class="footer-status-pill">
-                    <span class="pulse-dot"></span>
-                    <span data-key="ft_status">Диспетчер на связи 24/7</span>
-                </div>
-            </div>
-
-            <!-- НАВИГАЦИЯ -->
-            <div>
-                <span class="footer-col-title" data-key="ft_col1">Навигация</span>
-                <ul class="footer-links">
-                    <li><a href="#services" data-key="ft_l1">Все услуги</a></li>
-                    <li><a href="#about" data-key="ft_l2">О компании</a></li>
-                    <li><a href="#how-it-works" data-key="ft_l3">Схема работы</a></li>
-                    <li><a href="#reviews" data-key="ft_l4">Отзывы клиентов</a></li>
-                    <li><a href="#contacts" data-key="ft_l5">Контакты</a></li>
-                </ul>
-            </div>
-
-            <!-- УСЛУГИ -->
-            <div>
-                <span class="footer-col-title" data-key="ft_col2">Услуги</span>
-                <ul class="footer-links">
-                    <li><a href="#services" data-key="ft_s1">Электромонтаж</a></li>
-                    <li><a href="#services" data-key="ft_s2">Установка кондиционеров</a></li>
-                    <li><a href="#services" data-key="ft_s3">Видеонаблюдение</a></li>
-                    <li><a href="#services" data-key="ft_s4">Сантехника</a></li>
-                    <li><a href="#services" data-key="ft_s5">Уборка и клининг</a></li>
-                </ul>
-            </div>
-
-            <!-- ЗОНА ВЫЕЗДА -->
-            <div>
-                <span class="footer-col-title" data-key="ft_col4">География</span>
-                <ul class="coverage-list">
-                    <li data-key="ft_cov_1">г. Талас</li>
-                    <li data-key="ft_cov_2">Бакай-Ата</li>
-                    <li data-key="ft_cov_3">Кара-Буура</li>
-                    <li data-key="ft_cov_4">Манас</li>
-                    <li data-key="ft_cov_5">г. Бишкек</li>
-                </ul>
-            </div>
-
-            <!-- КОНТАКТЫ И ЯЗЫК -->
-            <div>
-                <span class="footer-col-title" data-key="ft_col3">Связь</span>
-                <div class="contacts-list">
-                    <div class="contact-item">
-                        <div class="contact-icon">📞</div>
-                        <div class="contact-info">
-                            <span class="contact-label" data-key="ft_lbl_phone">Звонок</span>
-                            <a href="tel:+996755000228" class="contact-value">+996 755 000 228</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">💬</div>
-                        <div class="contact-info">
-                            <span class="contact-label">WhatsApp</span>
-                            <a href="https://wa.me/996755000228" target="_blank" rel="noopener" class="contact-value">+996 755 000 228</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div class="contact-info">
-                            <span class="contact-label" data-key="ft_lbl_loc">Локация</span>
-                            <span class="contact-value" data-key="ft_loc_val">г. Талас / Бишкек</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="lang-switch" id="footerLangSwitch">
-                    <button type="button" class="lang-btn active" data-lang="ru" onclick="switchFooterLang('ru')">RU</button>
-                    <button type="button" class="lang-btn" data-lang="kg" onclick="switchFooterLang('kg')">KG</button>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- КАРТОЧКИ ПРЕИМУЩЕСТВ -->
-        <div class="footer-features">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <div class="feature-text">
-                    <h5 data-key="ft_f1_t">Быстрый выезд</h5>
-                    <p data-key="ft_f1_d">Оперативно направляем мастера</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛠️</div>
-                <div class="feature-text">
-                    <h5 data-key="ft_f2_t">Профи-мастера</h5>
-                    <p data-key="ft_f2_d">Проверенные специалисты</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📋</div>
-                <div class="feature-text">
-                    <h5 data-key="ft_f3_t">Фиксированный прайс</h5>
-                    <p data-key="ft_f3_d">Без скрытых переплат</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <div class="feature-text">
-                    <h5 data-key="ft_f4_t">Гарантия</h5>
-                    <p data-key="ft_f4_d">Контроль качества работ</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- КОПИРАЙТ И ЮР. ИНФО -->
-        <div class="footer-bottom">
-            <div>© 2026 <strong>TALAS_PROFI</strong>. <span data-key="ft_copy">Все права защищены. Сервис заказа мастеров.</span></div>
-            <div class="legal-links">
-                <a href="#" data-key="ft_privacy">Политика конфиденциальности</a>
-                <a href="#" data-key="ft_terms">Пользовательское соглашение</a>
-            </div>
-        </div>
-
-    </div>
-
-  <script>
-        (function() {
-            // 1. АВТОПЕРЕХОД НА ПЕРВЫЙ БЛОК ПРИ ЗАГРУЗКЕ / ПЕРЕЗАГРУЗКЕ
-            window.addEventListener('DOMContentLoaded', () => {
-                // Очищаем хэш в URL, чтобы браузер не прыгал к футеру или контактам
-                if (window.location.hash) {
-                    history.replaceState(null, null, window.location.pathname);
-                }
-
-                // Ищем первый блок (hero, главный экран или начало страницы)
-                const firstBlock = document.querySelector('header') || 
-                                   document.querySelector('#hero') || 
-                                   document.querySelector('section') || 
-                                   document.body;
-
-                // Плавно прокручиваем наверх
-                setTimeout(() => {
-                    firstBlock.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
             });
+        };
 
-            // 2. ДВУЯЗЫЧНОСТЬ (RU / KG)
-            const footerI18n = {
-                ru: {
-                    ft_desc: "Единая диспетчерская служба профессионального сервиса. Быстрый подбор проверенных мастеров и контроль качества работ.",
-                    ft_status: "Диспетчер на связи 24/7",
-                    ft_col1: "Навигация",
-                    ft_l1: "Все услуги",
-                    ft_l2: "О компании",
-                    ft_l3: "Схема работы",
-                    ft_l4: "Отзывы клиентов",
-                    ft_l5: "Контакты",
-                    ft_col2: "Услуги",
-                    ft_s1: "Электромонтаж",
-                    ft_s2: "Установка кондиционеров",
-                    ft_s3: "Видеонаблюдение",
-                    ft_s4: "Сантехника",
-                    ft_s5: "Уборка и клининг",
-                    ft_col4: "География",
-                    ft_cov_1: "г. Талас",
-                    ft_cov_2: "Бакай-Ата",
-                    ft_cov_3: "Кара-Буура",
-                    ft_cov_4: "Манас",
-                    ft_cov_5: "г. Бишкек",
-                    ft_col3: "Связь",
-                    ft_lbl_phone: "Звонок",
-                    ft_lbl_loc: "Локация",
-                    ft_loc_val: "г. Талас / Бишкек",
-                    ft_f1_t: "Быстрый выезд",
-                    ft_f1_d: "Оперативно направляем мастера",
-                    ft_f2_t: "Профи-мастера",
-                    ft_f2_d: "Проверенные специалисты",
-                    ft_f3_t: "Фиксированный прайс",
-                    ft_f3_d: "Без скрытых переплат",
-                    ft_f4_t: "Гарантия",
-                    ft_f4_d: "Контроль качества работ",
-                    ft_copy: "Все права защищены. Сервис заказа мастеров.",
-                    ft_privacy: "Политика конфиденциальности",
-                    ft_terms: "Пользовательское соглашение"
-                },
-                kg: {
-                    ft_desc: "Кесипкөй кызматтардын бирдиктүү диспетчердик кызматы. Ишенимдүү усталарды тез тандоо жана сапатты көзөмөлдөө.",
-                    ft_status: "Диспетчер байланышта 24/7",
-                    ft_col1: "Навигация",
-                    ft_l1: "Бардык кызматтар",
-                    ft_l2: "Компания жөнүндө",
-                    ft_l3: "Иштөө тартиби",
-                    ft_l4: "Кардарлардын пикири",
-                    ft_l5: "Байланыш",
-                    ft_col2: "Кызматтар",
-                    ft_s1: "Электромонтаж",
-                    ft_s2: "Кондиционер орнотуу",
-                    ft_s3: "Видеокөзөмөл",
-                    ft_s4: "Сантехника",
-                    ft_s5: "Тазалоо жана клининг",
-                    ft_col4: "География",
-                    ft_cov_1: "Талас ш.",
-                    ft_cov_2: "Бакай-Ата",
-                    ft_cov_3: "Кара-Буура",
-                    ft_cov_4: "Манас",
-                    ft_cov_5: "Бишкек ш.",
-                    ft_col3: "Байланыш",
-                    ft_lbl_phone: "Чалуу",
-                    ft_lbl_loc: "Аймак",
-                    ft_loc_val: "Талас ш. / Бишкек",
-                    ft_f1_t: "Ыкчам баруу",
-                    ft_f1_d: "Устаны дароо багыттайбыз",
-                    ft_f2_t: "Уста-адистер",
-                    ft_f2_d: "Текшерилген адистер",
-                    ft_f3_t: "Так баалар",
-                    ft_f3_d: "Жашыруун төлөмдөрсүз",
-                    ft_f4_t: "Кепилдик",
-                    ft_f4_d: "Иштин сапатын көзөмөлдөө",
-                    ft_copy: "Бардык укуктар корголгон. Усталарды чакыруу кызматы.",
-                    ft_privacy: "Купуялуулук саясаты",
-                    ft_terms: "Колдонуучу келишими"
+        // 1. Слушаем пользовательское событие от кнопок в навигации
+        window.addEventListener('languageChanged', (e) => {
+            if (e.detail && e.detail.lang) {
+                window.updateAboutCardLang(e.detail.lang);
+            }
+        });
+
+        // 2. Безопасный связующий мост, если навигация вызывает window.changeLanguage(lang)
+        (function() {
+            const originalChangeLang = window.changeLanguage;
+            window.changeLanguage = function(lang) {
+                if (typeof originalChangeLang === 'function') {
+                    originalChangeLang(lang);
                 }
-            };
-
-            window.switchFooterLang = function(lang) {
-                document.querySelectorAll('#footerLangSwitch .lang-btn').forEach(btn => {
-                    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-                });
-
-                if (footerI18n[lang]) {
-                    document.querySelectorAll('#footer [data-key]').forEach(el => {
-                        const key = el.getAttribute('data-key');
-                        if (footerI18n[lang][key]) {
-                            el.textContent = footerI18n[lang][key];
-                        }
-                    });
-                }
+                window.updateAboutCardLang(lang);
             };
         })();
     </script>
-</footer>
-
+</section>
 
 
 
