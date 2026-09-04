@@ -2609,12 +2609,24 @@ Object.assign(window.siteTranslations.ru, {
 
 
 
-    <!-- ================================================================= -->
+<!-- ================================================================= -->
 <!-- БЛОК "ФУТЕР" — PRO INDUSTRIAL FOOTER (ТАЛАС 24/7)                -->
 <!-- ================================================================= -->
 <footer id="main-footer" class="industrial-footer">
 
     <style>
+        /* Автоматическая привязка к низу страницы (Sticky Footer) */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
         #main-footer * {
             box-sizing: border-box;
             margin: 0;
@@ -2630,6 +2642,7 @@ Object.assign(window.siteTranslations.ru, {
             border-top: 2px solid #1E1E24;
             position: relative;
             overflow: hidden;
+            margin-top: auto; /* Прижимает футер к низу */
         }
 
         /* НЕОНОВАЯ ПОЛОСА ВВЕРХУ */
@@ -2863,7 +2876,6 @@ Object.assign(window.siteTranslations.ru, {
         };
     </script>
 </footer>
-
 
 
 
