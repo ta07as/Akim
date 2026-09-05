@@ -307,14 +307,29 @@
 <header class="pc-header">
     <div class="pc-header-container">
         <a href="#hero" class="pc-logo">Talas<span>_profi</span></a>
-        <nav class="pc-nav-links">
-            <a href="pages.html#about" data-i18n="sidebar_about">О компании</a>
-            <a href="pages.html#services" data-i18n="nav_services">Услуги</a>
-            <a href="pages.html#prices" data-i18n="sidebar_prices">Прайс-лист</a>
-            <a href="pages.html#portfolio" data-i18n="sidebar_portfolio">Наши работы</a>
-            <a href="pages.html#reviews" data-i18n="sidebar_reviews">Отзывы</a>
-            <a href="pages.html#contacts" data-i18n="sidebar_contacts">Контакты</a>
-        </nav>
+      <nav class="pc-nav-links" id="pcNavLinks">
+    <a href="pages.html#about" data-i18n="sidebar_about" onclick="setActiveNav(this)">
+        <span>🏛️</span> О компании
+    </a>
+    <a href="pages.html#services" data-i18n="nav_services" onclick="setActiveNav(this)">
+        <span>⚡</span> Услуги
+    </a>
+    <a href="pages.html#prices" data-i18n="sidebar_prices" onclick="setActiveNav(this)">
+        <span>💎</span> Прайс-лист
+    </a>
+    <a href="pages.html#portfolio" data-i18n="sidebar_portfolio" onclick="setActiveNav(this)">
+        <span>🛠️</span> Наши работы
+    </a>
+    <a href="pages.html#reviews" data-i18n="sidebar_reviews" onclick="setActiveNav(this)">
+        <span>⭐</span> Отзывы
+    </a>
+    <a href="pages.html#faq" data-i18n="sidebar_faq" onclick="setActiveNav(this)">
+        <span>❓</span> FAQ
+    </a>
+    <a href="pages.html#contacts" data-i18n="sidebar_contacts" class="nav-cta-btn" onclick="setActiveNav(this)">
+        <span>📞</span> Контакты
+    </a>
+</nav>
         <div class="pc-actions">
             <!-- Переключатель языка для ПК -->
             <button type="button" class="lang-btn-toggle" onclick="toggleLanguage()">
